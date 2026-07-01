@@ -1,0 +1,88 @@
+---
+import Navbar from '../layout/Navbar.astro';
+import CompassRose from './CompassRose.astro';
+import Title from './Title.astro';
+import HeroText from './HeroText.astro';
+import Coordinates from './Coordinates.astro';
+---
+
+<section id="hero" class="relative min-h-screen w-full overflow-hidden">
+  <div class="absolute inset-0 z-0 bg-gradient-to-r from-[var(--color-desert)] to-[var(--color-accent)]"></div>
+  <Navbar />
+  <CompassRose />
+
+  <!-- Content layer -->
+  <div class="absolute inset-0 z-[2] px-5 md:px-8">
+    <!-- Title: centered -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto text-center">
+      <Title />
+    </div>
+
+    <!-- Text block + Coordinates -->
+    <HeroText />
+    <Coordinates />
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof gsap === "undefined") return;
+
+    // 1. Navbar slide down
+    gsap.from("[data-animate='navbar']", {
+      y: -100,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power3.out",
+    });
+
+    // 2. Title reveal
+    gsap.from("[data-animate='title-main']", {
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      delay: 0.3,
+      ease: "power2.out",
+    });
+
+    // 3. "Studio" fade in
+    gsap.from("[data-animate='title-studio']", {
+      opacity: 0,
+      x: 20,
+      duration: 0.8,
+      delay: 0.8,
+      ease: "power2.out",
+    });
+
+    // 4. Compass rose stagger
+    gsap.from("[data-animate='compass'] [data-letter]", {
+      opacity: 0,
+      scale: 0.5,
+      duration: 0.6,
+      stagger: 0.15,
+      delay: 0.5,
+      ease: "back.out(1.7)",
+    });
+
+    // 5. Text block stagger
+    gsap.from("[data-animate='text-block'] p", {
+      y: 20,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      delay: 1.2,
+      ease: "power2.out",
+    });
+
+    // 6. Coordinates fade in
+    gsap.from("[data-animate='coordinates'] span", {
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.1,
+      delay: 1.6,
+      ease: "power1.out",
+    });
+  });
+</script>
