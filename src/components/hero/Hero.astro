@@ -6,7 +6,7 @@ import HeroText from './HeroText.astro';
 import Coordinates from './Coordinates.astro';
 ---
 
-<section id="hero" class="relative min-h-screen w-full overflow-hidden">
+<section id="hero" class="hero-section">
   <div class="absolute inset-0 z-0 bg-gradient-to-r from-[var(--color-desert)] to-[var(--color-accent)]"></div>
   <Navbar />
   <CompassRose />
@@ -26,6 +26,9 @@ import Coordinates from './Coordinates.astro';
 
 <script>
   import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
 
   document.addEventListener("DOMContentLoaded", () => {
     if (typeof gsap === "undefined") return;
@@ -84,5 +87,23 @@ import Coordinates from './Coordinates.astro';
       delay: 1.6,
       ease: "power1.out",
     });
+
+    // 7. Curtain reveal — pin Hero while About slides up over it
+    ScrollTrigger.create({
+      trigger: "#hero",
+      start: "top top",
+      end: "+=100%",
+      pin: true,
+      pinSpacing: false,
+    });
   });
 </script>
+
+<style>
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+</style>
