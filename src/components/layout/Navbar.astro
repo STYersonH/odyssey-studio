@@ -1,0 +1,43 @@
+---
+---
+
+<nav data-animate="navbar" class="fixed top-0 left-0 w-full z-50 px-5 py-4 md:px-8 md:py-6">
+  <div class="flex justify-between items-center max-w-[1400px] mx-auto">
+    <span class="font-bold text-base tracking-[0.2em] uppercase text-[var(--color-neutral-900)] lg:text-sm" style="font-family: var(--font-display)">
+      ODYSSEY
+    </span>
+
+    <!-- Nav links: hidden on mobile/tablet, visible on desktop -->
+    <div class="hidden lg:flex gap-8">
+      <a href="#about" class="text-sm font-normal text-[var(--color-neutral-900)] no-underline tracking-wide hover:opacity-60 transition-opacity" style="font-family: var(--font-body)">
+        About
+      </a>
+      <a href="#work" class="text-sm font-normal text-[var(--color-neutral-900)] no-underline tracking-wide hover:opacity-60 transition-opacity" style="font-family: var(--font-body)">
+        Work
+      </a>
+      <a href="#services" class="text-sm font-normal text-[var(--color-neutral-900)] no-underline tracking-wide hover:opacity-60 transition-opacity" style="font-family: var(--font-body)">
+        Services
+      </a>
+      <a href="#process" class="text-sm font-normal text-[var(--color-neutral-900)] no-underline tracking-wide hover:opacity-60 transition-opacity" style="font-family: var(--font-body)">
+        Process
+      </a>
+    </div>
+
+    <!-- CTA: mobile/tablet = light bg + arrow icon, desktop = dark bg -->
+    <a
+      href="#contact"
+      class="flex items-center gap-2 text-sm no-underline tracking-wide hover:opacitty-85
+             bg-[var(--color-neutral-50)] text-[var(--color-neutral-900)] px-2 py-1 rounded-lg
+      lg:bg-primary-dark lg:text-white lg:px-5 lg:py-2.5 lg:rounded-lg lg:font-medium lg:hover:bg-white lg:hover:text-primary-dark ease-in-out transition duration-700 cursor-pointer"
+      style="font-family: var(--font-body)"
+    >
+      Start a project
+      <!-- Arrow icon: visible on mobile/tablet only -->
+      <span class="inline-flex items-center justify-center w-3 h-3 bg-[var(--color-accent)] rounded md:hidden lg:hover:inline-flex lg:hover:bg-primary-dark lg:hover:text-white">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 7L7 1M7 1H1M7 1V7" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
+  </div>
+</nav>
