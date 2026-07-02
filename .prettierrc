@@ -1,4 +1,9 @@
 {
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "printWidth": 90,
   "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
   "overrides": [
     {
@@ -7,9 +12,5 @@
         "parser": "astro"
       }
     }
-  ],
-  "semi": true,
-  "singleQuote": true,
-  "printWidth": 100,
-  "tabWidth": 2
+  ]
 }
