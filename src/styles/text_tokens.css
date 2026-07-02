@@ -41,7 +41,7 @@
 	font-size: var(--text-16);
 	font-style: normal;
 	font-weight: 500;
-	line-height: normal;
+	line-height: 110%; /* 17.6px */
 }
 
 .body-2 {

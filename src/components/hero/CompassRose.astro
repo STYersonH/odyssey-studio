@@ -1,36 +1,176 @@
 ---
 ---
 
-<div class="absolute inset-0 pointer-events-none z-[1]" data-animate="compass">
+<div
+  class="compass-rose absolute inset-0 pointer-events-none z-[1] h-[50%] top-1/2 -translate-y-1/2"
+  data-animate="compass"
+  data-compass
+>
   <!-- N badge -->
-  <span data-letter="N" class="absolute top-[28%] left-1/2 -translate-x-1/2">
-    <span class="inline-flex items-center justify-center rounded-full bg-[var(--color-neutral-900)] text-white font-medium
-                 w-4 h-4 text-[8px]
-                 md:w-[22px] md:h-[22px] md:text-[18px]
-                 lg:w-7 lg:h-7 lg:text-xs"
-          style="font-family: var(--font-body)">
+  <span data-compass-host data-letter="N" class="compass-host">
+    <span
+      data-letter
+      class="inline-flex items-center justify-center rounded-full bg-[var(--color-neutral-900)] text-white font-medium
+             w-4 h-4 text-[8px]
+             md:w-[22px] md:h-[22px] md:text-[18px]
+             lg:w-7 lg:h-7 lg:text-xs font-body"
+    >
       N
     </span>
   </span>
 
   <!-- E -->
-  <span data-letter="E" class="absolute font-normal text-[var(--color-neutral-900)] tracking-wide left-[3%] top-1/2 -translate-y-1/2
-                               text-[8px] md:text-[18px] lg:text-sm"
-        style="font-family: var(--font-body)">
-    E
+  <span data-compass-host data-letter="E" class="compass-host">
+    <span
+      data-letter
+      class="font-normal text-[var(--color-neutral-900)] tracking-wide text-[8px] md:text-[18px] lg:text-sm font-body"
+    >
+      E
+    </span>
   </span>
 
   <!-- W -->
-  <span data-letter="W" class="absolute font-normal text-[var(--color-neutral-900)] tracking-wide right-[3%] top-1/2 -translate-y-1/2
-                               text-[8px] md:text-[18px] lg:text-sm"
-        style="font-family: var(--font-body)">
-    W
+  <span data-compass-host data-letter="W" class="compass-host">
+    <span
+      data-letter
+      class="font-normal text-[var(--color-neutral-900)] tracking-wide text-[8px] md:text-[18px] lg:text-sm font-body"
+    >
+      W
+    </span>
   </span>
 
   <!-- S -->
-  <span data-letter="S" class="absolute font-normal text-[var(--color-neutral-900)] tracking-wide bottom-[28%] left-1/2 -translate-x-1/2
-                               text-[8px] md:text-[18px] lg:text-sm"
-        style="font-family: var(--font-body)">
-    S
+  <span data-compass-host data-letter="S" class="compass-host">
+    <span
+      data-letter
+      class="font-normal text-[var(--color-neutral-900)] tracking-wide text-[8px] md:text-[18px] lg:text-sm font-body"
+    >
+      S
+    </span>
   </span>
 </div>
+
+<script>
+  const LETTER_OFFSETS: Record<string, number> = {
+    N: 0,
+    W: Math.PI / 2,
+    S: Math.PI,
+    E: (Math.PI * 3) / 2,
+  };
+
+  // Matches previous layout: E/W at 3% from edges, N/S at top/bottom.
+  const A_RATIO = 0.47;
+  const B_RATIO = 0.5;
+
+  // Spring physics for the needle. Underdamped -> it overshoots on fast
+  // cursor moves (momentum) and oscillates back to point at the cursor.
+  // Critical damping would be ~2*sqrt(STIFFNESS); staying below it gives swing.
+  const STIFFNESS = 140;
+  const DAMPING = 11;
+  const MAX_DT = 1 / 30;
+
+  // Shortest signed angular distance, normalized to [-PI, PI].
+  function normalizeAngle(angle: number) {
+    return Math.atan2(Math.sin(angle), Math.cos(angle));
+  }
+
+  let compassAbort: AbortController | null = null;
+  let compassRaf = 0;
+
+  function initCompassRose() {
+    const hero = document.getElementById("hero");
+    const compass = document.querySelector<HTMLElement>("[data-compass]");
+    if (!hero || !compass) return;
+
+    compassAbort?.abort();
+    cancelAnimationFrame(compassRaf);
+    compassAbort = new AbortController();
+    const { signal } = compassAbort;
+
+    const hosts = compass.querySelectorAll<HTMLElement>("[data-compass-host]");
+    let targetAngle = -Math.PI / 2;
+    let currentAngle = targetAngle;
+    let angularVelocity = 0;
+    let lastTime = 0;
+
+    // Ellipse parameter `t` whose point lies on the ray at `angle` from the
+    // center. N uses this so it stays aligned between the center and cursor.
+    function ellipseParamFromAngle(angle: number, a: number, b: number) {
+      return Math.atan2(a * Math.sin(angle), b * Math.cos(angle));
+    }
+
+    // Point for a given parameter. Spacing letters by equal `t` steps keeps
+    // their arc lengths balanced around the ellipse (visual equidistance),
+    // unlike equal angular steps which bunch up on an elongated ellipse.
+    function ellipsePointFromParam(t: number, a: number, b: number) {
+      return { x: a * Math.cos(t), y: b * Math.sin(t) };
+    }
+
+    const compassEl = compass;
+
+    function applyPositions() {
+      const rect = compassEl.getBoundingClientRect();
+      const a = rect.width * A_RATIO;
+      const b = rect.height * B_RATIO;
+      const tN = ellipseParamFromAngle(currentAngle, a, b);
+
+      hosts.forEach((host) => {
+        const key = host.dataset.letter ?? "N";
+        const offset = LETTER_OFFSETS[key] ?? 0;
+        const { x, y } = ellipsePointFromParam(tN + offset, a, b);
+
+        host.style.left = `calc(50% + ${x}px)`;
+        host.style.top = `calc(50% + ${y}px)`;
+      });
+    }
+
+    function tick(now: number) {
+      if (!lastTime) lastTime = now;
+      const dt = Math.min((now - lastTime) / 1000, MAX_DT);
+      lastTime = now;
+
+      // Resolve target on the same continuous turn as currentAngle so the
+      // needle always swings the short way toward the cursor.
+      const targetContinuous =
+        currentAngle + normalizeAngle(targetAngle - currentAngle);
+
+      const accel =
+        (targetContinuous - currentAngle) * STIFFNESS - angularVelocity * DAMPING;
+      angularVelocity += accel * dt;
+      currentAngle += angularVelocity * dt;
+
+      applyPositions();
+      compassRaf = requestAnimationFrame(tick);
+    }
+
+    function setTargetFromClient(clientX: number, clientY: number) {
+      const rect = compassEl.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+
+      targetAngle = Math.atan2(clientY - cy, clientX - cx);
+    }
+
+    function onPointerMove(event: PointerEvent) {
+      setTargetFromClient(event.clientX, event.clientY);
+    }
+
+    hero.addEventListener("pointermove", onPointerMove, { signal });
+    window.addEventListener("resize", applyPositions, { passive: true, signal });
+
+    setTargetFromClient(window.innerWidth / 2, compassEl.getBoundingClientRect().top - 1);
+    applyPositions();
+    compassRaf = requestAnimationFrame(tick);
+  }
+
+  initCompassRose();
+  document.addEventListener("astro:page-load", initCompassRose);
+</script>
+
+<style>
+  .compass-host {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    will-change: left, top;
+  }
+</style>

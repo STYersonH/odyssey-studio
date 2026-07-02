@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./figma_var.css";
+@import "./text_tokens.css";
 @import "./spacing_tokens.css";
 
 @theme {
