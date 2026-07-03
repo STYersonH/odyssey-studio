@@ -26,7 +26,7 @@ const heroContent = t.hero;
   <CompassRose />
 
   <!-- Content layer -->
-  <div class="absolute inset-0 z-[2] px-5 md:px-8">
+  <div class="absolute inset-0 z-2 px-5 md:px-8">
     <!-- Title: centered -->
     <div
       class="absolute top-1/2 left-1/2 w-auto -translate-x-1/2 -translate-y-1/2 text-center"
@@ -35,83 +35,25 @@ const heroContent = t.hero;
     </div>
 
     <!-- Text block + Coordinates -->
-    <HeroText />
-    <Coordinates />
+    <div class="flex h-full w-full items-end">
+      <div
+        class="mb:flex-row mb:gap-0 mb:items-end flex w-full flex-col items-center justify-between gap-[2rem] pb-[24px]"
+      >
+        <HeroText />
+        <Coordinates />
+      </div>
+    </div>
   </div>
 </section>
 
 <script>
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { animateHero } from './animation';
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  document.addEventListener('DOMContentLoaded', () => {
-    if (typeof gsap === 'undefined') return;
-
-    // 1. Navbar slide down
-    gsap.from("[data-animate='navbar']", {
-      y: -100,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power3.out',
-    });
-
-    // 2. Title reveal
-    gsap.from("[data-animate='title-main']", {
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      delay: 0.3,
-      ease: 'power2.out',
-    });
-
-    // 3. "Studio" fade in
-    gsap.from("[data-animate='title-studio']", {
-      opacity: 0,
-      x: 20,
-      duration: 0.8,
-      delay: 0.8,
-      ease: 'power2.out',
-    });
-
-    // 4. Compass rose stagger
-    gsap.from("[data-animate='compass'] [data-letter]", {
-      opacity: 0,
-      scale: 0.5,
-      duration: 0.6,
-      stagger: 0.15,
-      delay: 0.5,
-      ease: 'back.out(1.7)',
-    });
-
-    // 5. Text block stagger
-    gsap.from("[data-animate='text-block'] p", {
-      y: 20,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.2,
-      delay: 1.2,
-      ease: 'power2.out',
-    });
-
-    // 6. Coordinates fade in
-    gsap.from("[data-animate='coordinates'] span", {
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.1,
-      delay: 1.6,
-      ease: 'power1.out',
-    });
-
-    // 7. Curtain reveal — pin Hero while About slides up over it
-    ScrollTrigger.create({
-      trigger: '#hero',
-      start: 'top top',
-      end: '+=100%',
-      pin: true,
-      pinSpacing: false,
-    });
+  // Module scripts run after DOM is parsed. animateHero() reverts any prior
+  // split first, so a second call (astro:page-load) is safe.
+  void animateHero();
+  document.addEventListener('astro:page-load', () => {
+    void animateHero();
   });
 </script>
 

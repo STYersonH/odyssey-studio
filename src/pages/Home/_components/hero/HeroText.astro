@@ -1,19 +1,26 @@
 ---
+
 ---
 
-<div data-animate="text-block font-sans"
-     class="absolute bottom-16 left-1/2 -translate-x-1/2 md:translate-x-0
-            md:bottom-12 md:left-6 md:max-w-[245px]
-            lg:bottom-12 lg:left-8 lg:max-w-[18rem]">
-  <p class="text-neutral-900 m-0
-             text-center max-w-[244px]
-            md:text-left md:max-w-none 
-            body-3">
-    We craft premium websites and digital experiences for experience-led brands in travel and lifestyle.
+<div class="mb:items-start flex w-full flex-col items-center">
+  <p
+    class="text-block-animate mb:text-left body-3 w-full max-w-[244px] text-center text-neutral-900"
+  >
+    We craft premium websites and digital experiences for experience-led brands in life
+    styles and travel.
   </p>
-  <p class="text-neutral-900 m-0 mt-4
-            text-center md:text-left max-w-[244px] md:max-w-none md:mt-4
-            body-3">
-    For businesses that need a digital presence as memorable as the experiences they deliver.
+  <p
+    class="text-block-animate mb:text-left body-3 mt-4 max-w-[244px] text-center text-neutral-900 md:mt-4"
+  >
+    For businesses that need a digital presence as memorable as the experiences they
+    deliver.
   </p>
 </div>
+
+<style>
+  /* :global() is required: SplitText injects .char at runtime. */
+  :global(.text-block-animate .line) {
+    transform: translateY(100%);
+    will-change: transform;
+  }
+</style>

@@ -1,88 +1,99 @@
 /* TEXT TOKENS */
 
+/* Breakpoint values must be literals here — var() is invalid inside @media. */
 :root {
-	--text-16: 14px;
-	--text-18: 14px;
-	--text-32: 24px;
-	--text-36: 24px;
-	--text-40: 32px;
-	--text-100: 64px;
+  /* Mobile (default) */
+  --text-16: 14px;
+  --text-18: 14px;
+  --text-32: 24px;
+  --text-36: 24px;
+  --text-40: 32px;
+  --text-100: 64px;
+}
 
-	@media (width >= 744px) {
-		--text-16: 16px;
-		--text-18: 18px;
-		--text-32: 24px;
-		--text-36: 32px;
-		--text-40: 40px;
-		--text-100: 80px;
-	}
+/* mb — matches --breakpoint-mb in figma_var.css */
+@media (width >= 440px) {
+  :root {
+    --text-16: 16px;
+    --text-18: 18px;
+    --text-32: 24px;
+    --text-36: 32px;
+    --text-40: 40px;
+    --text-100: 80px;
+  }
+}
 
-	@media (width >= 1440px) {
-		--text-16: 16px;
-		--text-18: 18px;
-		--text-32: 32px;
-		--text-36: 36px;
-		--text-40: 40px;
-		--text-100: 100px;
-	}
+/* tb — matches --breakpoint-tb */
+@media (width >= 744px) {
+  :root {
+    --text-16: 16px;
+    --text-18: 18px;
+    --text-32: 32px;
+    --text-36: 36px;
+    --text-40: 40px;
+    --text-100: 100px;
+  }
+}
 
-	@media (width >= 1920px) {
-		--text-16: 16px;
-		--text-18: 20px;
-		--text-32: 40px;
-		--text-36: 40px;
-		--text-40: 52px;
-		--text-100: 160px;
-	}
+/* dk — matches --breakpoint-dk */
+@media (width >= 1440px) {
+  :root {
+    --text-16: 16px;
+    --text-18: 20px;
+    --text-32: 40px;
+    --text-36: 40px;
+    --text-40: 52px;
+    --text-100: 160px;
+  }
 }
 
 .body-3 {
-	font-family: "Neue Montreal";
-	font-size: var(--text-16);
-	font-style: normal;
-	font-weight: 500;
-	line-height: 110%; /* 17.6px */
+  font-family: 'Neue Montreal';
+  font-size: var(--text-16);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%; /* 17.6px */
 }
 
 .body-2 {
-	font-family: "Neue Montreal";
-	font-size: var(--text-18);
-	font-style: normal;
-	font-weight: 500;
-	line-height: 110%; /* 22px */
+  font-family: 'Neue Montreal';
+  font-size: var(--text-18);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%; /* 22px */
 }
 
 .body-1 {
-	font-family: "Neue Montreal";
-	font-size: var(--text-32);
-	font-style: normal;
-	font-weight: 500;
-	line-height: normal;
+  font-family: 'Neue Montreal';
+  font-size: var(--text-32);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .h1 {
-	font-family: "Neue Montreal";
-	font-size: var(--text-100);
-	font-style: normal;
-	font-weight: 500;
-	line-height: 110%; /* 176px */
-	text-transform: uppercase;
+  font-family: 'Neue Montreal';
+  font-size: var(--text-100);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%; /* 176px */
+  text-transform: uppercase;
 }
 
 .h3 {
-	font-family: "Neue Montreal";
-	font-size: var(--text-40);
-	font-style: normal;
-	font-weight: 500;
-	line-height: 110%; /* 44px */
-	text-transform: uppercase;
+  font-family: 'Neue Montreal';
+  font-size: var(--text-40);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%; /* 44px */
+  text-transform: uppercase;
 }
 
 .h4 {
-	font-family: "Neue Montreal";
-	font-size: var(--text-32);
-	font-style: normal;
-	font-weight: 500;
-	line-height: 110%; /* 35.2px */
-	text-transform: uppercase;
+  font-family: 'Neue Montreal';
+  font-size: var(--text-32);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%; /* 35.2px */
+  text-transform: uppercase;
 }

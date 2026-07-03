@@ -1,29 +1,30 @@
 ---
+import { cn } from '../../../../lib/cn';
 ---
 
 <div
-  class="compass-rose absolute inset-0 pointer-events-none z-[1] h-[50%] top-1/2 -translate-y-1/2"
-  data-animate="compass"
+  class={cn(
+    'compass-rose pointer-events-none absolute inset-x-0 top-1/2 z-[1] w-full -translate-y-1/2',
+    'aspect-[calc(8/5)] mb:aspect-auto mb:h-[40%] tb:h-[50%]',
+    'text-[0.5rem] mb:text-[0.75rem] tb:text-[1rem] font-neue-regular',
+  )}
+  data-animate-compass-rose
   data-compass
 >
   <!-- N badge -->
-  <span data-compass-host data-letter="N" class="compass-host">
-    <span
-      data-letter
-      class="inline-flex items-center justify-center rounded-full bg-[var(--color-neutral-900)] text-white font-medium
-             w-4 h-4 text-[8px]
-             md:w-[22px] md:h-[22px] md:text-[18px]
-             lg:w-7 lg:h-7 lg:text-xs font-body"
-    >
-      N
-    </span>
+  <span
+    data-compass-host
+    data-letter="N"
+    class="compass-host mb:h-[22px] mb:w-[22px] tb:h-7 tb:w-7 inline-flex h-4 w-4 items-center justify-center rounded-full bg-[var(--color-neutral-900)]"
+  >
+    <span data-letter class="font-neue-light text-white"> N </span>
   </span>
 
   <!-- E -->
   <span data-compass-host data-letter="E" class="compass-host">
     <span
       data-letter
-      class="font-normal text-[var(--color-neutral-900)] tracking-wide text-[8px] md:text-[18px] lg:text-sm font-body"
+      class="font-body font-normal tracking-wide text-[var(--color-neutral-900)]"
     >
       E
     </span>
@@ -33,7 +34,7 @@
   <span data-compass-host data-letter="W" class="compass-host">
     <span
       data-letter
-      class="font-normal text-[var(--color-neutral-900)] tracking-wide text-[8px] md:text-[18px] lg:text-sm font-body"
+      class="font-body font-normal tracking-wide text-[var(--color-neutral-900)]"
     >
       W
     </span>
@@ -43,7 +44,7 @@
   <span data-compass-host data-letter="S" class="compass-host">
     <span
       data-letter
-      class="font-normal text-[var(--color-neutral-900)] tracking-wide text-[8px] md:text-[18px] lg:text-sm font-body"
+      class="font-body font-normal tracking-wide text-[var(--color-neutral-900)]"
     >
       S
     </span>
@@ -78,8 +79,8 @@
   let compassRaf = 0;
 
   function initCompassRose() {
-    const hero = document.getElementById("hero");
-    const compass = document.querySelector<HTMLElement>("[data-compass]");
+    const hero = document.getElementById('hero');
+    const compass = document.querySelector<HTMLElement>('[data-compass]');
     if (!hero || !compass) return;
 
     compassAbort?.abort();
@@ -87,7 +88,7 @@
     compassAbort = new AbortController();
     const { signal } = compassAbort;
 
-    const hosts = compass.querySelectorAll<HTMLElement>("[data-compass-host]");
+    const hosts = compass.querySelectorAll<HTMLElement>('[data-compass-host]');
     let targetAngle = -Math.PI / 2;
     let currentAngle = targetAngle;
     let angularVelocity = 0;
@@ -115,7 +116,7 @@
       const tN = ellipseParamFromAngle(currentAngle, a, b);
 
       hosts.forEach((host) => {
-        const key = host.dataset.letter ?? "N";
+        const key = host.dataset.letter ?? 'N';
         const offset = LETTER_OFFSETS[key] ?? 0;
         const { x, y } = ellipsePointFromParam(tN + offset, a, b);
 
@@ -131,8 +132,7 @@
 
       // Resolve target on the same continuous turn as currentAngle so the
       // needle always swings the short way toward the cursor.
-      const targetContinuous =
-        currentAngle + normalizeAngle(targetAngle - currentAngle);
+      const targetContinuous = currentAngle + normalizeAngle(targetAngle - currentAngle);
 
       const accel =
         (targetContinuous - currentAngle) * STIFFNESS - angularVelocity * DAMPING;
@@ -155,8 +155,8 @@
       setTargetFromClient(event.clientX, event.clientY);
     }
 
-    hero.addEventListener("pointermove", onPointerMove, { signal });
-    window.addEventListener("resize", applyPositions, { passive: true, signal });
+    hero.addEventListener('pointermove', onPointerMove, { signal });
+    window.addEventListener('resize', applyPositions, { passive: true, signal });
 
     setTargetFromClient(window.innerWidth / 2, compassEl.getBoundingClientRect().top - 1);
     applyPositions();
@@ -164,7 +164,7 @@
   }
 
   initCompassRose();
-  document.addEventListener("astro:page-load", initCompassRose);
+  document.addEventListener('astro:page-load', initCompassRose);
 </script>
 
 <style>

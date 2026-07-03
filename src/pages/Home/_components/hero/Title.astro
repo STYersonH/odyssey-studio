@@ -1,18 +1,42 @@
 ---
+import { cn } from '../../../../lib/cn';
 ---
 
-<div class="flex flex-col items-center m-0 relative ">
-  <p data-animate="title-main relative"
-        class="font-black leading-[0.95] tracking-[0.04em] text-[var(--color-neutral-900)]
-               text-[64px] md:text-[120px] lg:text-[15.625rem] font-neue-medium">
-    OD
-		<span class="font-neue-medium-italic">Y</span>
-		SSE
-		<span class="font-neue-medium-italic">Y</span>
+<div class="relative m-0 flex flex-col items-center">
+  <!-- Keep ODYSSEY on one line: no spaces/newlines between parts (SplitText treats them as breaks). -->
+  <p
+    class={cn(
+      'title-main-animate',
+      'font-neue-medium leading-none font-black tracking-[0.04em] text-[var(--color-neutral-900)] whitespace-nowrap ',
+      '[text-box:trim-both_cap_alphabetic]',
+      'text-[4rem]',
+      'mb:text-[clamp(4rem,11vw+2rem,7.5rem)]',
+      'tb:text-[clamp(4rem,12vw+2rem,15.6rem)]',
+      'dk:text-[clamp(10rem,13vw+2rem,18.75rem)]',
+    )}
+  >
+    OD<span class="titulo-y font-neue-medium-italic">Y</span>SSE<span
+      class="titulo-y font-neue-medium-italic">Y</span
+    >
   </p>
-  <p data-animate="title-studio"
-        class="absolute font-normal italic tracking-[0.12em] text-[var(--color-neutral-900)]
-               text-[20px] mt-1 md:text-[40px] md:mt-2 lg:text-[clamp(1.8rem,4vw,3.5rem)] lg:mt-2 font-roxborough right-20 -bottom-16 ">
+  <p
+    data-animate-title-studio
+    class={cn(
+      'font-roxborough absolute text-[20px] font-normal tracking-[0.12em] text-[var(--color-neutral-900)] md:text-[40px] lg:text-[clamp(1.8rem,4vw,3.5rem)]',
+      '[text-box:trim-both_cap_alphabetic] leading-none',
+      'right-5 mb:right-8 tb:right-16 dk:right-24',
+      '-bottom-8 tb:-bottom-14 dk:-bottom-18 ',
+    )}
+  >
     Studio
   </p>
 </div>
+
+<style>
+  /* :global() is required: SplitText injects .char at runtime. */
+  :global(.title-main-animate .char) {
+    display: inline-block;
+    transform: translateY(100%);
+    will-change: transform;
+  }
+</style>

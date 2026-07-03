@@ -4,23 +4,21 @@
 
 <!-- Mobile: split layout — location left, coords right --><!-- Tablet/Desktop: stacked right-aligned -->
 <div
-  data-animate="coordinates"
-  class="absolute right-5 bottom-5 left-5 flex items-end justify-between md:right-8 md:bottom-12 md:left-auto md:flex-col md:items-end md:gap-2 lg:right-8 lg:bottom-12"
+  data-animate-coordinates
+  class="mb:flex-col tb:gap-2 flex w-full flex-row-reverse items-end justify-between"
 >
-  <!-- Location -->
-  <span
-    class="text-sm font-normal tracking-[0.03em] text-[var(--color-neutral-900)] md:order-2 md:text-[16px] lg:text-base"
-    style="font-family: var(--font-body)"
-  >
-    Based in Cusco, Peru
-  </span>
   <!-- Coordinates -->
-  <span
-    class="text-right text-[10px] font-normal tracking-[0.08em] text-neutral-900 opacity-60 md:order-1 md:text-right md:text-[14px] lg:text-xs"
-    style="font-family: var(--font-body)"
+  <div
+    class="font-neue-regular tb:order-1 tb:text-right tb:text-[14px] dk:text-xs text-right text-[10px] font-normal tracking-[0.08em] text-neutral-900 opacity-60"
   >
     13.5319° S<br class="block" />
     <span class="md:hidden">, </span>
     71.9675° W
-  </span>
+  </div>
+  <!-- Location -->
+  <p
+    class="font-neue-regular text-sm font-normal tracking-[0.03em] text-[var(--color-neutral-900)] md:order-2 md:text-[16px] lg:text-base"
+  >
+    Based in Cusco, Peru
+  </p>
 </div>
