@@ -8,7 +8,6 @@ const { lines, vision } = Astro.props;
 ---
 
 <div data-animate="slogan-text" class="absolute inset-0">
-  <!-- Secondary lines — positioned at final spot (top area) -->
   <div
     data-animate="slogan-lines"
     class="absolute top-[274px] right-1/2 flex translate-x-1/2 flex-col items-center text-[24px] leading-[1.1] text-white uppercase md:top-[235px] md:text-[48px] lg:top-[169px] lg:text-[64px] 2xl:top-[246px] 2xl:text-[64px]"
@@ -26,10 +25,9 @@ const { lines, vision } = Astro.props;
     }
   </div>
 
-  <!-- "your vision" — always centered in section -->
   <div
     data-animate="slogan-vision"
-    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-[72px] leading-[0.9] whitespace-nowrap text-white md:text-[115px] lg:text-[200px] 2xl:text-[260px]"
+    class="absolute top-1/2 left-1/2 max-w-[280px] -translate-x-1/2 -translate-y-1/2 text-center text-[64px] leading-[1.0] whitespace-normal text-white uppercase md:max-w-none md:text-[115px] md:whitespace-nowrap lg:text-[200px] 2xl:text-[260px]"
     style="font-family: var(--font-body); font-weight: 500"
   >
     <p class="m-0">{vision}</p>

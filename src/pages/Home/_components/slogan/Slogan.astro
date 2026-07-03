@@ -188,36 +188,44 @@ const t = useTranslations(lang);
       onUpdate: (self) => {
         const progress = self.progress;
 
-        // 1. "YOUR VISION": Crece en escala Y además baja 50px en el eje Y
-        const visionScale = gsap.utils.interpolate(0.3, 1, progress);
-        const visionY = gsap.utils.interpolate(0, 50, progress); // <-- Nueva bajada sutil
-        gsap.set(vision, { scale: visionScale, y: visionY });
+        // =====================================================
+        // 1. "YOUR VISION" MODIFICADO (Sincronización y Responsive Y)
+        // =====================================================
+        // Forzamos a que termine de animar al 66% del scroll (en sincronía con el resto)
+        const visionProgress = Math.min(1, progress * 1.5);
 
-        // 2. LAS 3 LÍNEAS SUPERIORES: Aparecen en cascada una por una (de arriba a abajo)
+        // Evaluamos el desvío Y según el breakpoint actual
+        const maxY = bp === 'base' ? -35 : 50; // <-- 15px en celular, 50px en Desktop
+
+        const visionScale = gsap.utils.interpolate(0.3, 1, visionProgress);
+        const visionY = gsap.utils.interpolate(0, maxY, visionProgress);
+
+        gsap.set(vision, {
+          scale: visionScale,
+          y: visionY,
+        });
+
+        // =====================================================
+        // 2. LAS 3 LÍNEAS SUPERIORES (No se tocan, se mantienen igual)
+        // =====================================================
         sloganLines.forEach((line, index) => {
-          // Cada línea empieza su animación con un retraso (stagger) diferente
-          // Línea 1: empieza en progress 0.0 | Línea 2: en 0.15 | Línea 3: en 0.30
           const lineStart = index * 0.15;
-
-          // Calculamos su propio progreso interno acelerado (multiplicado por 3) para que termine rápido
           const lineProgress = Math.max(0, Math.min(1, (progress - lineStart) * 3));
-
           gsap.set(line, {
-            autoAlpha: lineProgress, // Va de opacidad 0 a 1
-            y: gsap.utils.interpolate(-15, 0, lineProgress) + 'px', // Cae sutilmente a su posición original
+            autoAlpha: lineProgress,
+            y: gsap.utils.interpolate(-15, 0, lineProgress) + 'px',
           });
         });
 
-        // 3. ANIMACIÓN DE LAS IMÁGENES
+        // =====================================================
+        // 3. ANIMACIÓN DE LAS IMÁGENES (No se tocan, se mantienen igual)
+        // =====================================================
         images.forEach((img, i) => {
           if (!img) return;
-
           const stagger = i * 0.08;
           const imgProgress = Math.max(0, Math.min(1, (progress - stagger) * 2.0));
-
           const s = startPositions[i];
           const e = endPositions[i];
-
           gsap.set(img, {
             z: gsap.utils.interpolate(s.z, e.z, imgProgress),
             scale: gsap.utils.interpolate(s.scale, e.scale, imgProgress),
