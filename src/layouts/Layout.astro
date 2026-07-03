@@ -1,9 +1,17 @@
 ---
+import type { Locale } from '../i18n/locales';
+import { DEFAULT_LOCALE } from '../i18n/locales';
 import '../styles/global.css';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />

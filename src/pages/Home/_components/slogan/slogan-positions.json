@@ -1,0 +1,89 @@
+{
+  "description": "Figma final positions for Slogan images — use as GSAP animation end-states",
+  "images": {
+    "img1": {
+      "breakpoints": {
+        "base": {
+          "left": "calc(25% + 4.5px)",
+          "top": "149px",
+          "width": "131px",
+          "height": "95px"
+        },
+        "md": {
+          "left": "calc(25% + 16px)",
+          "top": "117px",
+          "width": "204px",
+          "height": "147px"
+        },
+        "lg": {
+          "left": "calc(8.33% + 129px)",
+          "top": "181px",
+          "width": "258px",
+          "height": "186px"
+        },
+        "2xl": {
+          "left": "calc(16.67% + 122px)",
+          "top": "265px",
+          "width": "265px",
+          "height": "191px"
+        }
+      }
+    },
+    "img2": {
+      "breakpoints": {
+        "base": {
+          "left": "calc(50% + 61px)",
+          "top": "379px",
+          "width": "122px",
+          "height": "88px"
+        },
+        "md": {
+          "left": "calc(62.5% + 50px)",
+          "top": "310px",
+          "width": "206px",
+          "height": "149px"
+        },
+        "lg": {
+          "left": "calc(75% - 11px)",
+          "top": "260px",
+          "width": "309px",
+          "height": "223px"
+        },
+        "2xl": {
+          "left": "calc(75% + 119px)",
+          "top": "340px",
+          "width": "309px",
+          "height": "223px"
+        }
+      }
+    },
+    "img3": {
+      "breakpoints": {
+        "base": {
+          "left": "12px",
+          "top": "528px",
+          "width": "179px",
+          "height": "129px"
+        },
+        "md": {
+          "left": "24px",
+          "top": "533px",
+          "width": "208px",
+          "height": "151px"
+        },
+        "lg": {
+          "left": "42px",
+          "top": "491px",
+          "width": "246px",
+          "height": "178px"
+        },
+        "2xl": {
+          "left": "42px",
+          "top": "571px",
+          "width": "246px",
+          "height": "178px"
+        }
+      }
+    }
+  }
+}

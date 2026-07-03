@@ -23,6 +23,25 @@ const en: Translations = {
     scrollLabel: 'SCROLL DOWN',
     scrollAriaLabel: 'Scroll down',
   },
+
+  about: {
+    heading: {
+      line1: 'WE HELP',
+      line2: 'WITH YOUR',
+      line3: 'ODYSSEY.',
+    },
+    text: {
+      paragraph1:
+        "Every project begins with a destination in mind. Whether you're building a travel brand, a hospitality experience, or something entirely new, it starts with a vision.",
+      paragraph2:
+        'Our role is to transform that vision into a meaningful digital journey—crafted with strategy, design, and technology to help your brand move forward with purpose.',
+    },
+  },
+
+  slogan: {
+    lines: ['WE WILL', 'MAKE YOU', 'CLOSER TO'],
+    vision: 'YOUR VISION',
+  },
 };
 
 export default en;

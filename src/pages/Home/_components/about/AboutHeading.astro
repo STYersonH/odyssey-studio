@@ -1,5 +1,9 @@
 ---
+interface Props {
+  lines: [string, string, string];
+}
 
+const { lines } = Astro.props;
 ---
 
 <div
@@ -7,7 +11,7 @@
   class="self-start text-[64px] leading-none whitespace-pre-wrap text-white md:text-[80px] lg:text-[90px] 2xl:text-[160px]"
   style="font-family: var(--font-body); font-weight: 300"
 >
-  <p class="m-0">WE&nbsp;HELP</p>
-  <p class="m-0">WITH&nbsp;YOUR</p>
-  <p class="m-0">ODYSSEY.</p>
+  <p class="m-0">{lines[0]}</p>
+  <p class="m-0">{lines[1]}</p>
+  <p class="m-0">{lines[2]}</p>
 </div>
