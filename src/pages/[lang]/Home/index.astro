@@ -5,6 +5,7 @@ import { useTranslations } from '../../../i18n/utils';
 import Layout from '../../../layouts/Layout.astro';
 import Hero from '../../Home/_components/hero/Hero.astro';
 import About from '../../Home/_components/about/About.astro';
+import Slogan from '../../Home/_components/slogan/Slogan.astro';
 
 export function getStaticPaths() {
   return LOCALES.map((lang) => ({ params: { lang } }));
@@ -14,8 +15,9 @@ const { lang } = Astro.params as { lang: Locale };
 ---
 
 <Layout lang={lang}>
-  <Hero />
-  <About />
+  <Hero lang={lang} />
+  <About lang={lang} />
+  <Slogan lang={lang} />
 </Layout>
 
 <script>
