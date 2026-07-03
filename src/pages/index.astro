@@ -1,12 +1,4 @@
 ---
-import Hero from '../components/hero/Hero.astro';
-import About from '../components/about/About.astro';
-import Slogan from '../components/slogan/Slogan.astro';
-import Layout from '../layouts/Layout.astro';
+export const prerender = false;
+return Astro.redirect('/es/Home', 301);
 ---
-
-<Layout>
-  <Hero />
-  <About />
-  <Slogan />
-</Layout>
