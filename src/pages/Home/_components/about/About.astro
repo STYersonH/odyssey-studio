@@ -11,7 +11,11 @@ interface Props {
 
 const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
-const headingLines = [t.about.heading.line1, t.about.heading.line2, t.about.heading.line3];
+const headingLines = [
+  t.about.heading.line1,
+  t.about.heading.line2,
+  t.about.heading.line3,
+];
 const textParagraphs = [t.about.text.paragraph1, t.about.text.paragraph2];
 ---
 
@@ -38,12 +42,31 @@ const textParagraphs = [t.about.text.paragraph1, t.about.text.paragraph2];
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap === 'undefined') return;
 
-    // Content reveal — animates as the section scrolls into view
+    // =====================================================
+    // 1. ANIMACIÓN DEL TELÓN (Levanta el Hero)
+    // =====================================================
+    // Movemos el telón del Hero hacia arriba (-100%) en sincronía con el scroll.
+    // Usamos el contenedor de rastreo externo como trigger.
+    gsap.to('#hero-theater-curtain', {
+      yPercent: -100,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#theater-scroll-track',
+        start: 'top top',
+        end: 'center top', // Termina de subir exactamente al completar los primeros 100vh de scroll
+        scrub: true,
+      },
+    });
+
+    // =====================================================
+    // 2. REVELADO DE TEXTOS DE ABOUT US
+    // =====================================================
+    // Modificamos el trigger para que dependa del contenedor de rastreo.
+    // Los textos se disparan elegantemente cuando el telón se haya levantado un 30%.
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: '#about',
-        start: 'top 80%',
-        end: 'top 20%',
+        trigger: '#theater-scroll-track',
+        start: 'top+=30% top',
         toggleActions: 'play none none reverse',
       },
     });
