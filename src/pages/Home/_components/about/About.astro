@@ -1,6 +1,18 @@
 ---
+import type { Locale } from '../../../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../../../i18n/locales';
+import { useTranslations } from '../../../../i18n/utils';
 import AboutHeading from './AboutHeading.astro';
 import AboutText from './AboutText.astro';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const headingLines = [t.about.heading.line1, t.about.heading.line2, t.about.heading.line3];
+const textParagraphs = [t.about.text.paragraph1, t.about.text.paragraph2];
 ---
 
 <section
@@ -11,9 +23,9 @@ import AboutText from './AboutText.astro';
     class="flex h-full w-full flex-col gap-8 p-8 md:min-h-screen md:justify-end md:gap-20 md:px-6 md:py-12 lg:items-stretch lg:gap-5 lg:px-12 lg:py-16 2xl:px-16 2xl:py-20"
   >
     <div class="lg:col-span-7">
-      <AboutHeading />
+      <AboutHeading lines={headingLines} />
     </div>
-    <AboutText />
+    <AboutText paragraphs={textParagraphs} />
   </div>
 </section>
 
