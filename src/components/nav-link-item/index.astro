@@ -1,0 +1,69 @@
+---
+import { cn } from '../../lib/cn';
+
+interface Props {
+  href: string;
+  label: string;
+  class?: string;
+  isActive?: boolean;
+}
+
+const { href, label, class: className = '', isActive = false } = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(
+    'nav-link-item inline-block font-neue-regular text-primary-dark no-underline outline-none',
+    isActive && 'nav-link-item--active',
+    className,
+  )}
+  data-nav-link
+  aria-current={isActive ? 'page' : undefined}
+>
+  <span class="nav-link-label relative block overflow-hidden">
+    <span data-nav-link-track class="nav-link-track flex flex-col">
+      <span data-nav-link-top class="nav-link-line">
+        {label}
+      </span>
+      <span data-nav-link-bottom class="nav-link-line">
+        {label}
+      </span>
+    </span>
+  </span>
+</a>
+
+<style>
+  .nav-link-item {
+    --nav-link-line: 14px;
+    --nav-link-track-gap: 4px;
+  }
+
+  @media (width >= 744px) {
+    .nav-link-item {
+      --nav-link-line: 16px;
+    }
+  }
+
+  .nav-link-label {
+    height: var(--nav-link-line);
+  }
+
+  .nav-link-track {
+    gap: var(--nav-link-track-gap);
+  }
+
+  .nav-link-line {
+    display: block;
+    height: var(--nav-link-line);
+    font-size: var(--nav-link-line);
+    line-height: var(--nav-link-line);
+  }
+</style>
+
+<script>
+  import { initNavLinkAnimations } from './animation';
+
+  initNavLinkAnimations();
+  document.addEventListener('astro:page-load', () => initNavLinkAnimations());
+</script>

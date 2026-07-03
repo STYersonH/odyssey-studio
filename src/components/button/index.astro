@@ -1,0 +1,140 @@
+---
+import UpRightArrowIcon from '../../icons/UpRightArrowIcon.astro';
+import { cn } from '../../lib/cn';
+
+interface Props {
+  href?: string;
+  text?: string;
+  class?: string;
+  size?: 'regular' | 'big';
+  type?: 'primary' | 'secondary' | 'tertiary';
+}
+
+const {
+  href,
+  text = 'Start a project',
+  size = 'regular',
+  type = 'primary',
+  class: className = '',
+} = Astro.props as Props;
+
+const isPrimary = type === 'primary';
+const isBig = size === 'big';
+const buttonType = isPrimary ? 'primary' : 'secondary';
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  {...href ? { href } : { type: 'button' }}
+  class={cn(
+    'button-root inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-lg border-0 no-underline outline-none',
+    'font-neue-regular whitespace-nowrap',
+    isBig
+      ? 'button-root--big h-[49px] w-[207px]'
+      : 'button-root--regular h-[35px] w-[144px]',
+    'gap-sm pl-lg pr-sm',
+    isPrimary ? 'bg-primary-dark' : 'bg-neutral-50',
+    className,
+  )}
+  data-button
+  data-button-type={buttonType}
+  data-button-size={size}
+>
+  <span data-button-label class="button-label relative shrink-0 overflow-hidden">
+    <span data-button-label-track class="button-label-track flex flex-col">
+      <span
+        data-button-label-top
+        class={cn('button-line', isPrimary ? 'text-neutral-50' : 'text-primary-dark')}
+      >
+        {text}
+      </span>
+      <span
+        data-button-label-bottom
+        class={cn(
+          'button-line',
+          isBig && !isPrimary && 'button-line--hover-lg',
+          isPrimary ? 'text-primary-dark' : 'text-neutral-50',
+        )}
+      >
+        {text}
+      </span>
+    </span>
+  </span>
+
+  <span
+    data-button-icon-wrap
+    class="button-icon-wrap flex shrink-0 items-center overflow-hidden"
+  >
+    <span
+      data-button-icon
+      class={cn(
+        'button-icon box-border flex items-center justify-center overflow-hidden rounded',
+        isPrimary ? 'bg-primary-dark' : 'bg-neutral-50',
+      )}
+    >
+      <UpRightArrowIcon
+        class={cn(
+          'shrink-0',
+          isPrimary ? 'text-neutral-50' : 'text-primary-dark',
+          isBig ? 'size-4' : 'size-3',
+        )}
+      />
+    </span>
+  </span>
+</Tag>
+
+<style>
+  .button-root--regular {
+    --button-line: 16px;
+    --button-track-gap: 8px;
+    --button-icon-size: 16px;
+  }
+
+  .button-root--big {
+    --button-line: 24px;
+    --button-track-gap: 8px;
+    --button-icon-size: 23px;
+  }
+
+  .button-label {
+    height: var(--button-line);
+  }
+
+  .button-label-track {
+    gap: var(--button-track-gap);
+  }
+
+  .button-line {
+    display: block;
+    height: var(--button-line);
+    font-size: var(--button-line);
+    line-height: var(--button-line);
+    /* background: red; */
+  }
+
+  .button-line--hover-lg {
+    font-size: 24px;
+  }
+
+  .button-icon-wrap {
+    width: 0;
+    height: var(--button-icon-size);
+  }
+
+  .button-icon {
+    width: 0;
+    height: 0;
+    padding: 0;
+  }
+
+  .button-icon svg {
+    transform-origin: center;
+  }
+</style>
+
+<script>
+  import { initButtonAnimations } from './animation';
+
+  initButtonAnimations();
+  document.addEventListener('astro:page-load', () => initButtonAnimations());
+</script>
