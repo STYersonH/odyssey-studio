@@ -5,6 +5,7 @@ import { useTranslations } from '../../../i18n/utils';
 import Layout from '../../../layouts/Layout.astro';
 import Hero from '../../Home/_components/hero/Hero.astro';
 import About from '../../Home/_components/about/About.astro';
+import Slogan from '../../Home/_components/slogan/Slogan.astro';
 import Header from '../../../components/header/index.astro';
 
 export function getStaticPaths() {
@@ -16,8 +17,22 @@ const { lang } = Astro.params as { lang: Locale };
 
 <Layout lang={lang}>
   <Header />
-  <Hero />
-  <About />
+  <div id="theater-scroll-track" class="relative h-[200vh] w-full">
+    <div class="sticky top-0 h-screen w-full overflow-hidden bg-neutral-900">
+      <div class="absolute inset-0 z-10 h-full w-full">
+        <About lang={lang} />
+      </div>
+
+      <div
+        id="hero-theater-curtain"
+        class="absolute inset-0 z-20 h-full w-full bg-neutral-900"
+      >
+        <Hero lang={lang} />
+      </div>
+    </div>
+  </div>
+
+  <Slogan lang={lang} />
 </Layout>
 
 <script>

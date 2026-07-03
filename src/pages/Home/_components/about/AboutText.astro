@@ -1,5 +1,9 @@
 ---
+interface Props {
+  paragraphs: [string, string];
+}
 
+const { paragraphs } = Astro.props;
 ---
 
 <div
@@ -8,11 +12,9 @@
   style="font-family: var(--font-body); font-weight: 300"
 >
   <p class="m-0 w-full md:w-[500px]">
-    Every project begins with a destination in mind. Whether you're building a travel
-    brand, a hospitality experience, or something entirely new, it starts with a vision.
+    {paragraphs[0]}
   </p>
   <p class="m-0 mt-3 w-full md:mt-6 md:w-[500px] lg:mt-0 lg:mt-8">
-    Our role is to transform that vision into a meaningful digital journey—crafted with
-    strategy, design, and technology to help your brand move forward with purpose.
+    {paragraphs[1]}
   </p>
 </div>
