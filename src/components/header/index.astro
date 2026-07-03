@@ -1,0 +1,28 @@
+---
+import Button from '../button/index.astro';
+---
+
+<header
+  class="fixed top-0 left-0 z-50 mx-10 my-4 flex w-[calc(100%-4rem)] items-center justify-between"
+>
+  <h2 class="font-neue-regular flex-1">ODYSSEY</h2>
+  <div class="flex flex-1 items-center justify-between">
+    <nav>
+      <ul class="flex gap-4">
+        <li>
+          <a href="/">About</a>
+        </li>
+        <li>
+          <a href="/">Work</a>
+        </li>
+        <li>
+          <a href="/">Services</a>
+        </li>
+        <li>
+          <a href="/">Process</a>
+        </li>
+      </ul>
+    </nav>
+    <Button href="/contact" text="Start a project" />
+  </div>
+</header>

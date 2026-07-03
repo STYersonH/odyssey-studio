@@ -1,0 +1,37 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="20"
+  height="20"
+  viewBox="0 0 20 20"
+  fill="none"
+  class={className}
+  aria-hidden="true"
+>
+  <g clip-path="url(#clip-up-right-arrow-icon)">
+    <path
+      d="M5 15L15 5"
+      stroke="currentColor"
+      stroke-width="1.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+    <path
+      d="M6.875 5H15V13.125"
+      stroke="currentColor"
+      stroke-width="1.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </g>
+  <defs>
+    <clipPath id="clip-up-right-arrow-icon">
+      <rect width="20" height="20" fill="white"></rect>
+    </clipPath>
+  </defs>
+</svg>
