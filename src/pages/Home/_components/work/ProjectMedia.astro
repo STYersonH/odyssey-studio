@@ -1,0 +1,33 @@
+---
+interface Props {
+  bgImage?: string;
+  overlayImage?: string;
+}
+
+const { bgImage, overlayImage } = Astro.props;
+---
+
+<div class="grid grid-cols-[max-content] grid-rows-[max-content] leading-[0] place-items-start relative shrink-0">
+  <!-- Background image layer with gradient placeholder -->
+  <div class="col-start-1 row-start-1 relative w-[662px] h-[478px] overflow-hidden bg-gradient-to-br from-neutral-700 to-neutral-900">
+    {bgImage && (
+      <img
+        src={bgImage}
+        alt=""
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+    )}
+  </div>
+  <!-- Overlay image layer with gradient placeholder -->
+  <div class="col-start-1 row-start-1 relative ml-[67px] mt-[63px] w-[527px] h-[350px] overflow-hidden bg-gradient-to-tr from-neutral-600 to-neutral-800">
+    {overlayImage && (
+      <img
+        src={overlayImage}
+        alt=""
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+    )}
+  </div>
+</div>

@@ -1,0 +1,29 @@
+---
+import ProjectMedia from './ProjectMedia.astro';
+import ProjectContent from './ProjectContent.astro';
+
+interface Props {
+  number: string;
+  total: string;
+  title: string;
+  description: string;
+  statNumber: string;
+  statLabel: string;
+  bgImage?: string;
+  overlayImage?: string;
+}
+
+const { number, total, title, description, statNumber, statLabel, bgImage, overlayImage } = Astro.props;
+---
+
+<div class="flex gap-[20px] items-start shrink-0" data-animate="project-card">
+  <ProjectMedia bgImage={bgImage} overlayImage={overlayImage} />
+  <ProjectContent
+    number={number}
+    total={total}
+    title={title}
+    description={description}
+    statNumber={statNumber}
+    statLabel={statLabel}
+  />
+</div>
