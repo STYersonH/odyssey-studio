@@ -17,9 +17,8 @@ const projects = t.work.projects;
 <section
   id="work"
   class="relative z-10 bg-primary-cream"
-  style="height: 400vh"
 >
-  <div class="sticky top-0 h-screen overflow-hidden flex items-center pl-[48px] pr-[200px]">
+  <div class="h-screen overflow-hidden flex items-center pl-[48px] pr-[200px]">
     <!-- Horizontal scroll track: title + cards se mueven juntos -->
     <div
       class="flex gap-[150px] items-center will-change-transform"
@@ -66,10 +65,12 @@ const projects = t.work.projects;
     if (!track) return;
 
     // Calculate scroll distance: how far the track needs to move left
+    // so the last card aligns with the right edge of the visible content area
     const getScrollDistance = () => {
-      const viewportWidth = window.innerWidth;
-      const paddingRight = 200;
-      return Math.max(0, track.scrollWidth - viewportWidth + paddingRight);
+      const container = track.parentElement;
+      if (!container) return 0;
+      // container.clientWidth = viewport - pl[48] - pr[200]
+      return Math.max(0, track.scrollWidth - container.clientWidth);
     };
 
     // =====================================================
