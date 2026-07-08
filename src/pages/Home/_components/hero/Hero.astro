@@ -47,13 +47,10 @@ const heroContent = t.hero;
 </section>
 
 <script>
-  import { animateHero } from './animation';
+  import { initHeroAnimation } from './animation';
 
-  // Module scripts run after DOM is parsed. animateHero() reverts any prior
-  // split first, so a second call (astro:page-load) is safe.
-  void animateHero();
   document.addEventListener('astro:page-load', () => {
-    void animateHero();
+    void initHeroAnimation();
   });
 </script>
 

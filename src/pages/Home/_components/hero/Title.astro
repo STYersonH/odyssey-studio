@@ -5,6 +5,7 @@ import { cn } from '../../../../lib/cn';
 <div class="relative m-0 flex flex-col items-center">
   <!-- Keep ODYSSEY on one line: no spaces/newlines between parts (SplitText treats them as breaks). -->
   <p
+    data-anim="title-main"
     class={cn(
       'title-main-animate',
       'font-neue-medium leading-none font-black tracking-[0.04em] text-[var(--color-neutral-900)] whitespace-nowrap ',
@@ -20,9 +21,9 @@ import { cn } from '../../../../lib/cn';
     >
   </p>
   <p
-    data-animate-title-studio
+    data-anim="title-studio"
     class={cn(
-      'font-roxborough absolute text-[20px] font-normal tracking-[0.12em] text-[var(--color-neutral-900)] md:text-[40px] lg:text-[clamp(1.8rem,4vw,3.5rem)]',
+      'font-roxborough absolute text-[20px] font-normal tracking-[0.12em] text-[var(--color-neutral-900)] opacity-0 md:text-[40px] lg:text-[clamp(1.8rem,4vw,3.5rem)]',
       '[text-box:trim-both_cap_alphabetic] leading-none',
       'right-5 mb:right-8 tb:right-16 dk:right-24',
       '-bottom-8 tb:-bottom-14 dk:-bottom-18 ',
@@ -34,7 +35,7 @@ import { cn } from '../../../../lib/cn';
 
 <style>
   /* :global() is required: SplitText injects .char at runtime. */
-  :global(.title-main-animate .char) {
+  :global([data-anim="title-main"] .char) {
     display: inline-block;
     transform: translateY(100%);
     will-change: transform;
