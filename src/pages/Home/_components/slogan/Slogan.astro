@@ -27,23 +27,14 @@ const t = useTranslations(lang);
 <script>
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  import Lenis from 'lenis';
+  import { ensureLenisScroll } from '../../../../lib/lenisScroll';
 
   gsap.registerPlugin(ScrollTrigger);
 
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap === 'undefined') return;
 
-    // =====================================================
-    // 0. LENIS — Smooth Scroll (como prueba.astro)
-    // =====================================================
-    const lenis = new Lenis();
-    lenis.on('scroll', ScrollTrigger.update);
-
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
+    ensureLenisScroll();
 
     // =====================================================
     // 1. REFS (Agregamos la referencia a las 3 líneas superiores)
@@ -116,7 +107,7 @@ const t = useTranslations(lang);
       trigger: '#slogan',
       start: 'top bottom',
       end: 'top top',
-      pin: '#theater-scroll-track',
+      // pin: '#about',
       pinSpacing: false,
     });
 
