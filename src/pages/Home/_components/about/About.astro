@@ -28,9 +28,11 @@ const textParagraphs: [string, string] = [
   class="relative z-10 flex min-h-screen w-full items-center bg-neutral-900"
 >
   <div
+    data-anim="enter"
     class={cn(
-      'tb:flex-row flex h-full w-full flex-col gap-8 p-8 md:min-h-screen md:justify-end md:gap-20 lg:items-stretch lg:gap-5 ',
+      'tb:flex-row flex h-full w-full flex-col gap-8 p-8 md:min-h-screen md:justify-end md:gap-20 lg:items-stretch lg:gap-5',
       'px-[0.75rem] mb:px-[1.5rem] tb:px-[2rem]',
+      'will-change-transform [transform:translateY(-35%)] ',
     )}
   >
     <AboutHeading lines={headingLines} />
@@ -39,24 +41,9 @@ const textParagraphs: [string, string] = [
 </section>
 
 <script>
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { initAboutAnimation } from './animation';
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  document.addEventListener('DOMContentLoaded', () => {
-    gsap.set('.title-main-animate', { opacity: 1 });
-
-    ScrollTrigger.create({
-      trigger: '#about',
-      start: 'top bottom',
-      end: 'bottom bottom',
-      scrub: true,
-      // markers: true,
-      onUpdate: (self) => {
-        const yValue = -35 * (1 - self.progress);
-        gsap.set('#about', { y: `${yValue}%` });
-      },
-    });
+  document.addEventListener('astro:page-load', () => {
+    initAboutAnimation();
   });
 </script>
