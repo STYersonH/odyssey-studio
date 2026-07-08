@@ -35,8 +35,8 @@
   }
 }
 
-/* dk — matches --breakpoint-dk */
-@media (width >= 1440px) {
+/* dk — matches --breakpoint-dk  antes:1440 */
+@media (width >= 1600px) {
   :root {
     --text-16: 16px;
     --text-18: 20px;
@@ -76,7 +76,7 @@
   font-size: var(--text-100);
   font-style: normal;
   font-weight: 500;
-  line-height: 110%; /* 176px */
+  line-height: 100%; /* 176px */
   text-transform: uppercase;
 }
 
