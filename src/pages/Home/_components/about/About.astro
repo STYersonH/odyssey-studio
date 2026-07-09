@@ -25,14 +25,15 @@ const textParagraphs: [string, string] = [
 
 <section
   id="about"
-  class="relative z-10 flex min-h-screen w-full items-center bg-neutral-900"
+  class="relative z-20 flex min-h-screen w-full items-end bg-neutral-900"
 >
   <div
     data-anim="enter"
     class={cn(
-      'tb:flex-row flex h-full w-full flex-col gap-8 p-8 md:min-h-screen md:justify-end md:gap-20 lg:items-stretch lg:gap-5',
+      'will-change-transform',
+      'tb:flex-row flex h-full w-full flex-col gap-8 p-8 md:min-h-screen justify-end md:gap-20 lg:items-stretch lg:gap-5 ',
       'px-[0.75rem] mb:px-[1.5rem] tb:px-[2rem]',
-      'will-change-transform [transform:translateY(-35%)] ',
+      'py-4xl',
     )}
   >
     <AboutHeading lines={headingLines} />

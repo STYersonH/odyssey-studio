@@ -75,9 +75,31 @@ Si vas a hacer stagger por palabras o líneas:
 
 En `animation.ts` usa `splitWords` / `splitChars` de `src/utils/split-text.ts` y `resetSplitText` en el cleanup.
 
-### 4. Estado inicial en CSS (no duplicar en JS)
+### 4. Estado inicial: `gsap.set` en `animation.ts`, `will-change` en HTML
 
-Propiedades que GSAP va a animar (`opacity`, `clip-path`, `transform`, etc.) defínelas **una vez** en Tailwind (arbitrary props) o en un `<style>` scoped del componente. No las repitas en `gsap.set()` solo para “espejar” CSS.
+**Valores que GSAP va a animar** (`opacity`, `transform`, `y`, `clip-path`, variables CSS como `--clip-value`, etc.) defínelos en `animation.ts` con `gsap.set()` al inicio del `setup`. Así el estado inicial vive junto a la lógica de animación y es más fácil de leer.
+
+**En el HTML** solo añade la pista de rendimiento con Tailwind: `will-change-transform`, `will-change-opacity`, `will-change-[clip-path]`, etc. según lo que vaya a animarse. No pongas ahí los valores iniciales (`opacity-0`, `[transform:translateY(-35%)]`, etc.) si ya los fijas con `gsap.set`.
+
+```astro
+<!-- About.astro: layout + will-change, sin valores de animación -->
+<div data-anim="enter" class="... will-change-transform">
+  ...
+</div>
+```
+
+```ts
+// animation.ts
+const enterEl = root.querySelector<HTMLElement>('[data-anim="enter"]');
+if (enterEl) {
+  gsap.set(enterEl, { y: '-35%' });
+  // ScrollTrigger, timeline, etc.
+}
+```
+
+**Excepción:** nodos que GSAP crea en runtime (p. ej. `.char` / `.line` de SplitText) pueden llevar estado inicial en un `<style>` scoped del componente, porque no existen en el HTML estático. Ver `hero/Title.astro`.
+
+Referencia: `Home/_components/about/` (entrada con `y` + text reveal).
 
 ---
 
@@ -348,8 +370,8 @@ return () => {
 ---
 
 <section id="my-section" class="...">
-  <h2 data-anim="title">Título</h2>
-  <p data-anim="description">Texto</p>
+  <h2 data-anim="title" class="will-change-transform">Título</h2>
+  <p data-anim="description" class="will-change-[opacity,transform]">Texto</p>
 </section>
 
 <script>
@@ -474,7 +496,7 @@ Para otros casos globales: exporta `initX()`, escucha `astro:page-load` y implem
 - [ ] `return () => { … }` mata ScrollTriggers, listeners **y** llama a `clearSectionStyles(root)`
 - [ ] `waitForFonts: false` si la sección no usa SplitText ni medición de texto
 - [ ] Boot solo con `document.addEventListener('astro:page-load', ...)`
-- [ ] Estado inicial de GSAP en CSS (Tailwind o `<style>` scoped), no duplicado en JS
+- [ ] Estado inicial con `gsap.set()` en `animation.ts`; en HTML solo `will-change-*` de Tailwind
 - [ ] Breakpoints con `mm.add` solo si el comportamiento cambia por viewport
 - [ ] Hover / listeners en módulo colocado con `return () => cleanup()`
 
@@ -487,6 +509,7 @@ Para otros casos globales: exporta `initX()`, escucha `astro:page-load` y implem
 | `Home/_components/PartnershipSection/`          | Scroll simple + hover colocado + split words |
 | `Home/_components/NumbersSection/`              | Breakpoints + counters                       |
 | `Home/_components/ActionSection/`               | Umbrales de progreso + split text            |
+| `Home/_components/about/`                       | Scroll + entrada `y` + text reveal           |
 | `Home/_components/hero/`                        | Intro de página (`refreshScrollTrigger: false`) |
 | `src/utils/create-section-animation-controller.ts` | Lifecycle compartido                         |
 | `src/utils/clear-section-styles.ts`             | Reset de `[data-anim]` + SplitText           |
