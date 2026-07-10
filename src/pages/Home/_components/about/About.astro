@@ -3,6 +3,7 @@ import type { Locale } from '../../../../i18n/locales';
 import { DEFAULT_LOCALE } from '../../../../i18n/locales';
 import { useTranslations } from '../../../../i18n/utils';
 import { cn } from '../../../../lib/cn';
+import NoiseOverlay from '../../../../components/noise-overlay/index.astro';
 import AboutHeading from './AboutHeading.astro';
 import AboutText from './AboutText.astro';
 
@@ -25,12 +26,14 @@ const textParagraphs: [string, string] = [
 
 <section
   id="about"
-  class="relative z-20 flex min-h-screen w-full items-end bg-neutral-900"
+  class="relative z-20 flex min-h-screen w-full items-end overflow-hidden bg-neutral-900"
 >
+  <NoiseOverlay />
+
   <div
     data-anim="enter"
     class={cn(
-      'will-change-transform',
+      'relative z-10 will-change-transform',
       'tb:flex-row flex h-full w-full flex-col gap-8 p-8 md:min-h-screen justify-end md:gap-20 lg:items-stretch lg:gap-5 ',
       'px-[0.75rem] mb:px-[1.5rem] tb:px-[2rem]',
       'py-4xl',

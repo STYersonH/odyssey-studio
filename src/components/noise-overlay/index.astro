@@ -1,0 +1,77 @@
+---
+/**
+ * NoiseOverlay — film grain (HTML + CSS only).
+ *
+ * Mirrors Backhouse: animation + @keyframes live in a raw <style is:inline>
+ * inside the markup so DevTools shows `grain-animation` defined (Astro does
+ * not hash/bundle that block).
+ *
+ * Parent: position relative + overflow hidden.
+ */
+
+interface Props {
+  opacity?: number;
+  image?: string;
+  zIndex?: number;
+}
+
+const { opacity = 0.75, image = '/noise-backhouse.png', zIndex = 1 } = Astro.props;
+---
+
+<div
+  class="noise-overlay u-grain-animate"
+  aria-hidden="true"
+  style={`opacity:${opacity};z-index:${zIndex};background-image:url('${image}')`}
+>
+  <!--
+    Same pattern as Backhouse (.w-embed > style):
+    keyframes + animation class ship as raw HTML, not Astro-scoped CSS.
+  -->
+  <style is:inline>
+    .noise-overlay {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      background-repeat: repeat;
+      background-size: auto;
+      mix-blend-mode: normal;
+      pointer-events: none;
+      user-select: none;
+      will-change: transform;
+    }
+
+    @keyframes grain-animation {
+      0%,
+      100% {
+        transform: translate(0, 0);
+      }
+      17% {
+        transform: translate(-5%, -10%);
+      }
+      33% {
+        transform: translate(3%, -15%);
+      }
+      50% {
+        transform: translate(12%, 9%);
+      }
+      67% {
+        transform: translate(9%, 4%);
+      }
+      83% {
+        transform: translate(-1%, 7%);
+      }
+    }
+
+    .u-grain-animate {
+      animation: grain-animation 0.5s steps(6) infinite;
+    }
+
+    /* @media (prefers-reduced-motion: reduce) {
+      .u-grain-animate {
+        animation: none;
+      }
+    } */
+  </style>
+</div>
