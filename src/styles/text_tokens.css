@@ -11,7 +11,7 @@
   --text-100: 64px;
 }
 
-/* mb — matches --breakpoint-mb in figma_var.css */
+/* tb — matches --breakpoint-tb in figma_var.css */
 @media (width >= 440px) {
   :root {
     --text-16: 16px;
@@ -23,7 +23,7 @@
   }
 }
 
-/* tb — matches --breakpoint-tb */
+/* dk — matches --breakpoint-dk */
 @media (width >= 744px) {
   :root {
     --text-16: 16px;
@@ -31,12 +31,12 @@
     --text-32: 32px;
     --text-36: 36px;
     --text-40: 40px;
-    --text-100: 100px;
+    --text-100: 130px;
   }
 }
 
-/* dk — matches --breakpoint-dk */
-@media (width >= 1440px) {
+/* dk-lg — matches --breakpoint-dk-lg */
+@media (width >= 1600px) {
   :root {
     --text-16: 16px;
     --text-18: 20px;
@@ -76,7 +76,7 @@
   font-size: var(--text-100);
   font-style: normal;
   font-weight: 500;
-  line-height: 110%; /* 176px */
+  line-height: 100%; /* 176px */
   text-transform: uppercase;
 }
 

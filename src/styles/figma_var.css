@@ -1,8 +1,7 @@
 @theme {
-  --breakpoint-dk-lg: 1920px;
-  --breakpoint-dk: 1440px;
-  --breakpoint-tb: 744px;
-  --breakpoint-mb: 440px;
+  --breakpoint-dk-lg: 1600px;
+  --breakpoint-dk: 744px;
+  --breakpoint-tb: 440px;
 }
 
 /* Roxborough */

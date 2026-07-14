@@ -1,4 +1,6 @@
 ---
+import { cn } from '../../../../lib/cn';
+
 interface Props {
   lines: string[];
   vision: string;
@@ -7,17 +9,23 @@ interface Props {
 const { lines, vision } = Astro.props;
 ---
 
-<div data-animate="slogan-text" class="absolute inset-0">
+<div data-anim="slogan-text" class="dk:z-10 absolute inset-0 z-30">
   <div
-    data-animate="slogan-lines"
-    class="absolute top-[274px] right-1/2 flex translate-x-1/2 flex-col items-center text-[24px] leading-[1.1] text-white uppercase md:top-[235px] md:text-[48px] lg:top-[169px] lg:text-[64px] 2xl:top-[246px] 2xl:text-[64px]"
-    style="font-family: var(--font-body); font-weight: 500"
+    data-anim="slogan-lines"
+    class={cn(
+      'absolute flex flex-col items-center text-white',
+      'top-[39%] right-1/2 translate-x-1/2 dk:top-[25%] dk-lg:top-[24%]',
+    )}
   >
     {
       lines.map((line, i) => (
         <p
-          class={`m-0 opacity-0${i === lines.length - 1 ? ' -mb-[10px] lg:-mb-[20px] 2xl:-mb-[20px]' : ''}`}
-          data-animate="slogan-line"
+          class={cn(
+            `font-neue-medium will-change-[opacity,transform uppercase`,
+            'dk-lg:text-[64px] dk:text-[48px] text-[32px]',
+            'dk:leading-[1.15] dk-lg:leading-[1.1] leading-[1.1]',
+          )}
+          data-anim="slogan-line"
         >
           {line}
         </p>
@@ -26,10 +34,23 @@ const { lines, vision } = Astro.props;
   </div>
 
   <div
-    data-animate="slogan-vision"
-    class="absolute top-1/2 left-1/2 max-w-[280px] -translate-x-1/2 -translate-y-1/2 text-center text-[64px] leading-[1.0] whitespace-normal text-white uppercase md:max-w-none md:text-[115px] md:whitespace-nowrap lg:text-[200px] 2xl:text-[260px]"
+    data-anim="slogan-vision"
+    class={cn(
+      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white uppercase will-change-transform',
+      ' leading-[1.0] whitespace-normal whitespace-nowrap',
+      'text-[64px] tb:text-[100px] dk:text-[200px] dk-lg:text-[260px]',
+    )}
     style="font-family: var(--font-body); font-weight: 500"
   >
-    <p class="m-0">{vision}</p>
+    <p class="">{vision}</p>
   </div>
 </div>
+
+<style>
+  :global(.slogan-char),
+  :global(.vision-char) {
+    display: inline-block;
+    line-height: inherit;
+    will-change: opacity, filter;
+  }
+</style>

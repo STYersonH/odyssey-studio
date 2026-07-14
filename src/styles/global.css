@@ -1,19 +1,18 @@
-@import "tailwindcss";
-@import "./figma_var.css";
-@import "./text_tokens.css";
-@import "./spacing_tokens.css";
+@import 'tailwindcss';
+@import './figma_var.css';
+@import './text_tokens.css';
+@import './spacing_tokens.css';
 
 @theme {
-	--color-primary: #063e72;
-	--color-primary-dark: #171717;
-	--color-accent: #ca9349;
-	--color-desert: #eee3e1;
-	--color-primary-cream: #d6cec3;
-	--color-neutral-50: #f2f2f2;
-	--color-neutral-900: #1a1a1a;
+  --color-primary: #063e72;
+  --color-primary-dark: #171717;
+  --color-accent: #ca9349;
+  --color-desert: #eee3e1;
+  --color-primary-cream: #d6cec3;
+  --color-neutral-50: #f2f2f2;
+  --color-neutral-900: #1a1a1a;
 
-	/* font-display → class "font-display" */
-	--font-display: "Playfair Display", Georgia, "Times New Roman", serif;
-	--font-body:
-		"Neue Montreal", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* font-display → class "font-display" */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Neue Montreal', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }

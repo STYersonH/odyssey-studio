@@ -5,14 +5,15 @@ import { cn } from '../../../../lib/cn';
 <div class="relative m-0 flex flex-col items-center">
   <!-- Keep ODYSSEY on one line: no spaces/newlines between parts (SplitText treats them as breaks). -->
   <p
+    data-anim="title-main"
     class={cn(
       'title-main-animate',
       'font-neue-medium leading-none font-black tracking-[0.04em] text-[var(--color-neutral-900)] whitespace-nowrap ',
       '[text-box:trim-both_cap_alphabetic]',
       'text-[4rem]',
-      'mb:text-[clamp(4rem,11vw+2rem,7.5rem)]',
-      'tb:text-[clamp(4rem,12vw+2rem,15.6rem)]',
-      'dk:text-[clamp(10rem,13vw+2rem,18.75rem)]',
+      'tb:text-[clamp(4rem,11vw+2rem,7.5rem)]',
+      'dk:text-[clamp(4rem,12vw+2rem,15.6rem)]',
+      'dk-lg:text-[clamp(10rem,13vw+2rem,18.75rem)]',
     )}
   >
     OD<span class="titulo-y font-neue-medium-italic">Y</span>SSE<span
@@ -20,12 +21,12 @@ import { cn } from '../../../../lib/cn';
     >
   </p>
   <p
-    data-animate-title-studio
+    data-anim="title-studio"
     class={cn(
-      'font-roxborough absolute text-[20px] font-normal tracking-[0.12em] text-[var(--color-neutral-900)] md:text-[40px] lg:text-[clamp(1.8rem,4vw,3.5rem)]',
+      'font-roxborough absolute text-[20px] font-normal tracking-[0.12em] text-[var(--color-neutral-900)] opacity-0 md:text-[40px] lg:text-[clamp(1.8rem,4vw,3.5rem)]',
       '[text-box:trim-both_cap_alphabetic] leading-none',
-      'right-5 mb:right-8 tb:right-16 dk:right-24',
-      '-bottom-8 tb:-bottom-14 dk:-bottom-18 ',
+      'right-5 tb:right-8 dk:right-16 dk-lg:right-24',
+      '-bottom-8 dk:-bottom-14 dk-lg:-bottom-18 ',
     )}
   >
     Studio
@@ -34,7 +35,7 @@ import { cn } from '../../../../lib/cn';
 
 <style>
   /* :global() is required: SplitText injects .char at runtime. */
-  :global(.title-main-animate .char) {
+  :global([data-anim='title-main'] .char) {
     display: inline-block;
     transform: translateY(100%);
     will-change: transform;

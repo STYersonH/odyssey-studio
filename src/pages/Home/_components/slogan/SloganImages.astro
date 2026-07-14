@@ -1,33 +1,39 @@
 ---
-
+import { cn } from '../../../../lib/cn';
 ---
 
 <div
-  data-animate="slogan-images"
-  class="absolute inset-0"
-  style="transform-style: preserve-3d"
+  data-anim="slogan-images"
+  class="relative z-20 h-[100vh] w-full [transform-style:preserve-3d]"
 >
-  <!-- Image 1: Flowers (top-left area in final position) -->
+  <!-- left/top = center of each image (-translate-x/y-1/2) -->
   <div
-    data-animate="img-1"
-    class="absolute right-[45%] bottom-[47%] h-[129px] w-[179px] [transform-origin:center_center] object-cover opacity-0 will-change-transform md:h-[178px] md:w-[246px] lg:h-[186px] lg:w-[258px] 2xl:h-[191px] 2xl:w-66.25"
+    data-anim="img-1"
+    class={cn(
+      ' h-[129px] w-[179px] object-cover will-change-transform dk:h-[186px] dk:w-[258px] dk-lg:h-[191px] dk-lg:w-66.25',
+      'absolute top-[44%] left-[45%] dk:top-[38%] dk:left-[45%] -translate-x-1/2 -translate-y-1/2 ',
+    )}
   >
     <img src="/images/image-flowers.png" alt="" class="h-full w-full object-cover" />
     <div class="absolute inset-0 bg-black/30"></div>
   </div>
 
-  <!-- Image 2: Woman (right side in final position) -->
   <div
-    data-animate="img-2"
-    class="absolute top-[34%] left-[50%] h-[88px] w-[122px] [transform-origin:center_center] object-cover opacity-0 will-change-transform md:h-[149px] md:w-[206px] lg:h-[223px] lg:w-[309px] 2xl:h-[223px] 2xl:w-[309px]"
+    data-anim="img-2"
+    class={cn(
+      'h-[129px] w-[179px] object-cover will-change-transform dk:h-[223px] dk:w-[309px] dk-lg:h-[223px] dk-lg:w-[309px]',
+      'absolute top-[47%] left-[64%] dk:top-[45%] dk:left-[62%] -translate-x-1/2 -translate-y-1/2 ',
+    )}
   >
     <img src="/images/image-woman.png" alt="" class="h-full w-full object-cover" />
   </div>
 
-  <!-- Image 3: Building (bottom-left in final position) -->
   <div
-    data-animate="img-3"
-    class="absolute top-[51%] right-1/2 h-[129px] w-[179px] [transform-origin:center_center] object-cover opacity-0 will-change-transform md:h-[151px] md:w-[208px] lg:top-[41%] lg:h-[178px] lg:w-[246px] 2xl:h-[178px] 2xl:w-[246px]"
+    data-anim="img-3"
+    class={cn(
+      ' h-[129px] w-[179px] object-cover will-change-transform  dk:h-[178px] dk:w-[246px] dk-lg:h-[178px] dk-lg:w-[246px]',
+      'absolute top-[53.5%] left-[36%] dk:top-[55%] dk:left-[38%] -translate-x-1/2 -translate-y-1/2 ',
+    )}
   >
     <img src="/images/image-building.png" alt="" class="h-full w-full object-cover" />
   </div>

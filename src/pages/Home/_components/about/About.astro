@@ -2,6 +2,8 @@
 import type { Locale } from '../../../../i18n/locales';
 import { DEFAULT_LOCALE } from '../../../../i18n/locales';
 import { useTranslations } from '../../../../i18n/utils';
+import { cn } from '../../../../lib/cn';
+import NoiseOverlay from '../../../../components/noise-overlay/index.astro';
 import AboutHeading from './AboutHeading.astro';
 import AboutText from './AboutText.astro';
 
@@ -16,15 +18,26 @@ const headingLines: [string, string, string] = [
   t.about.heading.line2,
   t.about.heading.line3,
 ];
-const textParagraphs: [string, string] = [t.about.text.paragraph1, t.about.text.paragraph2];
+const textParagraphs: [string, string] = [
+  t.about.text.paragraph1,
+  t.about.text.paragraph2,
+];
 ---
 
 <section
   id="about"
-  class="relative z-10 flex min-h-screen w-full items-center bg-neutral-900"
+  class="relative z-20 flex min-h-screen w-full items-end overflow-hidden bg-neutral-900"
 >
+  <NoiseOverlay />
+
   <div
-    class="flex h-full w-full flex-col gap-8 p-8 md:min-h-screen md:justify-end md:gap-20 md:px-6 md:py-12 lg:items-stretch lg:gap-5 lg:px-12 lg:py-16 2xl:px-16 2xl:py-20"
+    data-anim="enter"
+    class={cn(
+      'relative z-10 will-change-transform',
+      'dk:flex-row flex h-full w-full flex-col gap-8 p-8 md:min-h-screen justify-end md:gap-20 lg:items-stretch lg:gap-5 ',
+      'px-[0.75rem] tb:px-[1.5rem] dk:px-[2rem]',
+      'py-4xl',
+    )}
   >
     <AboutHeading lines={headingLines} />
     <AboutText paragraphs={textParagraphs} />
@@ -32,63 +45,9 @@ const textParagraphs: [string, string] = [t.about.text.paragraph1, t.about.text.
 </section>
 
 <script>
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { initAboutAnimation } from './animation';
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  document.addEventListener('DOMContentLoaded', () => {
-    if (typeof gsap === 'undefined') return;
-
-    // =====================================================
-    // 1. ANIMACIÓN DEL TELÓN (Levanta el Hero)
-    // =====================================================
-    // Movemos el telón del Hero hacia arriba (-100%) en sincronía con el scroll.
-    // Usamos el contenedor de rastreo externo como trigger.
-    gsap.to('#hero-theater-curtain', {
-      yPercent: -100,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#theater-scroll-track',
-        start: 'top top',
-        end: 'center top', // Termina de subir exactamente al completar los primeros 100vh de scroll
-        scrub: true,
-      },
-    });
-
-    // =====================================================
-    // 2. REVELADO DE TEXTOS DE ABOUT US
-    // =====================================================
-    // Modificamos el trigger para que dependa del contenedor de rastreo.
-    // Los textos se disparan elegantemente cuando el telón se haya levantado un 30%.
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '#theater-scroll-track',
-        start: 'top+=30% top',
-        toggleActions: 'play none none reverse',
-      },
-    });
-
-    // Heading lines stagger in
-    tl.from("[data-animate='about-heading'] p", {
-      y: 50,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-    });
-
-    // Text paragraphs stagger in
-    tl.from(
-      "[data-animate='about-text'] p",
-      {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out',
-      },
-      '-=0.3',
-    );
+  document.addEventListener('astro:page-load', () => {
+    initAboutAnimation();
   });
 </script>
