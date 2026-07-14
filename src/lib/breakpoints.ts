@@ -2,8 +2,8 @@
  * Animation viewport tiers for GSAP / section scripts.
  * See docs/animation-breakpoints.md
  *
- * Names match project Tailwind prefixes (mb/tb/dk/dk-lg), but the
- * thresholds below are for animations.
+ * Names match project Tailwind prefixes (tb/dk/dk-lg for CSS min-widths).
+ * JS also has `mb` for viewports below 440px (no CSS prefix — base styles).
  */
 
 export const BREAKPOINTS = {

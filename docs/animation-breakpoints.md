@@ -4,24 +4,20 @@ Fuente única para tiers de viewport en scripts GSAP: [`src/lib/breakpoints.ts`]
 
 ## Tabla
 
-| Nombre   | Umbral     | Uso                    |
-| -------- | ---------- | ---------------------- |
-| `mb`     | `< 440`    | móvil estrecho         |
-| `tb`     | `>= 440`   | tablet / móvil ancho   |
-| `dk`     | `>= 744`   | desktop                |
-| `dk-lg`  | `>= 1600`  | desktop grande         |
+| Nombre  | Umbral    | Uso                  | Prefijo CSS      |
+| ------- | --------- | -------------------- | ---------------- |
+| `mb`    | `< 440`   | móvil estrecho       | _(ninguno / base)_ |
+| `tb`    | `>= 440`  | tablet / móvil ancho | `tb:`            |
+| `dk`    | `>= 744`  | desktop              | `dk:`            |
+| `dk-lg` | `>= 1600` | desktop grande       | `dk-lg:`         |
+
+Los umbrales coinciden con `--breakpoint-tb` / `--breakpoint-dk` / `--breakpoint-dk-lg` en [`figma_var.css`](../src/styles/figma_var.css). En JS, `mb` cubre el rango por debajo del primer breakpoint CSS.
 
 ```ts
 import { getAnimBreakpoint, type AnimBreakpoint } from '../src/lib/breakpoints';
 
 const bp = getAnimBreakpoint(); // 'mb' | 'tb' | 'dk' | 'dk-lg'
 ```
-
-## No confundir con CSS
-
-Los **nombres** coinciden con prefijos Tailwind del proyecto (`mb:`, `tb:`, `dk:`, `dk-lg:`), pero los **umbrales de animación no son 1:1** con `--breakpoint-*` en [`figma_var.css`](../src/styles/figma_var.css).
-
-Ejemplo: en CSS, `mb:` aplica desde `min-width: 440px`. En animaciones, `mb` es el rango **por debajo** de 440px.
 
 No uses `sm` / `md` / `lg` / `xl` / `2xl` (defaults de Tailwind) para lookups de animación.
 

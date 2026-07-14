@@ -11,7 +11,7 @@
   --text-100: 64px;
 }
 
-/* mb — matches --breakpoint-mb in figma_var.css */
+/* tb — matches --breakpoint-tb in figma_var.css */
 @media (width >= 440px) {
   :root {
     --text-16: 16px;
@@ -23,7 +23,7 @@
   }
 }
 
-/* tb — matches --breakpoint-tb */
+/* dk — matches --breakpoint-dk */
 @media (width >= 744px) {
   :root {
     --text-16: 16px;
@@ -35,7 +35,7 @@
   }
 }
 
-/* dk — matches --breakpoint-dk  antes:1440 */
+/* dk-lg — matches --breakpoint-dk-lg */
 @media (width >= 1600px) {
   :root {
     --text-16: 16px;

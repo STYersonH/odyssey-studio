@@ -9,12 +9,12 @@ interface Props {
 const { lines, vision } = Astro.props;
 ---
 
-<div data-anim="slogan-text" class="tb:z-10 absolute inset-0 z-30">
+<div data-anim="slogan-text" class="dk:z-10 absolute inset-0 z-30">
   <div
     data-anim="slogan-lines"
     class={cn(
       'absolute flex flex-col items-center text-white',
-      'top-[39%] right-1/2 translate-x-1/2 tb:top-[25%] dk:top-[24%]',
+      'top-[39%] right-1/2 translate-x-1/2 dk:top-[25%] dk-lg:top-[24%]',
     )}
   >
     {
@@ -22,8 +22,8 @@ const { lines, vision } = Astro.props;
         <p
           class={cn(
             `font-neue-medium will-change-[opacity,transform uppercase`,
-            'dk:text-[64px] tb:text-[48px] text-[32px]',
-            'tb:leading-[1.15] dk:leading-[1.1] leading-[1.1]',
+            'dk-lg:text-[64px] dk:text-[48px] text-[32px]',
+            'dk:leading-[1.15] dk-lg:leading-[1.1] leading-[1.1]',
           )}
           data-anim="slogan-line"
         >
@@ -38,7 +38,7 @@ const { lines, vision } = Astro.props;
     class={cn(
       'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white uppercase will-change-transform',
       ' leading-[1.0] whitespace-normal whitespace-nowrap',
-      'text-[64px] mb:text-[100px] tb:text-[200px] dk:text-[260px]',
+      'text-[64px] tb:text-[100px] dk:text-[200px] dk-lg:text-[260px]',
     )}
     style="font-family: var(--font-body); font-weight: 500"
   >
