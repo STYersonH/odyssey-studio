@@ -16,7 +16,7 @@ interface Props {
 const { number, total, title, description, statNumber, statLabel, bgImage, overlayImage } = Astro.props;
 ---
 
-<div class="flex gap-[20px] items-start shrink-0" data-animate="project-card">
+<div class="flex gap-[20px] items-start shrink-0" data-anim="project-card">
   <ProjectMedia bgImage={bgImage} overlayImage={overlayImage} />
   <ProjectContent
     number={number}

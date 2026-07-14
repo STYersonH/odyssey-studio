@@ -7,10 +7,10 @@ interface Props {
 const { title, subtitle } = Astro.props;
 ---
 
-<div class="relative shrink-0" data-animate="work-heading">
+<div class="relative shrink-0" data-anim="work-heading">
   <!-- Main title: THE ODYSSEYS WE HELPED -->
   <div class="grid grid-cols-[max-content] grid-rows-[max-content] leading-[0] not-italic place-items-start text-[#171717] whitespace-nowrap">
-    <div class="h1 col-start-1 row-start-1 relative" data-animate="work-title">
+    <div class="h1 col-start-1 row-start-1 relative" data-anim="work-title">
       {
         title.map((line) => (
           <p class="leading-none m-0 whitespace-pre">{line}</p>
@@ -21,7 +21,7 @@ const { title, subtitle } = Astro.props;
     <p
       class="font-neue-medium text-[16px] tracking-[63.36px] leading-normal relative"
       style="margin-left: 187px; margin-top: 310px; grid-column: 1; grid-row: 1;"
-      data-animate="work-subtitle"
+      data-anim="work-subtitle"
     >
       {subtitle}
     </p>
