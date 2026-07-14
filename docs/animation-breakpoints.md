@@ -2,6 +2,8 @@
 
 Fuente única para tiers de viewport en scripts GSAP: [`src/lib/breakpoints.ts`](../src/lib/breakpoints.ts).
 
+Para prefijos CSS (`tb:` / `dk:` / `dk-lg:`) y cómo organizar `class={cn(...)}`, ver [breakpoints.md](./breakpoints.md).
+
 ## Tabla
 
 | Nombre  | Umbral    | Uso                  | Prefijo CSS      |

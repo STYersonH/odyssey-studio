@@ -30,7 +30,8 @@ SectionName/
 
 ## Breakpoints
 
-Para valores por viewport en JS (`getAnimBreakpoint`, JSON keyed por `mb`/`tb`/`dk`/`dk-lg`), ver [animation-breakpoints.md](./animation-breakpoints.md).
+- CSS / `cn()` (prefijos `tb`/`dk`/`dk-lg`, grupos de clases): [breakpoints.md](./breakpoints.md)
+- JS (`getAnimBreakpoint`, JSON keyed por `mb`/`tb`/`dk`/`dk-lg`): [animation-breakpoints.md](./animation-breakpoints.md)
 
 ---
 
