@@ -1,0 +1,53 @@
+---
+import type { Locale } from '../../../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../../../i18n/locales';
+import { useTranslations } from '../../../../i18n/utils';
+import WorkHeading from './WorkHeading.astro';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const projects = t.work.projects;
+---
+
+<section
+  id="work"
+  class="relative z-10 bg-primary-cream"
+>
+  <div class="h-screen overflow-hidden flex items-center pl-[48px] pr-[200px]">
+    <!-- Horizontal scroll track: title + cards se mueven juntos -->
+    <div
+      class="flex gap-[150px] items-center will-change-transform"
+      data-anim="work-track"
+    >
+      <!-- Title block -->
+      <WorkHeading title={t.work.title} subtitle={t.work.subtitle} />
+
+      <!-- Project cards -->
+      {
+        projects.map((project) => (
+          <ProjectCard
+            number={project.number}
+            total={project.total}
+            title={project.title}
+            description={project.description}
+            statNumber={project.statNumber}
+            statLabel={project.statLabel}
+            bgImage={project.bgImage}
+            overlayImage={project.overlayImage}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initWorkAnimation } from './animation';
+
+  document.addEventListener('astro:page-load', () => initWorkAnimation());
+</script>
