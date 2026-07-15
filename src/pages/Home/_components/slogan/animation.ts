@@ -15,7 +15,9 @@ const SEL = {
   img2: '[data-anim="img-2"]',
   img3: '[data-anim="img-3"]',
   vision: '[data-anim="slogan-vision"]',
-  visionText: '[data-anim="slogan-vision"] p',
+  /** mb: one <p> per word (2 lines). tb+: single <p>. */
+  visionMb: '[data-anim="slogan-vision"] [data-vision="mb"] p',
+  visionTb: '[data-anim="slogan-vision"] [data-vision="tb"]',
   sloganLine: '[data-anim="slogan-line"]',
 } as const;
 
@@ -23,11 +25,26 @@ const VISION_BLUR_PX = 20;
 const LINE_BLUR_PX = 4;
 const IMG_KEYS = ['img1', 'img2', 'img3'] as const;
 
-const VISION_MAX_Y: Record<AnimBreakpoint, string> = {
-  mb: '40%',
-  tb: '40%',
-  dk: '23%',
-  'dk-lg': '20%',
+/** Start scale from Figma initial/final size ratio (mb ~0.6; tb ~0.5). */
+const IMG_SCALE_START: Record<AnimBreakpoint, number> = {
+  mb: 0.6,
+  tb: 0.5,
+  dk: 0.35,
+  'dk-lg': 0.35,
+};
+
+const VISION_SCALE_START: Record<AnimBreakpoint, number> = {
+  mb: 0.42,
+  tb: 0.5,
+  dk: 0.3,
+  'dk-lg': 0.3,
+};
+
+const VISION_MAX_Y: Record<AnimBreakpoint, number> = {
+  mb: 23,
+  tb: 76,
+  dk: 64,
+  'dk-lg': 78,
 };
 
 type ImgKey = (typeof IMG_KEYS)[number];
@@ -52,33 +69,45 @@ function endPct(key: ImgKey, bp: AnimBreakpoint): PctPos {
 }
 
 /**
- * Split vision text into chars and set blurred / invisible initial state.
+ * Split visible vision copy into chars and set blurred / invisible initial state.
+ * mb uses one <p> per word; tb+ uses a single line. Centering via x/yPercent -50
+ * so animating `y` does not wipe CSS translate.
  */
 function setupVisionChars(
   vision: HTMLElement | null,
-  visionText: HTMLElement | null,
+  visionTexts: HTMLElement[],
   splits: SplitText[],
+  scaleStart: number,
 ): Element[] {
   if (!vision) return [];
 
-  if (!visionText) {
-    gsap.set(vision, { autoAlpha: 0, scale: 0.3, y: 0 });
-    return [];
-  }
-
-  const split = SplitText.create(visionText, {
-    type: 'chars',
-    charsClass: 'vision-char',
+  gsap.set(vision, {
+    autoAlpha: visionTexts.length ? 1 : 0,
+    scale: scaleStart,
+    xPercent: -50,
+    yPercent: -50,
+    x: 0,
+    y: 0,
   });
-  splits.push(split);
 
-  gsap.set(vision, { autoAlpha: 1, scale: 0.3, y: 0 });
-  gsap.set(split.chars, {
+  if (!visionTexts.length) return [];
+
+  const chars: Element[] = [];
+  visionTexts.forEach((textEl) => {
+    const split = SplitText.create(textEl, {
+      type: 'chars',
+      charsClass: 'vision-char',
+    });
+    splits.push(split);
+    chars.push(...split.chars);
+  });
+
+  gsap.set(chars, {
     autoAlpha: 0,
     filter: `blur(${VISION_BLUR_PX}px)`,
   });
 
-  return split.chars;
+  return chars;
 }
 
 /**
@@ -116,12 +145,17 @@ export const initSloganAnimation = createSectionAnimationController({
       root.querySelector<HTMLElement>(SEL.img3),
     ];
     const vision = root.querySelector<HTMLElement>(SEL.vision);
-    const visionText = root.querySelector<HTMLElement>(SEL.visionText);
     const sloganLines = root.querySelectorAll<HTMLElement>(SEL.sloganLine);
 
     const triggers: ScrollTrigger[] = [];
     const splits: SplitText[] = [];
     const bp = getAnimBreakpoint();
+    const imgScaleStart = IMG_SCALE_START[bp];
+    const visionScaleStart = VISION_SCALE_START[bp];
+    const visionTexts =
+      bp === 'mb'
+        ? Array.from(root.querySelectorAll<HTMLElement>(SEL.visionMb))
+        : Array.from(root.querySelectorAll<HTMLElement>(SEL.visionTb));
 
     // left/top = center of the image (xPercent/yPercent -50).
     images.forEach((img) => {
@@ -138,11 +172,11 @@ export const initSloganAnimation = createSectionAnimationController({
         position: 'absolute',
         autoAlpha: 0,
         z: -800,
-        scale: 0.35,
+        scale: imgScaleStart,
       });
     });
 
-    const visionChars = setupVisionChars(vision, visionText, splits);
+    const visionChars = setupVisionChars(vision, visionTexts, splits, visionScaleStart);
     const sloganLineChars = setupSloganLineChars(sloganLines, splits);
 
     // Phase 1: enter scrub (about fade) + vision letter focus.
@@ -153,10 +187,12 @@ export const initSloganAnimation = createSectionAnimationController({
         end: 'top top',
         scrub: 1,
         onUpdate: (self) => {
-          gsap.set('[data-anim="enter"]', {
-            y: `${80 * self.progress}%`,
-            autoAlpha: 1 - 1.3 * self.progress,
-          });
+          if (bp !== 'mb' && bp !== 'tb') {
+            gsap.set('[data-anim="enter"]', {
+              y: `${80 * self.progress}%`,
+              autoAlpha: 1 - 1.3 * self.progress,
+            });
+          }
         },
       },
     });
@@ -182,7 +218,7 @@ export const initSloganAnimation = createSectionAnimationController({
       scrollTrigger: {
         trigger: root,
         start: 'top top',
-        end: `+=${window.innerHeight * 4}px`,
+        end: `+=${window.innerHeight * (bp !== 'mb' && bp !== 'tb' ? 4 : 2)}px`,
         pin: true,
         pinSpacing: true,
         scrub: 1,
@@ -227,8 +263,6 @@ export const initSloganAnimation = createSectionAnimationController({
         travelAt,
       );
     });
-
-    console.log('sloganLineChars', sloganLineChars);
 
     // Line 1 → 2 → 3: letter focus while images/vision travel.
     const lineGap = travelDurLines / Math.max(sloganLineChars.length, 1);

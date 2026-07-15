@@ -7,23 +7,24 @@ interface Props {
 }
 
 const { lines, vision } = Astro.props;
+const visionWords = vision.trim().split(/\s+/);
 ---
 
-<div data-anim="slogan-text" class="dk:z-10 absolute inset-0 z-30">
+<div data-anim="slogan-text" class={cn('absolute inset-0 z-30', 'dk:z-10')}>
   <div
     data-anim="slogan-lines"
     class={cn(
       'absolute flex flex-col items-center text-white',
-      'top-[39%] right-1/2 translate-x-1/2 dk:top-[25%] dk-lg:top-[24%]',
+      'top-[40%] right-1/2 translate-x-1/2 -translate-y-1/2 tb:top-[calc(50%-55px)] dk:top-[calc(50%-100px)] dk-lg:top-[calc(50%-130px)]',
     )}
   >
     {
-      lines.map((line, i) => (
+      lines.map((line) => (
         <p
           class={cn(
-            `font-neue-medium will-change-[opacity,transform uppercase`,
-            'dk-lg:text-[64px] dk:text-[48px] text-[32px]',
-            'dk:leading-[1.15] dk-lg:leading-[1.1] leading-[1.1]',
+            'font-neue-medium whitespace-pre uppercase will-change-[opacity,transform]',
+            'tb:text-[48px] dk:text-[48px] dk-lg:text-[64px] text-[24px]',
+            'tb:leading-[1.1] dk:leading-[1.15] dk-lg:leading-[1.1] leading-[1.1]',
           )}
           data-anim="slogan-line"
         >
@@ -36,13 +37,20 @@ const { lines, vision } = Astro.props;
   <div
     data-anim="slogan-vision"
     class={cn(
-      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white uppercase will-change-transform',
-      ' leading-[1.0] whitespace-normal whitespace-nowrap',
-      'text-[64px] tb:text-[100px] dk:text-[200px] dk-lg:text-[260px]',
+      'absolute will-change-transform font-neue-medium',
+      'top-1/2 left-1/2',
+      'w-max',
+      'text-center uppercase text-white',
+      'text-[72px] tb:text-[115px] dk:text-[200px] dk-lg:text-[260px]',
+      'leading-[0.9] tb:leading-[1.1] dk:leading-none',
     )}
-    style="font-family: var(--font-body); font-weight: 500"
   >
-    <p class="">{vision}</p>
+    <div data-vision="mb" class="tb:hidden flex flex-col items-center">
+      {visionWords.map((word) => <p class="m-0 whitespace-nowrap">{word}</p>)}
+    </div>
+    <p data-vision="tb" class="tb:block m-0 hidden whitespace-nowrap">
+      {vision}
+    </p>
   </div>
 </div>
 

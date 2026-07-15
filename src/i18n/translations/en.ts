@@ -39,7 +39,7 @@ const en: Translations = {
   },
 
   slogan: {
-    lines: ['WE WILL', 'MAKE YOU', 'CLOSER TO'],
+    lines: ['WE  WILL', 'MAKE  YOU', 'CLOSER  TO'],
     vision: 'YOUR VISION',
   },
 };
