@@ -13,8 +13,8 @@ const SEL = {
 } as const;
 
 /** Matches --breakpoint-dk / --breakpoint-tb in figma_var.css */
-const MM_DESKTOP = '(min-width: 1000px)';
-const MM_TABLET = '(min-width: 440px) and (max-width: 999px)';
+const MM_DESKTOP = '(min-width: 1025px)';
+const MM_TABLET = '(min-width: 440px) and (max-width: 1024px)';
 const MM_MOBILE = '(max-width: 439px)';
 
 const ENTRY_Y = {

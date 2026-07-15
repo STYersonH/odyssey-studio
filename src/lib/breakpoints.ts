@@ -8,7 +8,7 @@
 
 export const BREAKPOINTS = {
   tb: 440,
-  dk: 744,
+  dk: 1025,
   dkLg: 1600,
 } as const;
 
