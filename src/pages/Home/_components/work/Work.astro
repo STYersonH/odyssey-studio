@@ -2,6 +2,7 @@
 import type { Locale } from '../../../../i18n/locales';
 import { DEFAULT_LOCALE } from '../../../../i18n/locales';
 import { useTranslations } from '../../../../i18n/utils';
+import { cn } from '../../../../lib/cn';
 import WorkHeading from './WorkHeading.astro';
 import ProjectCard from './ProjectCard.astro';
 
@@ -18,10 +19,25 @@ const projects = t.work.projects;
   id="work"
   class="relative z-10 bg-primary-cream"
 >
-  <div class="h-screen overflow-hidden flex items-center pl-[48px] pr-[200px]">
+  <div class={cn(
+    // layout
+    'flex flex-col',
+    'dk:flex dk:items-center dk:h-screen dk:overflow-hidden',
+    // spacing responsive
+    'px-[12px] py-[32px]',
+    'tb:px-[24px] tb:py-[48px]',
+    'dk:pl-[48px] dk:pr-[200px] dk:py-0',
+  )}>
     <!-- Horizontal scroll track: title + cards se mueven juntos -->
     <div
-      class="flex gap-[150px] items-center will-change-transform"
+      class={cn(
+        // layout + animation
+        'flex flex-col will-change-transform',
+        // gap responsive
+        'gap-[24px] tb:gap-[32px] dk:gap-[150px] dk-lg:gap-[300px]',
+        // direction responsive
+        'dk:flex-row dk:items-center',
+      )}
       data-anim="work-track"
     >
       <!-- Title block -->
