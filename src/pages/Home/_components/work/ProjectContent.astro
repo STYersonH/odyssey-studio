@@ -1,4 +1,6 @@
 ---
+import { cn } from '../../../../lib/cn';
+
 interface Props {
   number: string;
   total: string;
@@ -11,16 +13,37 @@ interface Props {
 const { number, total, title, description, statNumber, statLabel } = Astro.props;
 ---
 
-<div class="flex flex-col gap-[80px] items-start w-[321px] shrink-0 font-neue-medium leading-[1.1] not-italic">
-  <div class="flex flex-col gap-[8px] items-start w-full">
-    <p class="text-[14px] text-[#666] w-full" data-anim="project-number">{number} / {total}</p>
+<div class={cn(
+  'flex flex-col items-start shrink-0 font-neue-medium not-italic',
+  'gap-[40px] dk:gap-[80px]',
+  'w-full dk:w-[321px]',
+)}>
+  <div class={cn(
+    'flex flex-col gap-[8px] items-start w-full',
+  )}>
+    <p class={cn(
+      'text-[14px] text-[#666] w-full',
+      'tb:text-[18px]',
+    )} data-anim="project-number">{number} / {total}</p>
     <div class="flex flex-col gap-[16px] items-start w-full">
-      <h3 class="h3 text-black w-full m-0" data-anim="project-title">{title}</h3>
-      <p class="body-2 text-[#666] w-full m-0" data-anim="project-desc">{description}</p>
+      <h3 class={cn(
+        'h3 text-black w-full m-0',
+        'text-[32px] tb:text-[40px] dk:text-[52px]',
+      )} data-anim="project-title">{title}</h3>
+      <p class={cn(
+        'body-2 text-[#666] w-full m-0',
+        'text-[14px] tb:text-[18px] dk:text-[20px]',
+      )} data-anim="project-desc">{description}</p>
     </div>
   </div>
   <div class="flex flex-col gap-[4px] items-start text-black w-[237px]">
-    <p class="text-[36px] leading-[1.1] w-full m-0" data-anim="project-stat">{statNumber}</p>
-    <p class="body-2 w-full m-0" data-anim="project-stat-label">{statLabel}</p>
+    <p class={cn(
+      'leading-[1.1] w-full m-0',
+      'text-[24px] tb:text-[36px] dk:text-[42px]',
+    )} data-anim="project-stat">{statNumber}</p>
+    <p class={cn(
+      'body-2 w-full m-0',
+      'text-[14px] tb:text-[20px]',
+    )} data-anim="project-stat-label">{statLabel}</p>
   </div>
 </div>

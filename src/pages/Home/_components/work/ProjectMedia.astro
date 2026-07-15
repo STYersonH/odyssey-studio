@@ -1,4 +1,6 @@
 ---
+import { cn } from '../../../../lib/cn';
+
 interface Props {
   bgImage?: string;
   overlayImage?: string;
@@ -7,9 +9,12 @@ interface Props {
 const { bgImage, overlayImage } = Astro.props;
 ---
 
-<div class="grid grid-cols-[max-content] grid-rows-[max-content] leading-[0] place-items-start relative shrink-0">
+<div class="grid grid-cols-[max-content] grid-rows-[max-content] leading-[0] place-items-start relative">
   <!-- Background image layer with gradient placeholder -->
-  <div class="col-start-1 row-start-1 relative w-[662px] h-[478px] overflow-hidden bg-gradient-to-br from-neutral-700 to-neutral-900">
+  <div class={cn(
+    'col-start-1 row-start-1 relative overflow-hidden bg-gradient-to-br from-neutral-700 to-neutral-900',
+    'w-full aspect-[881/636] dk:w-[662px] dk:h-[478px] dk:aspect-auto',
+  )}>
     {bgImage && (
       <img
         src={bgImage}
@@ -20,7 +25,11 @@ const { bgImage, overlayImage } = Astro.props;
     )}
   </div>
   <!-- Overlay image layer with gradient placeholder -->
-  <div class="col-start-1 row-start-1 relative ml-[67px] mt-[63px] w-[527px] h-[350px] overflow-hidden bg-gradient-to-tr from-neutral-600 to-neutral-800">
+  <div class={cn(
+    'col-start-1 row-start-1 relative overflow-hidden bg-gradient-to-tr from-neutral-600 to-neutral-800',
+    'ml-[7.6%] mt-[13.2%] w-[59.8%] aspect-[722/480]',
+    'dk:ml-[67px] dk:mt-[63px] dk:w-[527px] dk:h-[350px] dk:aspect-auto',
+  )}>
     {overlayImage && (
       <img
         src={overlayImage}
