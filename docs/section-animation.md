@@ -2,6 +2,8 @@
 
 Cómo crear y organizar animaciones GSAP en secciones de Astro, usando el patrón del proyecto.
 
+Hub: [framework/methodology.md](./framework/methodology.md) · Posiciones desde Figma: [framework/figma-animation-handoff.md](./framework/figma-animation-handoff.md)
+
 ---
 
 ## Estructura de archivos
@@ -295,15 +297,15 @@ setup: ({ root }) => {
 },
 ```
 
-Referencia: `PartnershipSection/animation.ts`.
+Referencia: `Home/_components/slogan/animation.ts` (scroll + posiciones por tier).
 
 ### B) Sección responsive (desktop vs mobile)
 
-Usa `mm.add` por breakpoint. Cada bloque retorna su cleanup; `mm.revert()` los ejecuta todos en re-init:
+Usa `mm.add` por breakpoint. Cada bloque retorna su cleanup; `mm.revert()` los ejecuta todos en re-init. Prefiere los umbrales de [animation-breakpoints.md](./animation-breakpoints.md) (`440` / `1025` / `1600`) en lugar de breakpoints ad hoc:
 
 ```ts
 setup: ({ root, mm }) => {
-  mm.add('(min-width: 1200px)', () => {
+  mm.add('(min-width: 1025px)', () => {
     // lógica desktop
     const st = ScrollTrigger.create({ /* ... */ });
     return () => {
@@ -312,7 +314,7 @@ setup: ({ root, mm }) => {
     };
   });
 
-  mm.add('(max-width: 1199px)', () => {
+  mm.add('(max-width: 1024px)', () => {
     // lógica mobile/tablet
     const st = ScrollTrigger.create({ /* ... */ });
     return () => {
@@ -323,7 +325,7 @@ setup: ({ root, mm }) => {
 },
 ```
 
-Referencia: `NumbersSection/animation.ts`.
+Referencia: `Home/_components/about/animation.ts`.
 
 **Regla:** todo ScrollTrigger / tween scrub / listener que crees en un bloque debe matarse en el `return` de ese mismo bloque.
 
@@ -481,7 +483,7 @@ export const initMySectionAnimation = createSectionAnimationController({
   setup: ({ root, mm }) => {
     const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-anim="card"]'));
 
-    mm.add('(min-width: 1200px)', () => {
+    mm.add('(min-width: 1025px)', () => {
       gsap.set(cards, { opacity: 0, y: 30 });
 
       const st = ScrollTrigger.create({
@@ -498,7 +500,7 @@ export const initMySectionAnimation = createSectionAnimationController({
       };
     });
 
-    mm.add('(max-width: 1199px)', () => {
+    mm.add('(max-width: 1024px)', () => {
       const triggers = cards.map((card) =>
         ScrollTrigger.create({
           trigger: card,
@@ -564,11 +566,9 @@ Para otros casos globales: exporta `initX()`, escucha `astro:page-load` y implem
 
 | Ejemplo                                            | Patrón                                          |
 | -------------------------------------------------- | ----------------------------------------------- |
-| `Home/_components/PartnershipSection/`             | Scroll simple + hover colocado + split words    |
-| `Home/_components/NumbersSection/`                 | Breakpoints + counters                          |
-| `Home/_components/ActionSection/`                  | Umbrales de progreso + split text               |
-| `Home/_components/about/`                          | Scroll + entrada `y` + text reveal              |
-| `Home/_components/hero/`                           | Intro de página (`refreshScrollTrigger: false`) |
+| `Home/_components/hero/`                           | Intro de página (`refreshScrollTrigger: false`) + SplitText |
+| `Home/_components/about/`                          | Scroll + pin/clip + entrada `y` + text reveal   |
+| `Home/_components/slogan/`                         | Scroll + JSON de posiciones por `mb`/`tb`/`dk`/`dk-lg` |
 | `src/utils/create-section-animation-controller.ts` | Lifecycle compartido                            |
 | `src/utils/clear-section-styles.ts`                | Reset de `[data-anim]` + SplitText              |
 | `src/utils/when-fonts-ready.ts`                    | Esperar webfonts antes de SplitText             |

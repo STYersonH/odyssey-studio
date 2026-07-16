@@ -2,6 +2,8 @@
 
 Cómo declarar viewports en CSS/Tailwind y cómo organizar `class={cn(...)}` para que el markup sea legible.
 
+Hub: [framework/methodology.md](./framework/methodology.md) · Diseño Figma: [framework/figma-to-code.md](./framework/figma-to-code.md)
+
 Relacionado:
 
 - Tema: [`src/styles/figma_var.css`](../src/styles/figma_var.css)
@@ -16,7 +18,7 @@ Relacionado:
 | --------- | -------------------- | ----------------- |
 | _(ninguno)_ | `< 440px`          | Base / móvil estrecho |
 | `tb:`     | `>= 440px`           | Tablet / móvil ancho |
-| `dk:`     | `>= 744px`           | Desktop           |
+| `dk:`     | `>= 1025px`          | Desktop           |
 | `dk-lg:`  | `>= 1600px`          | Desktop grande    |
 
 Definidos en `@theme` como `--breakpoint-tb`, `--breakpoint-dk`, `--breakpoint-dk-lg`.

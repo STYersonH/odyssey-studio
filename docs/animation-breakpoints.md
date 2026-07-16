@@ -2,6 +2,8 @@
 
 Fuente única para tiers de viewport en scripts GSAP: [`src/lib/breakpoints.ts`](../src/lib/breakpoints.ts).
 
+Hub: [framework/methodology.md](./framework/methodology.md) · Handoff animación: [framework/figma-animation-handoff.md](./framework/figma-animation-handoff.md)
+
 Para prefijos CSS (`tb:` / `dk:` / `dk-lg:`) y cómo organizar `class={cn(...)}`, ver [breakpoints.md](./breakpoints.md).
 
 ## Tabla
@@ -10,7 +12,7 @@ Para prefijos CSS (`tb:` / `dk:` / `dk-lg:`) y cómo organizar `class={cn(...)}`
 | ------- | --------- | -------------------- | ---------------- |
 | `mb`    | `< 440`   | móvil estrecho       | _(ninguno / base)_ |
 | `tb`    | `>= 440`  | tablet / móvil ancho | `tb:`            |
-| `dk`    | `>= 744`  | desktop              | `dk:`            |
+| `dk`    | `>= 1025` | desktop              | `dk:`            |
 | `dk-lg` | `>= 1600` | desktop grande       | `dk-lg:`         |
 
 Los umbrales coinciden con `--breakpoint-tb` / `--breakpoint-dk` / `--breakpoint-dk-lg` en [`figma_var.css`](../src/styles/figma_var.css). En JS, `mb` cubre el rango por debajo del primer breakpoint CSS.

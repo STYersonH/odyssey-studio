@@ -1,20 +1,20 @@
 {
-  "description": "Final image positions as % of the slogan section. left/top = center of each image. Keys: mb/tb/dk/dk-lg (see docs/animation-breakpoints.md).",
+  "description": "Image end positions as % (center). mb: Figma 2:404 (390×787) · tb: Figma 2:395 · dk/dk-lg: desktop.",
   "img1": {
-    "mb": { "left": 26, "top": 18 },
-    "tb": { "left": 40, "top": 24 },
+    "mb": { "left": 43.0, "top": 25.0 },
+    "tb": { "left": 40.9, "top": 24.2 },
     "dk": { "left": 26, "top": 33 },
     "dk-lg": { "left": 26, "top": 34 }
   },
   "img2": {
-    "mb": { "left": 66, "top": 45 },
-    "tb": { "left": 83, "top": 48 },
+    "mb": { "left": 81.3, "top": 53.7 },
+    "tb": { "left": 83.1, "top": 48.9 },
     "dk": { "left": 85, "top": 45 },
     "dk-lg": { "left": 86, "top": 46 }
   },
   "img3": {
-    "mb": { "left": 3, "top": 63 },
-    "tb": { "left": 17, "top": 77 },
+    "mb": { "left": 26.0, "top": 75.3 },
+    "tb": { "left": 17.2, "top": 77.3 },
     "dk": { "left": 12, "top": 78 },
     "dk-lg": { "left": 12, "top": 74 }
   }
