@@ -14,14 +14,26 @@ interface Props {
   overlayImage?: string;
 }
 
-const { number, total, title, description, statNumber, statLabel, bgImage, overlayImage } = Astro.props;
+const {
+  number,
+  total,
+  title,
+  description,
+  statNumber,
+  statLabel,
+  bgImage,
+  overlayImage,
+} = Astro.props;
 ---
 
-<div class={cn(
-  'flex flex-col',
-  'gap-[20px] tb:gap-[60px] dk:gap-[40px]',
-  'w-full tb:flex-row dk:flex dk:shrink-0',
-)} data-anim="project-card">
+<div
+  class={cn(
+    'flex',
+    'gap-[20px] tb:gap-[60px] dk:gap-[40px]',
+    'w-full dk:w-dvw flex-col dk:flex-row dk:shrink-0',
+  )}
+  data-anim="project-card"
+>
   <ProjectMedia bgImage={bgImage} overlayImage={overlayImage} />
   <ProjectContent
     number={number}

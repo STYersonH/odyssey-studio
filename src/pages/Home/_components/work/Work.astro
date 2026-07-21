@@ -15,28 +15,26 @@ const t = useTranslations(lang);
 const projects = t.work.projects;
 ---
 
-<section
-  id="work"
-  class="relative z-10 bg-primary-cream"
->
-  <div class={cn(
-    // layout
-    'flex flex-col',
-    'dk:flex dk:items-center dk:h-screen dk:overflow-hidden',
-    // spacing responsive
-    'px-[12px] py-[32px]',
-    'tb:px-[24px] tb:py-[48px]',
-    'dk:pl-[48px] dk:pr-[200px] dk:py-0',
-  )}>
+<section id="work" class="bg-primary-cream relative z-10">
+  <div
+    class={cn(
+      // layout
+      'flex flex-col',
+      'dk:flex dk:h-screen dk:overflow-hidden dk:justify-center dk:items-start',
+      // spacing responsive
+      'px-[12px] py-[32px]',
+      'tb:px-[24px] tb:py-[48px]',
+      'dk:pl-[48px] dk:pr-[200px] dk:py-0',
+    )}
+  >
     <!-- Horizontal scroll track: title + cards se mueven juntos -->
     <div
       class={cn(
-        // layout + animation
         'flex flex-col will-change-transform',
         // gap responsive
         'gap-[24px] tb:gap-[32px] dk:gap-[150px] dk-lg:gap-[300px]',
         // direction responsive
-        'dk:flex-row dk:items-center',
+        'dk:flex-row justify-center',
       )}
       data-anim="work-track"
     >

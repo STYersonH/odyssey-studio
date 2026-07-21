@@ -12,12 +12,14 @@ export const initWorkAnimation = createSectionAnimationController({
     const track = root.querySelector<HTMLElement>('[data-anim="work-track"]');
     const subtitleEl = root.querySelector<HTMLElement>('[data-anim="work-subtitle"]');
     const titleLines = root.querySelectorAll('[data-anim="work-title"] p');
-    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-anim="project-card"]'));
+    const cards = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-anim="project-card"]'),
+    );
 
     if (!track) return () => {};
 
     // ── Desktop (>= 744px): horizontal scroll pin ──
-    mm.add('(min-width: 744px)', () => {
+    mm.add('(min-width: 1025px)', () => {
       // Get scroll distance dynamically
       const getScrollDistance = () => {
         const container = track.parentElement;
@@ -92,19 +94,20 @@ export const initWorkAnimation = createSectionAnimationController({
     });
 
     // ── Mobile/Tablet (< 744px): vertical stacked layout ──
-    mm.add('(max-width: 743px)', () => {
+    mm.add('(max-width: 1025px)', () => {
       gsap.set(cards, { y: 40, opacity: 0 });
 
-      const triggers = cards.map(card =>
+      const triggers = cards.map((card) =>
         ScrollTrigger.create({
           trigger: card,
           start: 'top 80%',
-          onEnter: () => gsap.to(card, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }),
-        })
+          onEnter: () =>
+            gsap.to(card, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }),
+        }),
       );
 
       return () => {
-        triggers.forEach(t => t.kill());
+        triggers.forEach((t) => t.kill());
         clearSectionStyles(root);
       };
     });
