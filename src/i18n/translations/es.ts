@@ -3,13 +3,16 @@
 const es = {
   common: {},
   header: {
-    brandAriaLabel: 'Andean Roots Initiative - Inicio',
+    brandAriaLabel: 'Odyssey - Inicio',
     mobileMenuAriaLabel: 'Abrir navegación',
+    cta: 'Hablemos hoy ',
+    ctaCompact: 'Empezar proyecto',
+    menu: 'Menú',
     navLinks: [
-      { label: 'Home', slug: 'Home' },
-      { label: 'Sobre nosotros', slug: 'About' },
-      { label: 'Programas', slug: 'programs' },
-      { label: 'Contacto', slug: 'contact' },
+      { label: 'Sobre nosotros', slug: 'about' },
+      { label: 'Proyectos', slug: 'work' },
+      { label: 'Servicios', slug: 'services' },
+      { label: 'Proceso', slug: 'process' },
     ],
   },
 
@@ -44,8 +47,8 @@ const es = {
   },
 
   work: {
-    title: ['LAS', 'ODISEAS', 'QUE AYUDAMOS'],
-    subtitle: 'NUESTRO TRABAJO',
+    title: ['LAS ODISEAS', 'EN LAS QUE', 'AYUDAMOS'],
+    subtitle: 'PROYECTOS',
     projects: [
       {
         number: '01',

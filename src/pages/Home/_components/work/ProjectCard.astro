@@ -30,9 +30,10 @@ const {
 
 <div
   class={cn(
-    'flex',
-    'gap-[20px] tb:gap-[60px] dk:gap-[40px]',
-    'w-full dk:w-[1126px]  flex-col dk:flex-row dk:shrink-0',
+    'flex flex-col dk:flex-row dk:shrink-0',
+    // Figma tb: 20 between media + content (60 was content-columns, not card)
+    'gap-20px dk:gap-40px',
+    'w-full dk:w-[1126px]',
   )}
   data-anim="project-card"
   data-bg={bgColor}

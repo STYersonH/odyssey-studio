@@ -7,6 +7,7 @@ import WorkHeading from './WorkHeading.astro';
 import ProjectCard from './ProjectCard.astro';
 import ProjectStage from './ProjectStage.astro';
 import NoiseOverlay from '../../../../components/noise-overlay/index.astro';
+
 interface Props {
   lang?: Locale;
 }
@@ -24,17 +25,17 @@ const projects = t.work.projects;
       'hidden',
       // Full viewport strip — start from the LEFT (not centered) so park can slide cleanly
       'dk:flex dk:h-screen dk:w-full dk:flex-row dk:items-center dk:justify-start',
-      'dk:overflow-hidden dk:px-[48px] dk:py-0',
+      'dk:overflow-hidden dk:px-48px dk:py-0',
     )}
   >
     <div
       class={cn(
         'flex w-max shrink-0 flex-row items-center will-change-transform',
-        'gap-[150px] dk-lg:gap-[300px]',
+        'gap-150px dk-lg:gap-300px',
       )}
       data-anim="work-track"
     >
-      <WorkHeading title={t.work.title} subtitle={t.work.subtitle} />
+      <WorkHeading lang={lang} title={t.work.title} subtitle={t.work.subtitle} />
       <ProjectStage projects={projects} />
     </div>
   </div>
@@ -70,28 +71,39 @@ const projects = t.work.projects;
   <div
     class={cn(
       'flex flex-col',
-      'gap-[24px] tb:gap-[32px]',
-      'px-[12px] py-[32px] tb:px-[24px] tb:py-[48px]',
+      // heading → cards: Figma mb/tb 60
+      'gap-60px',
+      // spacing — Figma WORK tb: px 24 / py 48
+      'px-12px py-32px',
+      'tb:px-24px tb:py-48px',
       'dk:hidden',
     )}
     data-anim="work-mobile"
   >
-    <WorkHeading title={t.work.title} subtitle={t.work.subtitle} />
-    {
-      projects.map((project) => (
-        <ProjectCard
-          number={project.number}
-          total={project.total}
-          title={project.title}
-          description={project.description}
-          statNumber={project.statNumber}
-          statLabel={project.statLabel}
-          bgImage={project.bgImage}
-          overlayImage={project.overlayImage}
-          bgColor={project.bgColor}
-        />
-      ))
-    }
+    <WorkHeading lang={lang} title={t.work.title} subtitle={t.work.subtitle} />
+    <div
+      class={cn(
+        'flex w-full flex-col',
+        // Figma mb 64 / tb 100 between projects
+        'gap-64px tb:gap-100px',
+      )}
+    >
+      {
+        projects.map((project) => (
+          <ProjectCard
+            number={project.number}
+            total={project.total}
+            title={project.title}
+            description={project.description}
+            statNumber={project.statNumber}
+            statLabel={project.statLabel}
+            bgImage={project.bgImage}
+            overlayImage={project.overlayImage}
+            bgColor={project.bgColor}
+          />
+        ))
+      }
+    </div>
   </div>
 </section>
 

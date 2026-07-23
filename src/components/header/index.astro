@@ -1,26 +1,81 @@
 ---
 import Button from '../button/index.astro';
 import NavLinkItem from '../nav-link-item/index.astro';
+import type { Locale } from '../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../i18n/locales';
+import { useTranslations } from '../../i18n/utils';
+import { cn } from '../../lib/cn';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const navLinks = t.header.navLinks;
 ---
 
-<header class="fixed top-0 left-0 z-50 flex w-[100%]">
-  <div class="mx-[40px] my-[24px] flex w-full items-center justify-between">
-    <h2 class="font-neue-medium flex-1 text-[20px]">
+<!--
+  Full bar is absolute (scrolls away with the page).
+  Compact dock is fixed; buttons rise from below when Hero 70% hits viewport top.
+-->
+<header class="pointer-events-none absolute top-0 left-0 z-50 w-full" data-header>
+  <div
+    class={cn(
+      'pointer-events-auto mx-[40px] my-[24px] flex w-[calc(100%-80px)] items-center justify-between',
+    )}
+    data-header-full
+  >
+    <a
+      href={`/${lang}/Home`}
+      class="font-neue-medium flex-1 text-[20px] text-primary-dark no-underline"
+      aria-label={t.header.brandAriaLabel}
+    >
       OD
       <span class="font-neue-medium-italic">Y</span>
       SSE
       <span class="font-neue-medium-italic">Y</span>
-    </h2>
+    </a>
     <div class="flex flex-1 items-center justify-between">
-      <nav>
-        <ul class="flex gap-4">
-          <NavLinkItem href="/" label="About" />
-          <NavLinkItem href="/" label="Work" />
-          <NavLinkItem href="/" label="Services" />
-          <NavLinkItem href="/" label="Process" />
+      <nav aria-label="Primary">
+        <ul class="m-0 flex list-none gap-4 p-0">
+          {
+            navLinks.map((link) => (
+              <NavLinkItem href={`#${link.slug}`} label={link.label} />
+            ))
+          }
         </ul>
       </nav>
-      <Button href="/contact" text="Start a project" />
+      <Button href="#contact" text={t.header.cta} />
     </div>
   </div>
 </header>
+
+<!-- Fixed dock: clipped so the row can slide up from below -->
+<div
+  class={cn(
+    'pointer-events-none fixed top-[24px] right-[40px] z-[60]',
+    'h-[35px] overflow-hidden',
+  )}
+  data-header-compact
+  aria-hidden="true"
+>
+  <div class="flex h-full items-center gap-3 will-change-transform" data-header-compact-inner>
+    <Button href="#contact" text={t.header.cta} class="pointer-events-auto" />
+    <Button
+      type="secondary"
+      icon={false}
+      text={t.header.menu}
+      aria-label={t.header.mobileMenuAriaLabel}
+      class={cn('pointer-events-auto', '!w-auto min-w-[72px]')}
+    />
+  </div>
+</div>
+
+<script>
+  import { initHeaderAnimation } from './animation';
+
+  const boot = () => initHeaderAnimation();
+  boot();
+  document.addEventListener('astro:page-load', boot);
+</script>
