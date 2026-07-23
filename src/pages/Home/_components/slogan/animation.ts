@@ -150,6 +150,7 @@ export const initSloganAnimation = createSectionAnimationController({
     const triggers: ScrollTrigger[] = [];
     const splits: SplitText[] = [];
     const bp = getAnimBreakpoint();
+    const isDesktop = bp !== 'mb' && bp !== 'tb';
     const imgScaleStart = IMG_SCALE_START[bp];
     const visionScaleStart = VISION_SCALE_START[bp];
     const visionTexts =
@@ -187,8 +188,8 @@ export const initSloganAnimation = createSectionAnimationController({
         end: 'top top',
         scrub: 1,
         onUpdate: (self) => {
-          if (bp !== 'mb' && bp !== 'tb') {
-            gsap.set('[data-anim="enter"]', {
+          if (isDesktop) {
+            gsap.set('[data-anim="about-enter"]', {
               y: `${80 * self.progress}%`,
               autoAlpha: 1 - 1.3 * self.progress,
             });
@@ -214,11 +215,16 @@ export const initSloganAnimation = createSectionAnimationController({
 
     // Phase 2: pin — fade images in, then travel to end % + vision scale.
     const maxY = VISION_MAX_Y[bp];
+    /** Scroll distance for the animated part of the pin. */
+    const animVh = isDesktop ? 4 : 2;
+    /** Extra scroll at the end to linger on the final composition. */
+    const holdVh = isDesktop ? 0.7 : 0.4;
+
     const phase2 = gsap.timeline({
       scrollTrigger: {
         trigger: root,
         start: 'top top',
-        end: `+=${window.innerHeight * (bp !== 'mb' && bp !== 'tb' ? 4 : 2)}px`,
+        end: `+=${window.innerHeight * (animVh + holdVh)}px`,
         pin: true,
         pinSpacing: true,
         scrub: 1,
@@ -280,6 +286,11 @@ export const initSloganAnimation = createSectionAnimationController({
         i * lineGap + travelAt,
       );
     });
+
+    // Hold: linger on the final frame before unpinning into Work.
+    // Duration ratio keeps the animated portion mapped to `animVh` of scroll.
+    const animDur = phase2.duration();
+    phase2.to({}, { duration: animDur * (holdVh / animVh) });
 
     const onResize = () => ScrollTrigger.refresh();
     window.addEventListener('resize', onResize);
