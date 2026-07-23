@@ -29,3 +29,7 @@ pnpm-debug.log*
 .claude/
 .opencode/
 skills-lock.json
+
+# Local methodology / Figma analysis docs (keep on disk, don't publish)
+docs/framework/
+docs/analysis-figma/
