@@ -47,8 +47,8 @@ const es = {
   },
 
   work: {
-    title: ['LAS', 'ODISEAS', 'QUE AYUDAMOS'],
-    subtitle: 'NUESTRO TRABAJO',
+    title: ['LAS ODISEAS', 'EN LAS QUE', 'AYUDAMOS'],
+    subtitle: 'PROYECTOS',
     projects: [
       {
         number: '01',

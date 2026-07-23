@@ -1,14 +1,17 @@
 ---
-import { COPY_READY_CLASS } from '../../../../components/Copy/utils/copy/shared';
 import { cn } from '../../../../lib/cn';
+import type { Locale } from '../../../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../../../i18n/locales';
 import Copy from '../../../../components/Copy/index.astro';
 
 interface Props {
   title: string[];
   subtitle: string;
+  lang?: Locale;
 }
 
-const { title, subtitle } = Astro.props;
+const { title, subtitle, lang = DEFAULT_LOCALE } = Astro.props;
+const isEs = lang === 'es';
 ---
 
 <div class="shrink-0" data-anim="work-heading">
@@ -45,11 +48,11 @@ const { title, subtitle } = Astro.props;
         }
       </Copy>
     </div>
-    <!-- OUR WORK label -->
+    <!-- OUR WORK / PROYECTOS — tracking + ml tuned per locale (string length differs) -->
     <Copy
       variant="slide"
       type="chars"
-      stagger={0.2}
+      stagger={0.1}
       trigger="#work"
       start="top 50%"
       reverse
@@ -58,9 +61,17 @@ const { title, subtitle } = Astro.props;
       <p
         class={cn(
           'font-neue-medium relative',
-          'text-[16px]',
-          'tracking-[20px] tb:tracking-[40px] dk:tracking-[67px] dk-lg:tracking-[105.8px]',
-          'tb:ml-[11em] dk:ml-[22em]',
+          // Figma mb 12 / tb 14 / dk 16
+          'text-[12px] tb:text-[14px] dk:text-[16px]',
+          'pt-[1em]',
+          // EN: "OUR WORK" — mb tracking ~41 / ml ~5
+          !isEs &&
+            'tracking-[40px] tb:tracking-[50px] dk:tracking-[86px] dk-lg:tracking-[110px]',
+          !isEs && 'ml-[5px] tb:ml-[170px] dk:ml-[17.7em] dk-lg:ml-[21.5em]',
+          // ES: "PROYECTOS"
+          isEs &&
+            'tracking-[34px] tb:tracking-[43px] dk:tracking-[75px] dk-lg:tracking-[96px]',
+          isEs && 'ml-[2px] tb:ml-[160px] dk:ml-[16.2em] dk-lg:ml-[20em]',
         )}
         data-anim="work-subtitle"
       >

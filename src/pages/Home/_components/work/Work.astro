@@ -21,42 +21,51 @@ const projects = t.work.projects;
       // layout
       'flex flex-col',
       'dk:flex dk:h-screen dk:overflow-hidden dk:justify-center dk:items-start',
-      // spacing responsive
-      'px-[12px] py-[32px]',
-      'tb:px-[24px] tb:py-[48px]',
-      'dk:pl-[48px] dk:pr-[200px] dk:py-0',
+      // spacing — Figma WORK tb: px 24 / py 48
+      'px-12px py-32px',
+      'tb:px-24px tb:py-48px',
+      'dk:pl-48px dk:pr-200px dk:py-0',
     )}
   >
     <!-- Horizontal scroll track: title + cards se mueven juntos -->
     <div
       class={cn(
         'flex flex-col will-change-transform',
-        // gap responsive
-        'gap-[24px] tb:gap-[32px] dk:gap-[150px] dk-lg:gap-[300px]',
+        // heading → cards: Figma mb/tb 60
+        'gap-60px dk:gap-150px dk-lg:gap-300px',
         // direction responsive
         'dk:flex-row justify-center',
       )}
       data-anim="work-track"
     >
       <!-- Title block -->
-      <WorkHeading title={t.work.title} subtitle={t.work.subtitle} />
+      <WorkHeading lang={lang} title={t.work.title} subtitle={t.work.subtitle} />
 
-      <!-- Project cards -->
-      {
-        projects.map((project) => (
-          <ProjectCard
-            number={project.number}
-            total={project.total}
-            title={project.title}
-            description={project.description}
-            statNumber={project.statNumber}
-            statLabel={project.statLabel}
-            bgImage={project.bgImage}
-            overlayImage={project.overlayImage}
-            bgColor={project.bgColor}
-          />
-        ))
-      }
+      <!-- Cards stack: Figma tb gap 100 between projects; dk:contents → track gap -->
+      <div
+        class={cn(
+          'flex w-full flex-col',
+          // Figma mb 64 / tb 100 between projects
+          'gap-64px tb:gap-100px',
+          'dk:contents',
+        )}
+      >
+        {
+          projects.map((project) => (
+            <ProjectCard
+              number={project.number}
+              total={project.total}
+              title={project.title}
+              description={project.description}
+              statNumber={project.statNumber}
+              statLabel={project.statLabel}
+              bgImage={project.bgImage}
+              overlayImage={project.overlayImage}
+              bgColor={project.bgColor}
+            />
+          ))
+        }
+      </div>
 
       <!-- Extra track width so the last card can reach the text-reveal position -->
       <div
