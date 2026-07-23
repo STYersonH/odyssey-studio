@@ -41,6 +41,7 @@ export function initButtonAnimation(button: HTMLElement) {
   button.dataset.buttonInit = 'true';
 
   const type = (button.dataset.buttonType ?? 'primary') as ButtonType;
+  const hasIcon = button.dataset.buttonIcon !== 'false';
   const theme = getTheme(type);
   const iconSize = getIconSize(button);
   const iconPadding = 2;
@@ -51,15 +52,18 @@ export function initButtonAnimation(button: HTMLElement) {
   const icon = button.querySelector<HTMLElement>('[data-button-icon]');
   const iconSvg = icon?.querySelector('svg');
 
-  if (!labelTrack || !labelTop || !iconWrap || !icon) return;
+  if (!labelTrack || !labelTop) return;
 
   const labelOffset = () => getLabelOffset(labelTrack, labelTop);
 
   gsap.set(button, { backgroundColor: theme.bgRest });
   gsap.set(labelTrack, { y: 0 });
-  gsap.set(iconWrap, { width: 0 });
-  gsap.set(icon, { width: 0, height: 0, padding: 0 });
-  if (iconSvg) gsap.set(iconSvg, { opacity: 0, scale: 0.6 });
+
+  if (hasIcon && iconWrap && icon) {
+    gsap.set(iconWrap, { width: 0 });
+    gsap.set(icon, { width: 0, height: 0, padding: 0 });
+    if (iconSvg) gsap.set(iconSvg, { opacity: 0, scale: 0.6 });
+  }
 
   const timeline = gsap.timeline({
     paused: true,
@@ -68,17 +72,21 @@ export function initButtonAnimation(button: HTMLElement) {
 
   timeline
     .to(button, { backgroundColor: theme.bgHover }, 0)
-    .fromTo(labelTrack, { y: 0 }, { y: () => -labelOffset() }, 0)
-    .fromTo(iconWrap, { width: 0 }, { width: iconSize }, 0)
-    .fromTo(
-      icon,
-      { width: 0, height: 0, padding: 0 },
-      { width: iconSize, height: iconSize, padding: iconPadding },
-      0,
-    );
+    .fromTo(labelTrack, { y: 0 }, { y: () => -labelOffset() }, 0);
 
-  if (iconSvg) {
-    timeline.fromTo(iconSvg, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1 }, 0);
+  if (hasIcon && iconWrap && icon) {
+    timeline
+      .fromTo(iconWrap, { width: 0 }, { width: iconSize }, 0)
+      .fromTo(
+        icon,
+        { width: 0, height: 0, padding: 0 },
+        { width: iconSize, height: iconSize, padding: iconPadding },
+        0,
+      );
+
+    if (iconSvg) {
+      timeline.fromTo(iconSvg, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1 }, 0);
+    }
   }
 
   const play = () => timeline.play();

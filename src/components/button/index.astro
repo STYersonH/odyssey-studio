@@ -8,6 +8,9 @@ interface Props {
   class?: string;
   size?: 'regular' | 'big';
   type?: 'primary' | 'secondary' | 'tertiary';
+  /** When false, hide the arrow icon slot (label-only button). */
+  icon?: boolean;
+  'aria-label'?: string;
 }
 
 const {
@@ -15,7 +18,9 @@ const {
   text = 'Start a project',
   size = 'regular',
   type = 'primary',
+  icon = true,
   class: className = '',
+  'aria-label': ariaLabel,
 } = Astro.props as Props;
 
 const isPrimary = type === 'primary';
@@ -26,19 +31,21 @@ const Tag = href ? 'a' : 'button';
 
 <Tag
   {...href ? { href } : { type: 'button' }}
+  aria-label={ariaLabel}
   class={cn(
     'button-root inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-lg border-0 no-underline outline-none',
     'font-neue-regular whitespace-nowrap',
     isBig
-      ? 'button-root--big h-[49px] w-[207px]'
-      : 'button-root--regular h-[35px] w-[144px]',
-    'gap-sm pl-lg pr-sm',
+      ? 'button-root--big h-[49px] min-w-[207px] w-auto'
+      : 'button-root--regular h-[35px] min-w-[144px] w-auto',
+    icon ? 'gap-sm pl-lg pr-sm' : 'px-lg',
     isPrimary ? 'bg-primary-dark' : 'bg-neutral-50',
     className,
   )}
   data-button
   data-button-type={buttonType}
   data-button-size={size}
+  data-button-icon={icon ? 'true' : 'false'}
 >
   <span data-button-label class="button-label relative shrink-0 overflow-hidden">
     <span data-button-label-track class="button-label-track flex flex-col">
@@ -61,26 +68,30 @@ const Tag = href ? 'a' : 'button';
     </span>
   </span>
 
-  <span
-    data-button-icon-wrap
-    class="button-icon-wrap flex shrink-0 items-center overflow-hidden"
-  >
-    <span
-      data-button-icon
-      class={cn(
-        'button-icon box-border flex items-center justify-center overflow-hidden rounded',
-        isPrimary ? 'bg-primary-dark' : 'bg-neutral-50',
-      )}
-    >
-      <UpRightArrowIcon
-        class={cn(
-          'shrink-0',
-          isPrimary ? 'text-neutral-50' : 'text-primary-dark',
-          isBig ? 'size-4' : 'size-3',
-        )}
-      />
-    </span>
-  </span>
+  {
+    icon && (
+      <span
+        data-button-icon-wrap
+        class="button-icon-wrap flex shrink-0 items-center overflow-hidden"
+      >
+        <span
+          data-button-icon
+          class={cn(
+            'button-icon box-border flex items-center justify-center overflow-hidden rounded',
+            isPrimary ? 'bg-primary-dark' : 'bg-neutral-50',
+          )}
+        >
+          <UpRightArrowIcon
+            class={cn(
+              'shrink-0',
+              isPrimary ? 'text-neutral-50' : 'text-primary-dark',
+              isBig ? 'size-4' : 'size-3',
+            )}
+          />
+        </span>
+      </span>
+    )
+  }
 </Tag>
 
 <style>
