@@ -7,7 +7,7 @@ import { createSectionAnimationController } from '../../../../utils/create-secti
 gsap.registerPlugin(ScrollTrigger);
 
 const SEL = {
-  enter: '[data-anim="enter"]',
+  enter: '[data-anim="about-enter"]',
   textReveal: '[data-anim="text-reveal"]',
   textBlock: '[data-anim="text-block"]',
 } as const;

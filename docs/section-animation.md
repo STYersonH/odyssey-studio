@@ -18,13 +18,11 @@ SectionName/
 └── card-hover.ts        # Interacción acotada (opcional)
 ```
 
-
 | Archivo                          | Responsabilidad                                                         |
 | -------------------------------- | ----------------------------------------------------------------------- |
 | `index.astro`                    | HTML, clases Tailwind, `data-anim`, `<script>` mínimo                   |
 | `animation.ts`                   | Toda la lógica GSAP de la sección                                       |
 | `*-hover.ts`, `counter.ts`, etc. | Comportamiento puntual (hover, contador) importado desde `animation.ts` |
-
 
 **Regla:** el `<script>` de `index.astro` solo arranca la animación. No pongas tweens ni ScrollTriggers ahí.
 
@@ -36,8 +34,6 @@ SectionName/
 - JS (`getAnimBreakpoint`, JSON keyed por `mb`/`tb`/`dk`/`dk-lg`): [animation-breakpoints.md](./animation-breakpoints.md)
 
 ---
-
-
 
 ## Boot en `index.astro`
 
@@ -59,11 +55,7 @@ El layout usa `<ClientRouter />`, así que el boot va solo en `astro:page-load`:
 
 ---
 
-
-
 ## Markup: contratos mínimos
-
-
 
 ### 1. `id` en la `<section>` (obligatorio)
 
@@ -73,8 +65,6 @@ Debe coincidir con `rootId` en `animation.ts`:
 <section id="partners" class="..."></section>
 ```
 
-
-
 ### 2. `data-anim` en nodos animados
 
 Nombres **locales a la sección** (ej. `label-desktop`, `logo-item`):
@@ -83,8 +73,6 @@ Nombres **locales a la sección** (ej. `label-desktop`, `logo-item`):
 <p data-anim="label-desktop">...</p>
 <div data-anim="logo-item">...</div>
 ```
-
-
 
 ### 3. Texto partido (opcional)
 
@@ -104,14 +92,12 @@ En `animation.ts` usa `splitWords` / `splitChars` de `src/utils/split-text.ts` y
 
 ```astro
 <!-- About.astro: layout + will-change, sin valores de animación -->
-<div data-anim="enter" class="... will-change-transform">
-  ...
-</div>
+<div data-anim="about-enter" class="will-change-transform ...">...</div>
 ```
 
 ```ts
 // animation.ts
-const enterEl = root.querySelector<HTMLElement>('[data-anim="enter"]');
+const enterEl = root.querySelector<HTMLElement>('[data-anim="about-enter"]');
 if (enterEl) {
   gsap.set(enterEl, { y: '-35%' });
   // ScrollTrigger, timeline, etc.
@@ -124,8 +110,6 @@ Referencia: `Home/_components/about/` (entrada con `y` + text reveal).
 
 ---
 
-
-
 ## `createSectionAnimationController`
 
 Util compartido: `src/utils/create-section-animation-controller.ts`.
@@ -137,10 +121,7 @@ Encapsula el ciclo de vida de **cualquier** sección animada (scroll o intro de 
 3. Ejecuta tu `setup` (tras `whenFontsReady` si `waitForFonts` es true).
 4. Opcionalmente refresca ScrollTrigger tras el layout.
 
-
-
 ### Opciones
-
 
 | Opción                 | Descripción                                                            |
 | ---------------------- | ---------------------------------------------------------------------- |
@@ -148,9 +129,6 @@ Encapsula el ciclo de vida de **cualquier** sección animada (scroll o intro de 
 | `setup`                | Donde vive la animación. Puede **retornar** una función de cleanup     |
 | `refreshScrollTrigger` | `true` por defecto. Pon `false` en intros sin ScrollTrigger (ej. Hero) |
 | `waitForFonts`         | `true` por defecto. Espera webfonts antes de `setup` (SplitText, etc.) |
-
-
-
 
 ### Quién hace el cleanup
 
@@ -169,15 +147,11 @@ El controller solo orquesta: ejecuta el cleanup anterior y monta de nuevo.
 
 ### `rootId` del HTML
 
-
 | Nombre   | Dónde                                          | Ejemplo                                  |
 | -------- | ---------------------------------------------- | ---------------------------------------- |
 | `rootId` | Opción del controller + atributo `id` del HTML | `'partners'` → `<section id="partners">` |
 
-
 ---
-
-
 
 ## Utilidades compartidas
 
@@ -196,7 +170,9 @@ export const initHeroAnimation = createSectionAnimationController({
   rootId: 'hero',
   refreshScrollTrigger: false,
   // waitForFonts: true  ← implícito; Hero usa SplitText
-  setup: ({ root }) => { /* ... */ },
+  setup: ({ root }) => {
+    /* ... */
+  },
 });
 ```
 
@@ -206,7 +182,9 @@ Para secciones **sin** SplitText ni medición de texto (solo scroll, opacity, cl
 export const initAboutAnimation = createSectionAnimationController({
   rootId: 'about',
   waitForFonts: false,
-  setup: ({ root }) => { /* ... */ },
+  setup: ({ root }) => {
+    /* ... */
+  },
 });
 ```
 
@@ -225,7 +203,7 @@ import { clearSectionStyles } from '../../../../utils/clear-section-styles';
 
 return () => {
   st.kill();
-  clearSectionStyles(root);           // sin SplitText
+  clearSectionStyles(root); // sin SplitText
   // clearSectionStyles(root, splits); // con SplitText (ver Hero)
 };
 ```
@@ -246,8 +224,6 @@ return () => {
 Prefiere este helper compartido en lugar de definir `clearMySectionStyles` local en cada sección, salvo que necesites lógica de reset muy específica.
 
 ---
-
-
 
 ## Capas dentro de `animation.ts`
 
@@ -275,11 +251,7 @@ Dentro de `setup`:
 
 ---
 
-
-
 ## Dos patrones de `setup`
-
-
 
 ### A) Sección simple (sin breakpoints)
 
@@ -331,8 +303,6 @@ Referencia: `Home/_components/about/animation.ts`.
 
 ---
 
-
-
 ## Cleanup con `clearSectionStyles`
 
 Usa el helper compartido `src/utils/clear-section-styles.ts` al final de cada cleanup:
@@ -343,7 +313,7 @@ import { clearSectionStyles } from '../../../../utils/clear-section-styles';
 return () => {
   st.kill();
   cleanupHover();
-      clearSectionStyles(root);
+  clearSectionStyles(root);
 };
 ```
 
@@ -359,8 +329,6 @@ return () => {
 En secciones con **dos breakpoints**, incluye `clearSectionStyles(root)` en el `return` de **cada** bloque `mm.add` (desktop y mobile).
 
 ---
-
-
 
 ## Interacciones puntuales (hover, tilt, etc.)
 
@@ -403,11 +371,7 @@ return () => {
 
 ---
 
-
-
 ## Plantilla básica (copiar y adaptar)
-
-
 
 ### `index.astro`
 
@@ -427,8 +391,6 @@ return () => {
   document.addEventListener('astro:page-load', () => initMySectionAnimation());
 </script>
 ```
-
-
 
 ### `animation.ts` — sección simple
 
@@ -452,7 +414,13 @@ export const initMySectionAnimation = createSectionAnimationController({
     const reveal = () => {
       if (title) gsap.to(title, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' });
       if (description) {
-        gsap.to(description, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.1 });
+        gsap.to(description, {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+          delay: 0.1,
+        });
       }
     };
 
@@ -471,8 +439,6 @@ export const initMySectionAnimation = createSectionAnimationController({
 });
 ```
 
-
-
 ### `animation.ts` — con breakpoints
 
 ```ts
@@ -490,7 +456,13 @@ export const initMySectionAnimation = createSectionAnimationController({
         trigger: root,
         start: 'top 75%',
         onEnter: () => {
-          gsap.to(cards, { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out' });
+          gsap.to(cards, {
+            opacity: 1,
+            y: 0,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: 'power2.out',
+          });
         },
       });
 
@@ -523,12 +495,9 @@ export const initMySectionAnimation = createSectionAnimationController({
 
 ---
 
-
-
 ## Excepciones (no usar el controller)
 
 Solo cuando **no** hay un `<section id="...">` propio o el alcance no es una sección de página:
-
 
 | Caso                      | Dónde                        | Ejemplo en el proyecto                   |
 | ------------------------- | ---------------------------- | ---------------------------------------- |
@@ -536,14 +505,11 @@ Solo cuando **no** hay un `<section id="...">` propio o el alcance no es una sec
 | Efecto global en layout   | `Layout.astro`               | `initButtonLinkMagnetic`                 |
 | Text reveal reutilizable  | `src/components/TextReveal/` | Importado por secciones que lo necesiten |
 
-
 El **Hero** sí usa el controller con `refreshScrollTrigger: false` (intro por timeline, sin scroll).
 
 Para otros casos globales: exporta `initX()`, escucha `astro:page-load` y implementa tu propio cleanup idempotente.
 
 ---
-
-
 
 ## Checklist al crear una sección nueva
 
@@ -559,18 +525,13 @@ Para otros casos globales: exporta `initX()`, escucha `astro:page-load` y implem
 
 ---
 
-
-
 ## Referencias en el repo
 
-
-| Ejemplo                                            | Patrón                                          |
-| -------------------------------------------------- | ----------------------------------------------- |
+| Ejemplo                                            | Patrón                                                      |
+| -------------------------------------------------- | ----------------------------------------------------------- |
 | `Home/_components/hero/`                           | Intro de página (`refreshScrollTrigger: false`) + SplitText |
-| `Home/_components/about/`                          | Scroll + pin/clip + entrada `y` + text reveal   |
-| `Home/_components/slogan/`                         | Scroll + JSON de posiciones por `mb`/`tb`/`dk`/`dk-lg` |
-| `src/utils/create-section-animation-controller.ts` | Lifecycle compartido                            |
-| `src/utils/clear-section-styles.ts`                | Reset de `[data-anim]` + SplitText              |
-| `src/utils/when-fonts-ready.ts`                    | Esperar webfonts antes de SplitText             |
-
-
+| `Home/_components/about/`                          | Scroll + pin/clip + entrada `y` + text reveal               |
+| `Home/_components/slogan/`                         | Scroll + JSON de posiciones por `mb`/`tb`/`dk`/`dk-lg`      |
+| `src/utils/create-section-animation-controller.ts` | Lifecycle compartido                                        |
+| `src/utils/clear-section-styles.ts`                | Reset de `[data-anim]` + SplitText                          |
+| `src/utils/when-fonts-ready.ts`                    | Esperar webfonts antes de SplitText                         |
