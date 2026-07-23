@@ -3,13 +3,16 @@ import type { Translations } from './es';
 const en: Translations = {
   common: {},
   header: {
-    brandAriaLabel: 'Andean Roots Initiative - Home',
+    brandAriaLabel: 'Odyssey - Home',
     mobileMenuAriaLabel: 'Open navigation',
+    cta: 'Start a project',
+    ctaCompact: 'Start a project',
+    menu: 'Menu',
     navLinks: [
-      { label: 'Home', slug: 'Home' },
-      { label: 'About Us', slug: 'About' },
-      { label: 'Programs', slug: 'programs' },
-      { label: 'Contact', slug: 'contact' },
+      { label: 'About', slug: 'about' },
+      { label: 'Work', slug: 'work' },
+      { label: 'Services', slug: 'services' },
+      { label: 'Process', slug: 'process' },
     ],
   },
 
