@@ -1,0 +1,70 @@
+---
+import { cn } from '../../../../lib/cn';
+import ProjectMedia from './ProjectMedia.astro';
+import ProjectContent from './ProjectContent.astro';
+
+interface Project {
+  number: string;
+  total: string;
+  title: string;
+  description: string;
+  statNumber: string;
+  statLabel: string;
+  bgImage?: string;
+  overlayImage?: string;
+  bgColor?: string;
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div
+  class={cn('relative flex shrink-0 flex-row items-center dk:items-start', 'gap-[40px]')}
+  data-anim="project-stage"
+>
+  <div
+    class={cn('relative shrink-0 overflow-hidden', 'aspect-881/636 w-[662px]')}
+    data-anim="media-stack"
+  >
+    {
+      projects.map((project, i) => (
+        <div
+          class={cn(
+            'overflow-hidden',
+            i === 0 ? 'relative h-full w-full' : 'absolute inset-0',
+          )}
+          data-anim="project-media-layer"
+          data-index={String(i)}
+        >
+          <ProjectMedia bgImage={project.bgImage} overlayImage={project.overlayImage} />
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="relative w-[321px] shrink-0" data-anim="content-stack">
+    {
+      projects.map((project, i) => (
+        <div
+          class={cn(i === 0 ? 'relative' : 'absolute top-0 left-0 w-full')}
+          data-anim="project-content-layer"
+          data-index={String(i)}
+          data-bg={project.bgColor ?? '#d6cec3'}
+        >
+          <ProjectContent
+            number={project.number}
+            total={project.total}
+            title={project.title}
+            description={project.description}
+            statNumber={project.statNumber}
+            statLabel={project.statLabel}
+          />
+        </div>
+      ))
+    }
+  </div>
+</div>

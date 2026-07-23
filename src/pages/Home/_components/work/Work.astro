@@ -5,7 +5,8 @@ import { useTranslations } from '../../../../i18n/utils';
 import { cn } from '../../../../lib/cn';
 import WorkHeading from './WorkHeading.astro';
 import ProjectCard from './ProjectCard.astro';
-
+import ProjectStage from './ProjectStage.astro';
+import NoiseOverlay from '../../../../components/noise-overlay/index.astro';
 interface Props {
   lang?: Locale;
 }
@@ -16,56 +17,81 @@ const projects = t.work.projects;
 ---
 
 <section id="work" class="bg-primary-cream relative z-10 overflow-hidden">
+  <NoiseOverlay />
+  <!-- Desktop: park stage, then in-place project swaps -->
   <div
     class={cn(
-      // layout
-      'flex flex-col',
-      'dk:flex dk:h-screen dk:overflow-hidden dk:justify-center dk:items-start',
-      // spacing responsive
-      'px-[12px] py-[32px]',
-      'tb:px-[24px] tb:py-[48px]',
-      'dk:pl-[48px] dk:pr-[200px] dk:py-0',
+      'hidden',
+      // Full viewport strip — start from the LEFT (not centered) so park can slide cleanly
+      'dk:flex dk:h-screen dk:w-full dk:flex-row dk:items-center dk:justify-start',
+      'dk:overflow-hidden dk:px-[48px] dk:py-0',
     )}
   >
-    <!-- Horizontal scroll track: title + cards se mueven juntos -->
     <div
       class={cn(
-        'flex flex-col will-change-transform',
-        // gap responsive
-        'gap-[24px] tb:gap-[32px] dk:gap-[150px] dk-lg:gap-[300px]',
-        // direction responsive
-        'dk:flex-row justify-center',
+        'flex w-max shrink-0 flex-row items-center will-change-transform',
+        'gap-[150px] dk-lg:gap-[300px]',
       )}
       data-anim="work-track"
     >
-      <!-- Title block -->
       <WorkHeading title={t.work.title} subtitle={t.work.subtitle} />
+      <ProjectStage projects={projects} />
+    </div>
+  </div>
 
-      <!-- Project cards -->
-      {
-        projects.map((project) => (
-          <ProjectCard
-            number={project.number}
-            total={project.total}
-            title={project.title}
-            description={project.description}
-            statNumber={project.statNumber}
-            statLabel={project.statLabel}
-            bgImage={project.bgImage}
-            overlayImage={project.overlayImage}
-            bgColor={project.bgColor}
-          />
-        ))
-      }
-
-      <!-- Extra track width so the last card can reach the text-reveal position -->
+  <!-- Desktop progress: visible only while a project is active -->
+  <div
+    class={cn(
+      'pointer-events-none absolute right-[48px] bottom-[40px] z-20',
+      'hidden flex-col items-end gap-3 opacity-0',
+      'dk:flex',
+    )}
+    data-anim="work-progress"
+    aria-hidden="true"
+  >
+    <p
+      class={cn(
+        'font-neue-medium m-0 text-[12px] tracking-[0.18em] text-neutral-900/50 uppercase',
+      )}
+      data-anim="work-progress-label"
+    >
+      — / {String(projects.length).padStart(2, '0')}
+    </p>
+    <div class="relative h-px w-[120px] bg-neutral-900/15">
       <div
-        class="dk:block dk:w-[12vw] dk-lg:w-[14.5vw] hidden shrink-0"
-        data-anim="work-end-spacer"
-        aria-hidden="true"
+        class="absolute top-0 left-0 h-full w-0 bg-neutral-900/70"
+        data-anim="work-progress-bar"
       >
       </div>
     </div>
+  </div>
+
+  <!-- Mobile / tablet: vertical cards -->
+  <div
+    class={cn(
+      'flex flex-col',
+      'gap-[24px] tb:gap-[32px]',
+      'px-[12px] py-[32px] tb:px-[24px] tb:py-[48px]',
+      'dk:hidden',
+    )}
+    data-anim="work-mobile"
+  >
+    <WorkHeading title={t.work.title} subtitle={t.work.subtitle} />
+    {
+      projects.map((project) => (
+        <ProjectCard
+          number={project.number}
+          total={project.total}
+          title={project.title}
+          description={project.description}
+          statNumber={project.statNumber}
+          statLabel={project.statLabel}
+          bgImage={project.bgImage}
+          overlayImage={project.overlayImage}
+          bgColor={project.bgColor}
+        />
+      ))
+    }
   </div>
 </section>
 
