@@ -12,6 +12,7 @@ interface Props {
   statLabel: string;
   bgImage?: string;
   overlayImage?: string;
+  bgColor?: string;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   statLabel,
   bgImage,
   overlayImage,
+  bgColor = '#d6cec3',
 } = Astro.props;
 ---
 
@@ -30,9 +32,10 @@ const {
   class={cn(
     'flex',
     'gap-[20px] tb:gap-[60px] dk:gap-[40px]',
-    'w-full dk:w-dvw flex-col dk:flex-row dk:shrink-0',
+    'w-full dk:w-[1126px]  flex-col dk:flex-row dk:shrink-0',
   )}
   data-anim="project-card"
+  data-bg={bgColor}
 >
   <ProjectMedia bgImage={bgImage} overlayImage={overlayImage} />
   <ProjectContent

@@ -1,5 +1,7 @@
 ---
+import { COPY_READY_CLASS } from '../../../../components/Copy/utils/copy/shared';
 import { cn } from '../../../../lib/cn';
+import Copy from '../../../../components/Copy/index.astro';
 
 interface Props {
   title: string[];
@@ -20,31 +22,50 @@ const { title, subtitle } = Astro.props;
       )}
       data-anim="work-title"
     >
-      {
-        title.map((line, i) => (
-          <p
-            class={cn(
-              'm-0 leading-none whitespace-pre',
-              i === 1 && 'tb:ml-[1em]',
-              i === 2 && 'tb:ml-[2em]',
-            )}
-          >
-            {line}
-          </p>
-        ))
-      }
+      <Copy
+        variant="slide"
+        type="words"
+        stagger={0.2}
+        trigger="#work"
+        start="top 50%"
+        reverse
+      >
+        {
+          title.map((line, i) => (
+            <p
+              class={cn(
+                'm-0 leading-none whitespace-pre',
+                i === 1 && 'tb:ml-[1em]',
+                i === 2 && 'tb:ml-[2em]',
+              )}
+            >
+              {line}
+            </p>
+          ))
+        }
+      </Copy>
     </div>
     <!-- OUR WORK label -->
-    <p
-      class={cn(
-        'font-neue-medium relative',
-        'text-[16px]',
-        'tracking-[20px] tb:tracking-[40px] dk:tracking-[63.36px] dk-lg:tracking-[105.8px]',
-        'tb:ml-[11em] dk:ml-[17.5em]',
-      )}
-      data-anim="work-subtitle"
+    <Copy
+      variant="slide"
+      type="chars"
+      stagger={0.2}
+      trigger="#work"
+      start="top 50%"
+      reverse
+      delay={1}
     >
-      {subtitle}
-    </p>
+      <p
+        class={cn(
+          'font-neue-medium relative',
+          'text-[16px]',
+          'tracking-[20px] tb:tracking-[40px] dk:tracking-[67px] dk-lg:tracking-[105.8px]',
+          'tb:ml-[11em] dk:ml-[22em]',
+        )}
+        data-anim="work-subtitle"
+      >
+        {subtitle}
+      </p>
+    </Copy>
   </div>
 </div>

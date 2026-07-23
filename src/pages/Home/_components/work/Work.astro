@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 const projects = t.work.projects;
 ---
 
-<section id="work" class="bg-primary-cream relative z-10">
+<section id="work" class="bg-primary-cream relative z-10 overflow-hidden">
   <div
     class={cn(
       // layout
@@ -53,9 +53,18 @@ const projects = t.work.projects;
             statLabel={project.statLabel}
             bgImage={project.bgImage}
             overlayImage={project.overlayImage}
+            bgColor={project.bgColor}
           />
         ))
       }
+
+      <!-- Extra track width so the last card can reach the text-reveal position -->
+      <div
+        class="dk:block dk:w-[12vw] dk-lg:w-[14.5vw] hidden shrink-0"
+        data-anim="work-end-spacer"
+        aria-hidden="true"
+      >
+      </div>
     </div>
   </div>
 </section>
