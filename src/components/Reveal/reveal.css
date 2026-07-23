@@ -1,0 +1,35 @@
+/* Hide until setup finishes (avoids FOUC before initial offset). */
+[data-reveal]:not(.reveal-ready) {
+  visibility: hidden;
+}
+
+/*
+ * Animate transform/opacity via GSAP only.
+ * Tailwind `transition` on buttons/links otherwise fights the tween
+ * (lag / “held” feel before settling).
+ */
+[data-reveal]
+  :is(
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    img,
+    picture,
+    video,
+    figure,
+    blockquote,
+    ul,
+    ol,
+    li,
+    table,
+    a,
+    button,
+    label
+  ) {
+  will-change: transform, opacity;
+  transition-property: background-color, border-color, color, box-shadow, filter;
+}

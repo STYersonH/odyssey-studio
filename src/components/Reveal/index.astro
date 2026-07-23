@@ -1,0 +1,123 @@
+---
+import { cn } from '../../lib/cn';
+import './reveal.css';
+
+type Direction = 'left' | 'right' | 'top' | 'bottom';
+
+interface Props {
+  /**
+   * Enter direction — where children come from.
+   * `left` | `right` | `top` | `bottom`
+   */
+  from?: Direction;
+  /**
+   * Exit direction on reverse / leave-back.
+   * Defaults to `from` (tween plays backwards).
+   * With `scrub`, exit is always the scrub reverse (`out` ignored).
+   */
+  out?: Direction | null;
+  /** Play when scrolled into view; if false, play on mount. Ignored when scrubbing. */
+  animateOnScroll?: boolean;
+  /** Seconds before enter starts (play-once only). */
+  delay?: number;
+  /** Delay between children. */
+  stagger?: number | null;
+  /** Pixel travel for the offset. */
+  distance?: number | null;
+  /** ScrollTrigger trigger selector (default = Reveal root). */
+  trigger?: string | null;
+  /** ScrollTrigger start. */
+  start?: string | null;
+  /** ScrollTrigger end — used when `scrub` is on. */
+  end?: string | null;
+  /**
+   * Tie progress to scroll between `start` → `end`.
+   * `true` = scrub; number = scrub smoothness (GSAP lag).
+   */
+  scrub?: boolean | number;
+  /**
+   * Play-once: reverse (or play `out`) on scroll-up past `start`.
+   * Ignored with `scrub`.
+   */
+  reverse?: boolean;
+  /** GSAP ease when not scrubbing. */
+  ease?: string | null;
+  /** Tween duration in seconds (play-once). */
+  duration?: number | null;
+  class?: string;
+}
+
+const {
+  from = 'right',
+  out = null,
+  animateOnScroll = true,
+  delay = 0,
+  stagger = null,
+  distance = null,
+  trigger = null,
+  start = null,
+  end = null,
+  scrub = false,
+  reverse = false,
+  ease = null,
+  duration = null,
+  class: className = '',
+} = Astro.props;
+
+const revealOptions = JSON.stringify({
+  from,
+  out,
+  animateOnScroll,
+  delay,
+  stagger,
+  distance,
+  trigger,
+  start,
+  end,
+  scrub,
+  reverse,
+  ease,
+  duration,
+});
+---
+
+<!--
+  Reveal — stagger children in/out by direction (no SplitText).
+
+  Animates direct element children of this wrapper (never bare <span>s).
+
+  @example Enter from the right on scroll
+    <Reveal from="right">
+      <p>01 / 05</p>
+      <h3>OH Architecture</h3>
+      <p>Description…</p>
+    </Reveal>
+
+  @example Reverse on scroll up (same path back)
+    <Reveal from="bottom" reverse>
+      <div>A</div>
+      <div>B</div>
+    </Reveal>
+
+  @example Enter from right, exit toward left
+    <Reveal from="right" out="left" reverse>
+      <p>One</p>
+      <p>Two</p>
+    </Reveal>
+
+  @example Scrubbed
+    <Reveal from="left" scrub start="top 80%" end="top 40%">
+      <h2>Headline</h2>
+      <p>Body</p>
+    </Reveal>
+-->
+<div data-reveal data-reveal-options={revealOptions} class={cn(className)}>
+  <slot />
+</div>
+
+<script>
+  import { initRevealAnimations } from './animation';
+
+  initRevealAnimations();
+  document.addEventListener('astro:page-load', () => initRevealAnimations());
+</script>
