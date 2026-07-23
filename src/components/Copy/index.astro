@@ -1,0 +1,140 @@
+---
+import { cn } from '../../lib/cn';
+import './copy.css';
+
+interface Props {
+  /** Registered strategy id. Built-ins: `slide` | `flicker` | `random` | `blur` | `depth`. */
+  variant?: string;
+  /** Play when scrolled into view; if false, play on mount. Ignored when `scrub` is on. */
+  animateOnScroll?: boolean;
+  /** Seconds before reveal starts (play-once mode only). */
+  delay?: number;
+  /** Delay between units/elements (strategy default if omitted). */
+  stagger?: number | null;
+  /** Split unit (`slide` / `blur` / `random`). */
+  type?: 'lines' | 'words' | 'chars';
+  /** ScrollTrigger trigger selector (default = Copy root). */
+  trigger?: string | null;
+  /** Alias for `trigger`; wins when both are set. */
+  triggerPoint?: string | null;
+  /** ScrollTrigger start (strategy default if omitted). */
+  start?: string | null;
+  /** ScrollTrigger end — used when `scrub` is enabled (default `top 20%`). */
+  end?: string | null;
+  /**
+   * Tie animation progress to scroll between `start` → `end`.
+   * `true` = scrub; number = scrub smoothness (GSAP lag).
+   * Supported by `slide`, `random`, `blur`, and `depth` — flicker ignores scrub.
+   */
+  scrub?: boolean | number;
+  /**
+   * Play-once only: reverse back to the hidden state on scroll-up past `start`
+   * (and replay on re-enter). Ignored with `scrub` or `variant="flicker"`.
+   */
+  reverse?: boolean;
+  /**
+   * GSAP ease when not scrubbing (e.g. `power3.out`, `circ.out`, `hop`).
+   * Ignored with `scrub` (always `none`). Strategy default if omitted.
+   */
+  ease?: string | null;
+  /** Tween duration in seconds. Strategy default if omitted. */
+  duration?: number | null;
+  class?: string;
+}
+
+const {
+  variant = 'slide',
+  animateOnScroll = true,
+  delay = 0,
+  stagger = null,
+  type = 'lines',
+  trigger = null,
+  triggerPoint = null,
+  start = null,
+  end = null,
+  scrub = false,
+  reverse = false,
+  ease = null,
+  duration = null,
+  class: className = '',
+} = Astro.props;
+
+/** Serialized for the client script (Astro props are not visible inside `<script>`). */
+const copyOptions = JSON.stringify({
+  variant,
+  animateOnScroll,
+  delay,
+  stagger,
+  type,
+  trigger,
+  triggerPoint,
+  start,
+  end,
+  scrub,
+  reverse,
+  ease,
+  duration,
+});
+---
+
+<!--
+  Copy — animated text reveal (slide | flicker | random | blur | depth).
+
+  Always wraps the slot (Astro can't clone a single child like React).
+  Nested text nodes share one sequential stagger across all lines.
+
+  @example Play once on enter (default)
+    <Copy>
+      <h1>Subject Identified</h1>
+    </Copy>
+
+  @example Custom ease + duration (play-once)
+    <Copy ease="hop" duration={1.2}>
+      <h1>Subject Identified</h1>
+    </Copy>
+
+  @example Reverse on scroll up (play-once)
+    <Copy reverse>
+      <h1>Subject Identified</h1>
+    </Copy>
+
+  @example Scrubbed progress (slide / random / blur / depth)
+    <Copy scrub start="top 80%" end="top 20%">
+      <h1>Subject Identified</h1>
+    </Copy>
+
+  @example Flicker on mount
+    <Copy variant="flicker" animateOnScroll={false}>
+      <p>Surveillance log entry</p>
+    </Copy>
+
+  @example Random (3D char flip + random stagger)
+    <Copy variant="random" type="chars">
+      <h1>ODYSSEY</h1>
+    </Copy>
+
+  @example Blur (progressive focus from soft → sharp)
+    <Copy variant="blur" scrub start="top 90%" end="top 30%">
+      <p>Long body copy that clears line by line…</p>
+    </Copy>
+
+  @example Depth (3D word reveal)
+    <Copy variant="depth" stagger={0.1}>
+      <h2>Preventing burnout and</h2>
+    </Copy>
+-->
+<div
+  data-copy
+  data-copy-wrapper="true"
+  data-copy-options={copyOptions}
+  class={cn(className)}
+>
+  <slot />
+</div>
+
+<script>
+  import { initCopyAnimations } from './animation';
+
+  initCopyAnimations();
+  document.addEventListener('astro:page-load', () => initCopyAnimations());
+</script>

@@ -1,5 +1,7 @@
 # Astro Starter Kit: Basics
 
+**Methodology:** [docs/framework/methodology.md](docs/framework/methodology.md)
+
 ```sh
 pnpm create astro@latest -- --template basics
 ```
