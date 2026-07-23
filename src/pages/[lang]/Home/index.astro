@@ -6,6 +6,7 @@ import Layout from '../../../layouts/Layout.astro';
 import Hero from '../../Home/_components/hero/Hero.astro';
 import About from '../../Home/_components/about/About.astro';
 import Slogan from '../../Home/_components/slogan/Slogan.astro';
+import Work from '../../Home/_components/work/Work.astro';
 import Header from '../../../components/header/index.astro';
 
 export function getStaticPaths() {
@@ -22,6 +23,7 @@ const { lang } = Astro.params as { lang: Locale };
   <About lang={lang} />
 
   <Slogan lang={lang} />
+  <Work lang={lang} />
 </Layout>
 
 <script>

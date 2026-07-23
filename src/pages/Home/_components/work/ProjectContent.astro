@@ -1,0 +1,67 @@
+---
+import { cn } from '../../../../lib/cn';
+
+interface Props {
+  number: string;
+  total: string;
+  title: string;
+  description: string;
+  statNumber: string;
+  statLabel: string;
+}
+
+const { number, total, title, description, statNumber, statLabel } = Astro.props;
+---
+
+<div
+  class={cn(
+    'flex flex-row dk:flex-col flex-wrap tb:flex-nowrap items-start shrink-0 font-neue-medium not-italic',
+    'gap-3 tb:gap-[40px] dk:gap-[80px]',
+    'w-full dk:w-[321px] mb-10 tb:mb-0',
+  )}
+>
+  <div class={cn('flex flex-col gap-[8px] items-start w-full')}>
+    <p
+      class={cn('text-[14px] text-[#666] w-full', 'tb:text-[18px]')}
+      data-anim="project-number"
+    >
+      {number} / {total}
+    </p>
+    <div class="flex w-full flex-col items-start gap-[16px]">
+      <h3
+        class={cn(
+          'h3 text-black w-full m-0',
+          'text-[32px] tb:text-[40px] dk:text-[52px]',
+        )}
+        data-anim="project-title"
+      >
+        {title}
+      </h3>
+      <p
+        class={cn(
+          'body-2 text-[#666] w-full m-0',
+          'text-[14px] tb:text-[18px] dk:text-[20px]',
+        )}
+        data-anim="project-desc"
+      >
+        {description}
+      </p>
+    </div>
+  </div>
+  <div
+    class="tb:w-[237px] tb:max-w-none tb:ml-0 ml-auto flex w-auto max-w-[115px] flex-col items-start gap-[4px] text-black"
+  >
+    <p
+      class={cn('leading-[1.1] w-full m-0', 'text-[24px] tb:text-[36px] dk:text-[42px]')}
+      data-anim="project-stat"
+    >
+      {statNumber}
+    </p>
+    <p
+      class={cn('body-2 w-full m-0', 'text-[14px] tb:text-[20px]')}
+      data-anim="project-stat-label"
+    >
+      {statLabel}
+    </p>
+  </div>
+</div>

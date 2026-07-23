@@ -1,0 +1,49 @@
+---
+import { cn } from '../../../../lib/cn';
+
+interface Props {
+  bgImage?: string;
+  overlayImage?: string;
+}
+
+const { bgImage, overlayImage } = Astro.props;
+---
+
+<div class="relative grid place-items-start leading-[0]">
+  <!-- Background image layer with gradient placeholder -->
+  <div
+    class={cn(
+      'col-start-1 row-start-1 relative overflow-hidden bg-gradient-to-br from-neutral-700 to-neutral-900',
+      'aspect-881/636 w-full dk:w-[662px]',
+    )}
+  >
+    {
+      bgImage && (
+        <img
+          src={bgImage}
+          alt=""
+          class="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
+      )
+    }
+  </div>
+  <!-- Overlay image layer with gradient placeholder -->
+  <div
+    class={cn(
+      'col-start-1 row-start-1 relative overflow-hidden bg-gradient-to-tr from-neutral-600 to-neutral-800',
+      'm-auto w-[75%] aspect-722/480',
+    )}
+  >
+    {
+      overlayImage && (
+        <img
+          src={overlayImage}
+          alt=""
+          class="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
+      )
+    }
+  </div>
+</div>

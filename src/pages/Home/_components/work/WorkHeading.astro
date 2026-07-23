@@ -1,0 +1,50 @@
+---
+import { cn } from '../../../../lib/cn';
+
+interface Props {
+  title: string[];
+  subtitle: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<div class="shrink-0" data-anim="work-heading">
+  <!-- Main title: THE ODYSSEYS WE HELPED -->
+  <div class={cn('flex flex-col', 'not-italic text-[#171717] whitespace-nowrap')}>
+    <div
+      class={cn(
+        'h1 relative',
+        'text-[64px] tb:text-[80px] dk:text-[160px]',
+        'leading-none',
+      )}
+      data-anim="work-title"
+    >
+      {
+        title.map((line, i) => (
+          <p
+            class={cn(
+              'm-0 leading-none whitespace-pre',
+              i === 1 && 'tb:ml-[1em]',
+              i === 2 && 'tb:ml-[2em]',
+            )}
+          >
+            {line}
+          </p>
+        ))
+      }
+    </div>
+    <!-- OUR WORK label -->
+    <p
+      class={cn(
+        'font-neue-medium relative',
+        'text-[16px]',
+        'tracking-[20px] tb:tracking-[40px] dk:tracking-[63.36px] dk-lg:tracking-[105.8px]',
+        'tb:ml-[11em] dk:ml-[17.5em]',
+      )}
+      data-anim="work-subtitle"
+    >
+      {subtitle}
+    </p>
+  </div>
+</div>

@@ -42,6 +42,43 @@ const es = {
     lines: ['TE HAREMOS', 'ESTAR MÁS', 'CERCA DE'],
     vision: 'TU VISIÓN',
   },
+
+  work: {
+    title: ['LAS', 'ODISEAS', 'QUE AYUDAMOS'],
+    subtitle: 'NUESTRO TRABAJO',
+    projects: [
+      {
+        number: '01',
+        total: '05',
+        title: 'OH Architecture',
+        description: 'Lorem ipsum dolor sit amet consectetur. Elementum scelerisque duis lacus sem vulputate at urna.',
+        statNumber: '+10',
+        statLabel: 'Nuevos proyectos',
+        bgImage: '/images/work-oh-arch-bg.png',
+        overlayImage: '/images/work-oh-arch-overlay.png',
+      },
+      {
+        number: '02',
+        total: '05',
+        title: 'SUPERSOLID',
+        description: 'Lorem ipsum dolor sit amet consectetur. Elementum scelerisque duis lacus sem vulputate at urna.',
+        statNumber: '+2000',
+        statLabel: 'Nuevos usuarios activos en la plataforma',
+        bgImage: '/images/work-supersolid-bg.png',
+        overlayImage: '/images/work-supersolid-overlay.png',
+      },
+      {
+        number: '03',
+        total: '05',
+        title: 'MAMOTS MURALS',
+        description: 'Lorem ipsum dolor sit amet consectetur. Elementum scelerisque duis lacus sem vulputate at urna.',
+        statNumber: '+18',
+        statLabel: 'Nuevos murales en la ciudad',
+        bgImage: '/images/work-mamots-bg.png',
+        overlayImage: '/images/work-mamots-overlay.png',
+      },
+    ],
+  },
 };
 
 export default es;

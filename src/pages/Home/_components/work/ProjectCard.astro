@@ -1,0 +1,46 @@
+---
+import { cn } from '../../../../lib/cn';
+import ProjectMedia from './ProjectMedia.astro';
+import ProjectContent from './ProjectContent.astro';
+
+interface Props {
+  number: string;
+  total: string;
+  title: string;
+  description: string;
+  statNumber: string;
+  statLabel: string;
+  bgImage?: string;
+  overlayImage?: string;
+}
+
+const {
+  number,
+  total,
+  title,
+  description,
+  statNumber,
+  statLabel,
+  bgImage,
+  overlayImage,
+} = Astro.props;
+---
+
+<div
+  class={cn(
+    'flex',
+    'gap-[20px] tb:gap-[60px] dk:gap-[40px]',
+    'w-full dk:w-dvw flex-col dk:flex-row dk:shrink-0',
+  )}
+  data-anim="project-card"
+>
+  <ProjectMedia bgImage={bgImage} overlayImage={overlayImage} />
+  <ProjectContent
+    number={number}
+    total={total}
+    title={title}
+    description={description}
+    statNumber={statNumber}
+    statLabel={statLabel}
+  />
+</div>
