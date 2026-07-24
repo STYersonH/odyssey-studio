@@ -1,17 +1,18 @@
 /* TEXT TOKENS */
 
 /* Breakpoint values must be literals here — var() is invalid inside @media. */
+/* --text-100 clamp: designSize / frameWidth * 100 → vw (frames 390 / 440 / 1025 / 1600) */
 :root {
-  /* Mobile (default) */
+  /* Mobile (default) — 64px @ 390 → 16.41vw */
   --text-16: 14px;
   --text-18: 14px;
   --text-32: 24px;
   --text-36: 24px;
   --text-40: 32px;
-  --text-100: 64px;
+  --text-100: clamp(56px, 16.41vw, 80px);
 }
 
-/* tb — matches --breakpoint-tb in figma_var.css */
+/* tb — matches --breakpoint-tb in figma_var.css — 80px @ 440 → 18.18vw */
 @media (width >= 440px) {
   :root {
     --text-16: 16px;
@@ -19,11 +20,11 @@
     --text-32: 24px;
     --text-36: 32px;
     --text-40: 40px;
-    --text-100: 80px;
+    --text-100: clamp(3rem, 13vw, 5rem);
   }
 }
 
-/* dk — matches --breakpoint-dk */
+/* dk — matches --breakpoint-dk — 130px @ 1025 → 12.68vw */
 @media (width >= 1025px) {
   :root {
     --text-16: 16px;
@@ -35,7 +36,7 @@
   }
 }
 
-/* dk-lg — matches --breakpoint-dk-lg */
+/* dk-lg — matches --breakpoint-dk-lg — 160px @ 1600 → 10vw */
 @media (width >= 1600px) {
   :root {
     --text-16: 16px;
