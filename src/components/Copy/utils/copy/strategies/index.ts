@@ -2,7 +2,10 @@ import { blurStrategy } from './blur';
 import { depthStrategy } from './depth';
 import { flickerStrategy } from './flicker';
 import { randomStrategy } from './random';
-import { slideStrategy } from './slide';
+import {
+  slideFromBottomStrategy,
+  slideFromTopStrategy,
+} from './slide';
 import type { CopyStrategy } from '../types';
 
 /**
@@ -16,7 +19,10 @@ import type { CopyStrategy } from '../types';
  * Only strategy modules live in this folder. Shared helpers live in `../`.
  */
 const strategies: Record<string, CopyStrategy> = {
-  slide: slideStrategy,
+  slideFromBottom: slideFromBottomStrategy,
+  slideFromTop: slideFromTopStrategy,
+  /** Alias of `slideFromBottom` for older call sites. */
+  slide: slideFromBottomStrategy,
   flicker: flickerStrategy,
   random: randomStrategy,
   blur: blurStrategy,
@@ -24,7 +30,7 @@ const strategies: Record<string, CopyStrategy> = {
 };
 
 export function getCopyStrategy(variant: string): CopyStrategy {
-  return strategies[variant] ?? strategies.slide;
+  return strategies[variant] ?? strategies.slideFromBottom;
 }
 
 export function registerCopyStrategy(strategy: CopyStrategy) {

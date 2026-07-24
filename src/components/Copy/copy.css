@@ -5,6 +5,10 @@
   will-change: transform, opacity, filter;
 }
 
+.word {
+  transform-style: preserve-3d;
+}
+
 /* Hide the copy until its reveal is set up (see COPY_READY_CLASS). */
 [data-copy]:not(.copy-ready) {
   visibility: hidden;

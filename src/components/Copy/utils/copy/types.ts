@@ -1,4 +1,6 @@
 export type CopyVariant =
+  | 'slideFromBottom'
+  | 'slideFromTop'
   | 'slide'
   | 'flicker'
   | 'random'
@@ -67,8 +69,5 @@ export type CopyStrategyInstance = {
 export type CopyStrategy = {
   id: string;
   defaults: CopyStrategyDefaults;
-  setup: (
-    ctx: CopyStrategyContext,
-    helpers: CopyStrategyHelpers,
-  ) => CopyStrategyInstance;
+  setup: (ctx: CopyStrategyContext, helpers: CopyStrategyHelpers) => CopyStrategyInstance;
 };

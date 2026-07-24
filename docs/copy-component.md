@@ -36,7 +36,7 @@ flowchart TD
   astro["index.astro (SSR)"] -->|"props → JSON en data-copy-options"| dom["div[data-copy]"]
   script["script cliente"] -->|"astro:page-load"| anim["animation.ts"]
   anim -->|"lee data-copy-options"| create["createCopyAnimation()"]
-  create -->|"variant"| strat["strategy (slide / flicker / random / blur)"]
+  create -->|"variant"| strat["strategy (slideFromBottom / slideFromTop / flicker / random / blur)"]
   strat --> gsap["GSAP + SplitText + ScrollTrigger"]
 ```
 
@@ -54,16 +54,16 @@ Visibilidad: el root se oculta con `[data-copy]:not(.copy-ready)` hasta que la s
 
 | Prop | Tipo | Default | Notas |
 | ---- | ---- | ------- | ----- |
-| `variant` | `'slide' \| 'flicker' \| 'random' \| 'blur' \| 'depth' \| string` | `'slide'` | Strategy registrada. |
+| `variant` | `'slideFromBottom' \| 'slideFromTop' \| 'flicker' \| 'random' \| 'blur' \| 'depth' \| string` | `'slideFromBottom'` | Strategy registrada. (`slide` sigue como alias de `slideFromBottom`.) |
 | `animateOnScroll` | `boolean` | `true` | `true` = al entrar en viewport; `false` = al montar. Ignorado con `scrub`. |
 | `delay` | `number` | `0` | Segundos antes del reveal (solo play-once). |
 | `stagger` | `number \| null` | default de la strategy | Delay entre unidades. |
-| `type` | `'lines' \| 'words' \| 'chars'` | `'lines'` | `slide` / `blur` / `random`: unidad de split. |
+| `type` | `'lines' \| 'words' \| 'chars'` | `'lines'` | `slideFromBottom` / `slideFromTop` / `blur` / `random`: unidad de split. |
 | `trigger` | `string \| null` | `null` | Selector del trigger de ScrollTrigger (default = root). |
 | `triggerPoint` | `string \| null` | `null` | Alias de `trigger`; gana si ambos están. |
 | `start` | `string \| null` | default de la strategy | ScrollTrigger `start`. |
 | `end` | `string \| null` | `'top 20%'` | ScrollTrigger `end` (se usa con `scrub`). |
-| `scrub` | `boolean \| number` | `false` | Liga el progress al scroll entre `start`→`end`. Número = suavizado (lag). Solo `slide`/`random`/`blur`/`depth`. |
+| `scrub` | `boolean \| number` | `false` | Liga el progress al scroll entre `start`→`end`. Número = suavizado (lag). Solo slides/`random`/`blur`/`depth`. |
 | `reverse` | `boolean` | `false` | Play-once: revierte al estado inicial al subir el scroll y re-reproduce al bajar. Ignorado con `scrub` o `flicker`. |
 | `ease` | `string \| null` | default de la strategy | Ease GSAP en play-once/mount (`power3.out`, `circ.out`, `hop`, …). Con `scrub` siempre es `none`. |
 | `duration` | `number \| null` | default de la strategy | Duración del tween en segundos. Con `scrub` siempre es `1`. |
@@ -79,7 +79,7 @@ Defaults por strategy (si no pasas `ease` / `duration`):
 
 | Strategy | `ease` | `duration` |
 | -------- | ------ | ---------- |
-| `slide` | `power3.out` | `0.9` |
+| `slideFromBottom` / `slideFromTop` | `power3.out` | `0.9` |
 | `random` | `power3.out` | `0.75` |
 | `blur` | `power2.out` | `1.1` |
 | `depth` | `power3.out` | `1.15` |
@@ -88,7 +88,8 @@ Defaults por strategy (si no pasas `ease` / `duration`):
 
 | Variante | Split | `scrub` | `reverse` | `ease` |
 | -------- | ----- | ------- | --------- | ------ |
-| `slide` | lines / words / chars (mask) | sí | sí | sí |
+| `slideFromBottom` | lines / words / chars (mask, desde abajo) | sí | sí | sí |
+| `slideFromTop` | lines / words / chars (mask, desde arriba) | sí | sí | sí |
 | `random` | lines / words / chars (3D `rotateX`, stagger aleatorio) | sí | sí | sí |
 | `blur` | lines / words / chars (`filter: blur` + opacity) | sí | sí | sí |
 | `depth` | words (perspective + `rotateX` + Z + blur) | sí | sí | sí |
@@ -130,6 +131,11 @@ Defaults por strategy (si no pasas `ease` / `duration`):
 <!-- Scrub ligado al scroll -->
 <Copy scrub start="top 85%" end="top 35%">
   <h2>This follows your scroll</h2>
+</Copy>
+
+<!-- Slide desde arriba -->
+<Copy variant="slideFromTop" type="words">
+  <h2>We help with your odyssey</h2>
 </Copy>
 
 <!-- Random 3D flip (chars por palabra + stagger aleatorio) -->
