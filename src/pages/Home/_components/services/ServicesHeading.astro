@@ -7,19 +7,23 @@ import Copy from '../../../../components/Copy/index.astro';
 interface Props {
   title: string[];
   subtitle: string;
+  subtitleDesktop: string;
   lang?: Locale;
 }
 
-const { title, subtitle, lang = DEFAULT_LOCALE } = Astro.props;
+const { title, subtitle, subtitleDesktop, lang = DEFAULT_LOCALE } = Astro.props;
 const isEs = lang === 'es';
+/** mb/tb: first word on its own line, rest below (e.g. OUR / SERVICES). */
+const subtitleWords = subtitle.trim().split(/\s+/);
 ---
 
 <!--
-  mb: subtitle above title (Figma).
-  tb+: title first, subtitle tracking under — same idea as WorkHeading.
+  Title first, then subtitle under — same idea as Process / Work.
+  mb/tb: subtitle stacked + right-aligned.
+  dk+: single line with tracking indent.
 -->
 <div
-  class={cn('relative shrink-0', 'flex flex-col-reverse items-start', 'tb:flex-col')}
+  class={cn('relative flex w-full shrink-0 flex-col items-start dk:w-auto')}
   data-anim="services-heading"
 >
   <div
@@ -56,34 +60,60 @@ const isEs = lang === 'es';
     </Copy>
   </div>
 
-  <Copy
-    variant="slide"
-    type="chars"
-    stagger={0.1}
-    trigger="#services"
-    start="top 50%"
-    reverse
-    delay={1}
-  >
-    <p
-      class={cn(
-        'font-neue-medium relative text-white uppercase',
-        // Figma mb 12 / tb 14 / dk 16 / dk-lg 20
-        'text-[0.75rem] tb:text-[0.875rem] dk:text-[1rem] dk-lg:text-[1.25rem]',
-        // mb: sits above title; tb+: under title block
-        'mb-[1rem] tb:mb-0 tb:pt-[1em]',
-        // EN: "OUR SERVICES"
-        !isEs &&
-          'tracking-[0.88rem] tb:tracking-[1.74rem] dk:tracking-[1.93rem] dk-lg:tracking-[3.5rem]',
-        !isEs && 'tb:ml-[3.87rem] dk:ml-[6.8rem] dk-lg:ml-[11.2rem]',
-        // ES: "SERVICIOS"
-        isEs &&
-          'tracking-[1.8rem] tb:tracking-[2.55rem] dk:tracking-[2.9rem] dk-lg:tracking-[5.1rem]',
-        isEs && 'ml-[0.3rem] tb:ml-[3.8rem] dk:ml-[6.5rem] dk-lg:ml-[10.75rem]',
-      )}
-      data-anim="services-subtitle"
+  <!-- mb/tb: stacked, right-aligned — same as Process (leading 25 / tracking 18) -->
+  <div class="dk:hidden ml-auto w-fit pt-[1em]" data-anim="services-subtitle">
+    <Copy
+      variant="slide"
+      type="chars"
+      stagger={0.1}
+      trigger="#services"
+      start="top 50%"
+      reverse
+      delay={1}
     >
-      {subtitle}
-    </p>
-  </Copy>
+      {
+        subtitleWords.map((word) => (
+          <p
+            class={cn(
+              'font-neue-medium m-0 uppercase text-white',
+              'text-[0.75rem] tb:text-[0.875rem]',
+              'leading-[1.5625rem] tracking-[1.125rem]',
+            )}
+          >
+            {word}
+          </p>
+        ))
+      }
+    </Copy>
+  </div>
+
+  <!-- dk+: single line, indented -->
+  <div class="hidden dk:block">
+    <Copy
+      variant="slide"
+      type="chars"
+      stagger={0.1}
+      trigger="#services"
+      start="top 50%"
+      reverse
+      delay={1}
+    >
+      <p
+        class={cn(
+          'font-neue-medium relative uppercase text-white',
+          'dk:text-[1rem] dk-lg:text-[1.25rem]',
+          'pt-[1em]',
+          // EN: "OUR SERVICES"
+          !isEs && 'dk:tracking-[1.93rem] dk-lg:tracking-[3.5rem]',
+          !isEs && 'dk:ml-[6.8rem] dk-lg:ml-[11.2rem]',
+          // ES: "SERVICIOS"
+          isEs && 'dk:tracking-[2.9rem] dk-lg:tracking-[5.1rem]',
+          isEs && 'dk:ml-[6.5rem] dk-lg:ml-[10.75rem]',
+        )}
+        data-anim="services-subtitle-dk"
+      >
+        {subtitleDesktop}
+      </p>
+    </Copy>
+  </div>
 </div>

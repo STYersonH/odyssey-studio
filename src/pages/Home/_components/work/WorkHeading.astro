@@ -7,14 +7,18 @@ import Copy from '../../../../components/Copy/index.astro';
 interface Props {
   title: string[];
   subtitle: string;
+  subtitleDesktop: string;
   lang?: Locale;
 }
 
-const { title, subtitle, lang = DEFAULT_LOCALE } = Astro.props;
+const { title, subtitle, subtitleDesktop, lang = DEFAULT_LOCALE } = Astro.props;
 const isEs = lang === 'es';
+/** mb/tb: first word on its own line, rest below (e.g. OUR / WORK). */
+const subtitleWords = subtitle.trim().split(/\s+/);
 ---
 
-<div class="shrink-0" data-anim="work-heading">
+<!-- w-full only on mb/tb (subtitle ml-auto); dk:w-auto so the track gap isn't inflated -->
+<div class="dk:w-auto flex w-full shrink-0 flex-col" data-anim="work-heading">
   <!-- Main title: THE ODYSSEYS WE HELPED -->
   <div class={cn('flex flex-col', 'not-italic text-[#171717] whitespace-nowrap')}>
     <div
@@ -48,7 +52,37 @@ const isEs = lang === 'es';
         }
       </Copy>
     </div>
-    <!-- OUR WORK / PROYECTOS — tracking + ml tuned per locale (string length differs) -->
+  </div>
+
+  <!-- mb/tb: stacked, right-aligned — same as Process (leading 25 / tracking 18) -->
+  <div class="dk:hidden ml-auto w-fit pt-[1em]" data-anim="work-subtitle">
+    <Copy
+      variant="slide"
+      type="chars"
+      stagger={0.1}
+      trigger="#work"
+      start="top 50%"
+      reverse
+      delay={1}
+    >
+      {
+        subtitleWords.map((word) => (
+          <p
+            class={cn(
+              'font-neue-medium m-0 uppercase',
+              'tb:text-[14px] text-[12px]',
+              'leading-[1.5625rem] tracking-[1.125rem]',
+            )}
+          >
+            {word}
+          </p>
+        ))
+      }
+    </Copy>
+  </div>
+
+  <!-- dk+: single line, indented -->
+  <div class="dk:block hidden">
     <Copy
       variant="slide"
       type="chars"
@@ -60,22 +94,19 @@ const isEs = lang === 'es';
     >
       <p
         class={cn(
-          'font-neue-medium relative',
-          // Figma mb 12 / tb 14 / dk 16
-          'text-[12px] tb:text-[14px] dk:text-[16px]',
+          'font-neue-medium relative uppercase',
+          'dk:text-[16px]',
           'pt-[1em]',
-          // EN: "OUR WORK" — mb tracking ~41 / ml ~5
-          !isEs &&
-            'tracking-[40px] tb:tracking-[50px] dk:tracking-[86px] dk-lg:tracking-[110px]',
-          !isEs && 'ml-[5px] tb:ml-[170px] dk:ml-[17.7em] dk-lg:ml-[21.5em]',
+          // EN: "OUR WORK"
+          !isEs && 'dk:tracking-[86px] dk-lg:tracking-[110px]',
+          !isEs && 'dk:ml-[17.7em] dk-lg:ml-[21.5em]',
           // ES: "PROYECTOS"
-          isEs &&
-            'tracking-[34px] tb:tracking-[43px] dk:tracking-[75px] dk-lg:tracking-[96px]',
-          isEs && 'ml-[2px] tb:ml-[160px] dk:ml-[16.2em] dk-lg:ml-[20em]',
+          isEs && 'dk:tracking-[75px] dk-lg:tracking-[96px]',
+          isEs && 'dk:ml-[16.2em] dk-lg:ml-[20em]',
         )}
-        data-anim="work-subtitle"
+        data-anim="work-subtitle-dk"
       >
-        {subtitle}
+        {subtitleDesktop}
       </p>
     </Copy>
   </div>

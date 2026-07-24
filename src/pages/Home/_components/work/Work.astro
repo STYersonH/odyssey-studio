@@ -35,7 +35,12 @@ const projects = t.work.projects;
       )}
       data-anim="work-track"
     >
-      <WorkHeading lang={lang} title={t.work.title} subtitle={t.work.subtitle} />
+      <WorkHeading
+        lang={lang}
+        title={t.work.title}
+        subtitle={t.work.subtitle}
+        subtitleDesktop={t.work.subtitleDesktop}
+      />
       <ProjectStage projects={projects} />
     </div>
   </div>
@@ -80,7 +85,12 @@ const projects = t.work.projects;
     )}
     data-anim="work-mobile"
   >
-    <WorkHeading lang={lang} title={t.work.title} subtitle={t.work.subtitle} />
+    <WorkHeading
+      lang={lang}
+      title={t.work.title}
+      subtitle={t.work.subtitle}
+      subtitleDesktop={t.work.subtitleDesktop}
+    />
     <div
       class={cn(
         'flex w-full flex-col',
