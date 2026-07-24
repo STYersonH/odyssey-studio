@@ -91,6 +91,8 @@ export const initWorkAnimation = createSectionAnimationController({
 
       const getIntroDistance = () => window.innerHeight * 0.45;
       const getStepDistance = () => window.innerHeight * 0.7;
+      /** Extra pin after the last project so it can be read before unpinning. */
+      const getLastHoldDistance = () => window.innerHeight * 0.85;
       /** Extra nudge so WorkHeading clears the left edge once a project is active. */
       const getHeadingNudge = () => Math.min(window.innerWidth * 0.28, 420);
 
@@ -112,7 +114,12 @@ export const initWorkAnimation = createSectionAnimationController({
 
       const totalScroll = () => {
         const park = Math.abs(getParkTargetX());
-        return getIntroDistance() + Math.max(park, 1) + n * getStepDistance();
+        return (
+          getIntroDistance() +
+          Math.max(park, 1) +
+          n * getStepDistance() +
+          getLastHoldDistance()
+        );
       };
 
       gsap.set(root, { backgroundColor: WORK_BG_DEFAULT });
@@ -368,7 +375,9 @@ export const initWorkAnimation = createSectionAnimationController({
             const intro = getIntroDistance();
             const park = Math.max(Math.abs(getParkTargetX()), 1);
             const step = getStepDistance();
-            const total = intro + park + n * step;
+            const lastHold = getLastHoldDistance();
+            const stepsSpan = n * step;
+            const total = intro + park + stepsSpan + lastHold;
             const pos = self.progress * total;
             const parkEnd = intro + park;
 
@@ -379,7 +388,8 @@ export const initWorkAnimation = createSectionAnimationController({
             }
 
             const intoSteps = pos - parkEnd;
-            const projectProgress = intoSteps / (n * step);
+            // During lastHold, stay on the final project with progress filled
+            const projectProgress = Math.min(1, intoSteps / stepsSpan);
             const index = Math.min(n - 1, Math.floor(intoSteps / step));
             updateProgressUi(projectProgress, activeIndex < 0 ? index : activeIndex);
             goTo(index);
@@ -394,6 +404,7 @@ export const initWorkAnimation = createSectionAnimationController({
         ease: 'none',
       });
       parkTl.to({}, { duration: () => n * getStepDistance() });
+      parkTl.to({}, { duration: () => getLastHoldDistance() });
 
       const onResize = () => ScrollTrigger.refresh();
       window.addEventListener('resize', onResize);
