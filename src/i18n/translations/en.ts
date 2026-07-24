@@ -49,6 +49,7 @@ const en: Translations = {
   work: {
     title: ['THE', 'ODYSSEYS', 'WE HELPED'],
     subtitle: 'OUR WORK',
+    subtitleDesktop: 'OUR WORK',
     projects: [
       {
         number: '01',
@@ -92,6 +93,7 @@ const en: Translations = {
   services: {
     title: ['WE CAN', 'HELP WITH'],
     subtitle: 'OUR SERVICES',
+    subtitleDesktop: 'OUR SERVICES',
     defaultActive: 1,
     items: [
       {
@@ -123,6 +125,41 @@ const en: Translations = {
         description:
           'Flows that turn interest into bookings and sales without friction.',
         images: ['/images/services-preview-b.png', '/images/services-preview-a.png'],
+      },
+    ],
+  },
+
+  process: {
+    title: ['THE WORK', 'THAT WE DO'],
+    titleMobile: ['THE', 'WORK THAT', 'WE DO'],
+    subtitle: 'OUR PROCESS',
+    subtitleDesktop: 'OUR PROCESS',
+    heroImage: '/images/process-notebook.png',
+    heroImageAlt: 'Hand writing ideas in a notebook',
+    steps: [
+      {
+        number: '01',
+        title: 'We uncover your story',
+        description:
+          'We dig deep into your brand, surface what makes you irreplaceable, and shape it into sharp positioning and a website strategy that connects in seconds.',
+        image: '/images/process-step-01-b.png',
+        imageAlt: 'Brand preview on a device',
+      },
+      {
+        number: '02',
+        title: 'We shape your digital presence',
+        description:
+          'With your narrative locked, we design and direct a brand and website that feels premium, signals credibility, and gives your audience one clear reason to lean in and act.',
+        image: '/images/process-step-01-a.png',
+        imageAlt: 'Digital presence preview',
+      },
+      {
+        number: '03',
+        title: 'We send it into the world',
+        description:
+          "Your brand and website goes live as a long-term asset that turns attention into opportunity, attracts the clients you're built for, and grows with you.",
+        image: '/images/services-preview-b.png',
+        imageAlt: 'Live brand preview',
       },
     ],
   },

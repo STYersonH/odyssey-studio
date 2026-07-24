@@ -47,8 +47,9 @@ const es = {
   },
 
   work: {
-    title: ['LAS ODISEAS', 'EN LAS QUE', 'AYUDAMOS'],
-    subtitle: 'PROYECTOS',
+    title: ['ODISEAS', 'EN LAS QUE', 'AYUDAMOS'],
+    subtitle: 'NUESTROS PROYECTOS',
+    subtitleDesktop: 'PROYECTOS',
     projects: [
       {
         number: '01',
@@ -91,7 +92,8 @@ const es = {
 
   services: {
     title: ['PODEMOS', 'AYUDARTE'],
-    subtitle: 'SERVICIOS',
+    subtitle: 'NUESTROS SERVICIOS',
+    subtitleDesktop: 'SERVICIOS',
     defaultActive: 1,
     items: [
       {
@@ -123,6 +125,41 @@ const es = {
         description:
           'Flujos que convierten el interés en reservas y ventas sin fricción.',
         images: ['/images/services-preview-b.png', '/images/services-preview-a.png'],
+      },
+    ],
+  },
+
+  process: {
+    title: ['LO QUE', 'HACEMOS'],
+    titleMobile: ['LO', 'QUE', 'HACEMOS'],
+    subtitle: 'NUESTRO PROCESO',
+    subtitleDesktop: 'NUESTRO PROCESO',
+    heroImage: '/images/process-notebook.png',
+    heroImageAlt: 'Mano escribiendo ideas en un cuaderno',
+    steps: [
+      {
+        number: '01',
+        title: 'Descubrimos tu historia',
+        description:
+          'Profundizamos en tu marca, sacamos a la luz lo que te hace irreemplazable y lo convertimos en un posicionamiento nítido y una estrategia web que conecta en segundos.',
+        image: '/images/process-step-01-b.png',
+        imageAlt: 'Vista previa de marca en dispositivo',
+      },
+      {
+        number: '02',
+        title: 'Damos forma a tu presencia digital',
+        description:
+          'Con la narrativa definida, diseñamos y dirigimos una marca y un sitio que se sienten premium, transmiten credibilidad y dan a tu audiencia una razón clara para acercarse y actuar.',
+        image: '/images/process-step-01-a.png',
+        imageAlt: 'Vista previa de presencia digital',
+      },
+      {
+        number: '03',
+        title: 'Lo lanzamos al mundo',
+        description:
+          'Tu marca y tu sitio salen al aire como un activo a largo plazo que convierte atención en oportunidad, atrae a los clientes para los que estás hecho y crece contigo.',
+        image: '/images/services-preview-b.png',
+        imageAlt: 'Vista previa de marca en vivo',
       },
     ],
   },

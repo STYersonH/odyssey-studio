@@ -1,0 +1,70 @@
+---
+import type { Locale } from '../../../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../../../i18n/locales';
+import { useTranslations } from '../../../../i18n/utils';
+import { cn } from '../../../../lib/cn';
+import ProcessHeading from './ProcessHeading.astro';
+import ProcessStep from './ProcessStep.astro';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const steps = t.process.steps;
+---
+
+<section id="process" class="bg-primary-cream relative z-10 overflow-hidden">
+  <div
+    class={cn(
+      'flex flex-col items-start',
+      // Figma: mb 12/32 · tb 24/48 · dk 48/64
+      'px-12px py-32px',
+      'tb:px-24px tb:py-48px',
+      'dk:px-48px dk:py-64px',
+      // heading → steps
+      'gap-48px dk:gap-120px',
+    )}
+  >
+    <ProcessHeading
+      lang={lang}
+      title={t.process.title}
+      titleMobile={t.process.titleMobile}
+      subtitle={t.process.subtitle}
+      subtitleDesktop={t.process.subtitleDesktop}
+      heroImage={t.process.heroImage}
+      heroImageAlt={t.process.heroImageAlt}
+    />
+
+    <div
+      class={cn(
+        'flex w-full flex-col items-start',
+        // Figma ~25 between step wrappers + dividers
+        'gap-24px',
+        'dk:w-[94.8125rem] dk:max-w-full dk:self-end',
+      )}
+      data-anim="process-steps"
+    >
+      {
+        steps.map((step, index) => (
+          <ProcessStep
+            index={index}
+            number={step.number}
+            title={step.title}
+            description={step.description}
+            image={step.image}
+            imageAlt={step.imageAlt}
+            showDivider={index < steps.length - 1}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initProcessAnimation } from './animation';
+
+  document.addEventListener('astro:page-load', () => initProcessAnimation());
+</script>

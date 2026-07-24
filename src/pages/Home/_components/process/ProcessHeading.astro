@@ -1,0 +1,166 @@
+---
+import { cn } from '../../../../lib/cn';
+import type { Locale } from '../../../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../../../i18n/locales';
+import Copy from '../../../../components/Copy/index.astro';
+
+interface Props {
+  title: string[];
+  titleMobile: string[];
+  subtitle: string;
+  subtitleDesktop: string;
+  heroImage: string;
+  heroImageAlt: string;
+  lang?: Locale;
+}
+
+const {
+  title,
+  titleMobile,
+  subtitle,
+  subtitleDesktop,
+  heroImage,
+  heroImageAlt,
+  lang = DEFAULT_LOCALE,
+} = Astro.props;
+const isEs = lang === 'es';
+/** mb/tb: first word on its own line, rest below (e.g. OUR / PROCESS). */
+const subtitleWords = subtitle.trim().split(/\s+/);
+---
+
+<div
+  class={cn(
+    'flex w-full flex-col items-start',
+    'dk:flex-row dk:items-center dk:gap-100px dk-lg:gap-120px',
+  )}
+  data-anim="process-heading"
+>
+  <div
+    class={cn(
+      'relative flex w-full shrink-0 flex-col dk:w-auto',
+      'text-primary-dark not-italic',
+    )}
+  >
+    <!-- Mobile title (3 lines) — Figma mb 390 / 64px → 16.41vw -->
+    <div
+      class={cn(
+        'h1 relative tb:hidden',
+        'text-[clamp(3.5rem,16.41vw,4rem)]',
+        'leading-none whitespace-nowrap',
+      )}
+      data-anim="process-title"
+    >
+      <Copy
+        variant="slide"
+        type="words"
+        stagger={0.2}
+        trigger="#process"
+        start="top 55%"
+        reverse
+      >
+        {titleMobile.map((line) => <p class="m-0 leading-none whitespace-pre">{line}</p>)}
+      </Copy>
+    </div>
+
+    <!-- Tablet+ title (2 lines) -->
+    <div
+      class={cn(
+        'h1 relative hidden tb:block',
+        // Figma tb 80 / dk 100 / dk-lg 160
+        'tb:text-[5rem] dk:text-[6.25rem] dk-lg:text-[10rem]',
+        'leading-none whitespace-nowrap',
+      )}
+      data-anim="process-title-tb"
+    >
+      <Copy
+        variant="slide"
+        type="words"
+        stagger={0.2}
+        trigger="#process"
+        start="top 55%"
+        reverse
+      >
+        {
+          title.map((line, i) => (
+            <p class={cn('m-0 leading-none whitespace-pre', i === 1 && 'tb:ml-[0.9em]')}>
+              {line}
+            </p>
+          ))
+        }
+      </Copy>
+    </div>
+
+    <!-- mb/tb: stacked, right-aligned — Figma leading 25 / tracking 18 -->
+    <div class="dk:hidden ml-auto w-fit pt-[1em]" data-anim="process-subtitle">
+      <Copy
+        variant="slide"
+        type="chars"
+        stagger={0.08}
+        trigger="#process"
+        start="top 55%"
+        reverse
+        delay={0.85}
+      >
+        {
+          subtitleWords.map((word) => (
+            <p
+              class={cn(
+                'font-neue-medium m-0 uppercase',
+                'tb:text-[0.875rem] text-[clamp(0.6875rem,3.08vw,0.75rem)]',
+                'leading-[1.5625rem] tracking-[1.125rem]',
+              )}
+            >
+              {word}
+            </p>
+          ))
+        }
+      </Copy>
+    </div>
+
+    <!-- dk+: single line, indented -->
+    <div class="dk:block hidden">
+      <Copy
+        variant="slide"
+        type="chars"
+        stagger={0.08}
+        trigger="#process"
+        start="top 55%"
+        reverse
+        delay={0.85}
+      >
+        <p
+          class={cn(
+            'font-neue-medium relative uppercase',
+            'dk:text-[1rem] dk-lg:text-[1.25rem]',
+            'pt-[1em]',
+            // EN: "OUR PROCESS"
+            !isEs && 'dk:tracking-[3.8rem] dk-lg:tracking-[4.7rem]',
+            !isEs && 'dk:ml-[9.3rem] dk-lg:ml-[11.5rem]',
+            // ES: "NUESTRO PROCESO"
+            isEs && 'dk:tracking-[2.06rem] dk-lg:tracking-[2.55rem]',
+            isEs && 'dk:ml-[7.8rem] dk-lg:ml-[9.6rem]',
+          )}
+          data-anim="process-subtitle-dk"
+        >
+          {subtitleDesktop}
+        </p>
+      </Copy>
+    </div>
+  </div>
+
+  <!-- Hero image — desktop only: fills leftover width + title column height -->
+  <div
+    class={cn(
+      'relative hidden min-w-0 overflow-hidden will-change-[clip-path]',
+      'dk:block dk:flex-1 dk:self-stretch',
+    )}
+    data-anim="process-hero"
+  >
+    <img
+      src={heroImage}
+      alt={heroImageAlt}
+      class="absolute inset-0 size-full object-cover"
+      loading="lazy"
+    />
+  </div>
+</div>
