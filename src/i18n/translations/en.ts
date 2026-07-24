@@ -88,6 +88,44 @@ const en: Translations = {
       },
     ],
   },
+
+  services: {
+    title: ['WE CAN', 'HELP WITH'],
+    subtitle: 'OUR SERVICES',
+    defaultActive: 1,
+    items: [
+      {
+        title: 'Website Strategy',
+        description:
+          'We map goals, audience, and journey so every page has a clear job to do.',
+        images: ['/images/work-oh-arch-bg.png', '/images/work-oh-arch-overlay.png'],
+      },
+      {
+        title: 'UX/UI Design',
+        description:
+          'Interfaces that feel effortless — researched, structured, and polished for conversion.',
+        images: ['/images/services-preview-a.png', '/images/services-preview-b.png'],
+      },
+      {
+        title: 'Website Design',
+        description:
+          'Visual systems and layouts that carry your brand with clarity and presence.',
+        images: ['/images/work-supersolid-bg.png', '/images/work-supersolid-overlay.png'],
+      },
+      {
+        title: 'Website Development',
+        description:
+          'Fast, accessible builds engineered to scale — from launch to long-term growth.',
+        images: ['/images/work-mamots-bg.png', '/images/work-mamots-overlay.png'],
+      },
+      {
+        title: 'Booking & Commerce',
+        description:
+          'Flows that turn interest into bookings and sales without friction.',
+        images: ['/images/services-preview-b.png', '/images/services-preview-a.png'],
+      },
+    ],
+  },
 };
 
 export default en;

@@ -1,0 +1,113 @@
+---
+import type { Locale } from '../../../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../../../i18n/locales';
+import { useTranslations } from '../../../../i18n/utils';
+import { cn } from '../../../../lib/cn';
+import NoiseOverlay from '../../../../components/noise-overlay/index.astro';
+import ServicesHeading from './ServicesHeading.astro';
+import ServicePreview from './ServicePreview.astro';
+import ServiceList from './ServiceList.astro';
+import ServiceDescription from './ServiceDescription.astro';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const items = t.services.items;
+const activeIndex = t.services.defaultActive;
+const active = items[activeIndex] ?? items[0];
+const activeImages = [active.images[0], active.images[1]] as [string, string];
+---
+
+<section
+  id="services"
+  class={cn(
+    'bg-primary-dark relative z-10 w-full overflow-hidden',
+    'dk:flex dk:min-h-screen dk:flex-col',
+  )}
+  data-services-active={String(activeIndex)}
+>
+  <NoiseOverlay />
+
+  <div
+    class={cn(
+      'relative z-[2] flex w-full flex-col items-center',
+      // Figma SERVICES padding: mb 12/32 · tb 48/48 · dk 48/64
+      'px-[0.75rem] py-[2rem]',
+      'tb:px-[3rem] tb:py-[3rem]',
+      'dk:min-h-screen dk:px-[3rem] dk:py-[4rem]',
+      // heading → body
+      'gap-[2rem] tb:gap-[3rem] dk:gap-[4rem]',
+      // Desktop: distribute content across the viewport
+      'dk:justify-between',
+    )}
+  >
+    <ServicesHeading
+      lang={lang}
+      title={t.services.title}
+      subtitle={t.services.subtitle}
+    />
+
+    <div
+      class={cn(
+        'flex w-full flex-col items-center',
+        // Figma tb: images then list (gap 32)
+        'gap-[2rem]',
+        // dk: two columns — stretch to fill leftover height under the heading
+        'dk:min-h-0 dk:flex-1 dk:flex-row dk:items-stretch dk:gap-[1.25rem]',
+      )}
+      data-anim="services-body"
+    >
+      <!-- Left: preview + desktop description -->
+      <div
+        class={cn(
+          'flex w-full flex-col',
+          'dk:flex-1 dk:justify-between',
+          'dk:pl-[3.75rem] dk-lg:pl-[6.25rem]',
+        )}
+        data-anim="services-visual"
+      >
+        <div class="dk:justify-start flex w-full justify-center">
+          <ServicePreview
+            images={activeImages}
+            overlay="/images/services-preview-a-overlay.png"
+            showOverlay={activeIndex === 1}
+          />
+        </div>
+
+        <!-- Desktop-only description (bottom of left column) — Copy slideFromTop after images -->
+        <div class="dk:mt-auto" data-anim="services-desc-desktop">
+          <ServiceDescription text={active.description} placement="desktop" />
+        </div>
+      </div>
+
+      <!-- Right / below: service list -->
+      <div
+        class={cn(
+          'w-full',
+          'tb:max-w-[32.25rem] tb:self-center',
+          'dk:max-w-none dk:flex-1 dk:self-center',
+          'dk-lg:px-[2.5rem]',
+        )}
+        data-anim="services-list-wrap"
+      >
+        <ServiceList items={items} activeIndex={activeIndex} />
+      </div>
+    </div>
+  </div>
+
+  <script
+    is:inline
+    type="application/json"
+    data-services-payload
+    set:html={JSON.stringify(items)}
+  />
+</section>
+
+<script>
+  import { initServicesAnimation } from './animation';
+
+  document.addEventListener('astro:page-load', () => initServicesAnimation());
+</script>

@@ -1,0 +1,84 @@
+---
+import { cn } from '../../../../lib/cn';
+
+interface Props {
+  images: [string, string];
+  /** Optional overlay stacked on the first card (Figma mammoth sticker layer). */
+  overlay?: string;
+  showOverlay?: boolean;
+}
+
+const { images, overlay, showOverlay = false } = Astro.props;
+const [front, back] = images;
+---
+
+<div
+  class={cn(
+    'relative mx-auto shrink-0 dk:mx-0',
+    // Figma stack footprint
+    'h-[11.875rem] w-full max-w-[22.875rem]',
+    'tb:h-[15.625rem] tb:max-w-[31.875rem]',
+    'dk:h-[15.625rem] dk:max-w-[31.875rem]',
+    'dk-lg:h-[20rem] dk-lg:max-w-[40.625rem]',
+  )}
+  data-anim="services-preview"
+>
+  <!-- Outer = GSAP target (opacity / y / scale / rotation). Start flat (0°). -->
+  <div
+    class={cn(
+      'absolute top-0 left-0',
+      'w-[51%] aspect-[264/176]',
+      'tb:w-[16.5rem] tb:aspect-auto tb:h-[11rem]',
+      'dk-lg:w-[20.9375rem] dk-lg:h-[13.9375rem]',
+      'will-change-transform',
+    )}
+    data-anim="services-card-a"
+    data-rotation="-2"
+  >
+    <div class="relative size-full overflow-hidden rounded-[0.25rem]">
+      <img
+        src={front}
+        alt=""
+        class="absolute inset-0 size-full object-cover"
+        data-anim="services-card-a-img"
+        decoding="async"
+      />
+      {
+        overlay && (
+          <img
+            src={overlay}
+            alt=""
+            class={cn(
+              'pointer-events-none absolute inset-0 size-full object-cover',
+              !showOverlay && 'hidden',
+            )}
+            data-anim="services-card-a-overlay"
+            decoding="async"
+          />
+        )
+      }
+    </div>
+  </div>
+
+  <div
+    class={cn(
+      'absolute',
+      'top-[3.9375rem] left-[49%] w-[51%] aspect-[268/178]',
+      'tb:top-[3.9375rem] tb:left-[14.8125rem] tb:w-[16.75rem] tb:aspect-auto tb:h-[11.125rem]',
+      'dk-lg:top-[5rem] dk-lg:left-[18.8125rem] dk-lg:w-[21.25rem] dk-lg:h-[14.125rem]',
+      'will-change-transform',
+    )}
+    data-anim="services-card-b"
+    data-rotation="2"
+  >
+    <div class="relative size-full overflow-hidden rounded-[0.25rem]">
+      <img
+        src={back}
+        alt=""
+        class="absolute inset-0 size-full object-cover"
+        data-anim="services-card-b-img"
+        decoding="async"
+      />
+    </div>
+  </div>
+</div>

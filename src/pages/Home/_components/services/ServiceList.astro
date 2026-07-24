@@ -1,0 +1,66 @@
+---
+import { cn } from '../../../../lib/cn';
+import ServiceDescription from './ServiceDescription.astro';
+
+interface ServiceItem {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  items: ServiceItem[];
+  activeIndex: number;
+}
+
+const { items, activeIndex } = Astro.props;
+---
+
+<ul
+  class={cn(
+    'm-0 flex w-full list-none flex-col p-0',
+    // Figma mb 4 / tb+dk 8 / dk-lg 4
+    'gap-[0.25rem] tb:gap-[0.5rem] dk-lg:gap-[0.25rem]',
+    'font-neue-medium not-italic',
+  )}
+  data-anim="services-list"
+  role="listbox"
+  aria-label="Services"
+>
+  {
+    items.map((item, i) => {
+      const isActive = i === activeIndex;
+      return (
+        <li class="w-full" data-anim="services-item" data-index={String(i)}>
+          <button
+            type="button"
+            class={cn(
+              'services-item-btn w-full cursor-pointer border-0 bg-transparent p-0 text-left',
+              // Figma mb 36 / tb 52 / dk 56 / dk-lg 72
+              'text-[2.25rem] tb:text-[3.25rem] dk:text-[3.5rem] dk-lg:text-[4.5rem]',
+              'leading-[1.1]',
+              'will-change-transform',
+              isActive ? 'text-white' : 'text-[#4d4d4d]',
+              'transition-colors duration-300',
+            )}
+            data-anim="services-item-btn"
+            data-index={String(i)}
+            role="option"
+            aria-selected={isActive ? 'true' : 'false'}
+          >
+            {item.title}
+          </button>
+
+          <!-- mb/tb: description under the active item (instant open/close). -->
+          <div
+            class="w-full overflow-hidden dk:hidden"
+            data-anim="services-item-desc"
+            data-index={String(i)}
+            style={isActive ? undefined : 'height: 0'}
+          >
+            <ServiceDescription text={item.description} placement="mobile" />
+          </div>
+        </li>
+      );
+    })
+  }
+</ul>

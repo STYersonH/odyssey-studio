@@ -1,0 +1,89 @@
+---
+import { cn } from '../../../../lib/cn';
+import type { Locale } from '../../../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../../../i18n/locales';
+import Copy from '../../../../components/Copy/index.astro';
+
+interface Props {
+  title: string[];
+  subtitle: string;
+  lang?: Locale;
+}
+
+const { title, subtitle, lang = DEFAULT_LOCALE } = Astro.props;
+const isEs = lang === 'es';
+---
+
+<!--
+  mb: subtitle above title (Figma).
+  tb+: title first, subtitle tracking under — same idea as WorkHeading.
+-->
+<div
+  class={cn('relative shrink-0', 'flex flex-col-reverse items-start', 'tb:flex-col')}
+  data-anim="services-heading"
+>
+  <div
+    class={cn(
+      'relative text-white font-neue-medium',
+      // Figma mb/tb 80 / dk 90 / dk-lg 150
+      'text-[4rem] dk:text-[5.625rem] dk-lg:text-[9.375rem]',
+      'leading-none',
+      'whitespace-normal tb:whitespace-nowrap',
+    )}
+    data-anim="services-title"
+  >
+    <Copy
+      variant="slide"
+      type="words"
+      stagger={0.2}
+      trigger="#services"
+      start="top 50%"
+      reverse
+    >
+      {
+        title.map((line, i) => (
+          <p
+            class={cn(
+              'm-0 leading-none',
+              // Second line indent from tablet up (Figma “      HELP WITH”)
+              i === 1 && 'tb:ml-[0.75em] dk:ml-[1.15em]',
+            )}
+          >
+            {line}
+          </p>
+        ))
+      }
+    </Copy>
+  </div>
+
+  <Copy
+    variant="slide"
+    type="chars"
+    stagger={0.1}
+    trigger="#services"
+    start="top 50%"
+    reverse
+    delay={1}
+  >
+    <p
+      class={cn(
+        'font-neue-medium relative text-white uppercase',
+        // Figma mb 12 / tb 14 / dk 16 / dk-lg 20
+        'text-[0.75rem] tb:text-[0.875rem] dk:text-[1rem] dk-lg:text-[1.25rem]',
+        // mb: sits above title; tb+: under title block
+        'mb-[1rem] tb:mb-0 tb:pt-[1em]',
+        // EN: "OUR SERVICES"
+        !isEs &&
+          'tracking-[0.88rem] tb:tracking-[1.74rem] dk:tracking-[1.93rem] dk-lg:tracking-[3.5rem]',
+        !isEs && 'tb:ml-[3.87rem] dk:ml-[6.8rem] dk-lg:ml-[11.2rem]',
+        // ES: "SERVICIOS"
+        isEs &&
+          'tracking-[1.8rem] tb:tracking-[2.55rem] dk:tracking-[2.9rem] dk-lg:tracking-[5.1rem]',
+        isEs && 'ml-[0.3rem] tb:ml-[3.8rem] dk:ml-[6.5rem] dk-lg:ml-[10.75rem]',
+      )}
+      data-anim="services-subtitle"
+    >
+      {subtitle}
+    </p>
+  </Copy>
+</div>
