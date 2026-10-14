@@ -1,0 +1,279 @@
+---
+import type { Locale } from '../../../../i18n/locales';
+import { DEFAULT_LOCALE } from '../../../../i18n/locales';
+import { useTranslations } from '../../../../i18n/utils';
+import { cn } from '../../../../lib/cn';
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const t = useTranslations(lang);
+const footer = t.footer;
+
+const labelClass = cn(
+  'm-0 font-neue-medium text-[#666]',
+  'text-[1rem] tb:text-[1.25rem]',
+  'leading-[1.3] tb:leading-[1.1]',
+);
+
+const navLinkClass = cn(
+  'font-neue-medium text-white no-underline',
+  'text-[2.25rem] tb:text-[3.125rem]',
+  'leading-[1.1]',
+);
+
+const infoValueClass = cn(
+  'font-neue-medium text-white no-underline',
+  'text-[1rem] tb:text-[1.5rem]',
+  'leading-[1.3] tb:leading-[1.1]',
+);
+
+const socialLinkClass = cn(
+  'inline-flex items-center gap-[0.875rem] text-white no-underline',
+  'font-neue-medium text-[1rem] tb:text-[1.75rem]',
+  'leading-[1.3] tb:leading-[1.1]',
+);
+
+const legalClass = cn(
+  'm-0 font-neue-medium text-white uppercase no-underline',
+  'text-[0.6875rem] tb:text-[0.875rem]',
+  'leading-[1.1]',
+);
+---
+
+<section
+  id="footer"
+  class={cn(
+    'relative w-full bg-primary-dark',
+    'pt-[7.5rem] pb-0 tb:pb-5 dk:pb-10',
+  )}
+  data-header-theme="dark"
+>
+  <div data-anim="footer-curtain" class="relative bg-primary-dark">
+    <div
+      class={cn(
+        'hidden dk:grid dk:grid-cols-12 dk:items-stretch',
+        'dk:gap-x-5 dk:px-12 dk:py-[0.625rem]',
+      )}
+    >
+      <div class="col-span-5 flex flex-col justify-between">
+        <p
+          class={cn(
+            'm-0 max-w-[27rem] font-neue-medium uppercase text-[#333]',
+            'text-[5rem] leading-[1.1]',
+          )}
+        >
+          {
+            footer.headline.map((line) => (
+              <span class="block">{line}</span>
+            ))
+          }
+        </p>
+        <p class={cn('m-0 font-neue-medium text-[1.125rem] leading-[1.1] text-white')}>
+          {footer.location}
+        </p>
+      </div>
+
+      <div class="col-span-3 col-start-6 w-full dk-lg:w-[20.0625rem]">
+        <p class={labelClass}>{footer.navigationLabel}</p>
+        <ul class="m-0 mt-8 flex list-none flex-col gap-3 p-0">
+          {
+            footer.nav.map((item) => (
+              <li class="flex flex-col gap-3">
+                <a href={item.href} class={navLinkClass}>
+                  {item.label}
+                </a>
+                <span class="h-px w-full bg-white/20" aria-hidden="true" />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="col-span-3 col-start-10 flex flex-col justify-between">
+        <div class="flex flex-col gap-8">
+          <p class={labelClass}>{footer.infoLabel}</p>
+          <div class="flex flex-col gap-4">
+            <a href={`mailto:${footer.email}`} class={infoValueClass}>
+              {footer.email}
+            </a>
+            <a href={footer.phoneHref} class={infoValueClass}>
+              {footer.phone}
+            </a>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-8">
+          <p class={labelClass}>{footer.socialsLabel}</p>
+          <ul class="m-0 flex list-none flex-col gap-4 p-0">
+            {
+              footer.socials.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class={socialLinkClass}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {item.label}
+                    <img
+                      src="/images/footer/arrow-up-right.svg"
+                      alt=""
+                      width="20"
+                      height="20"
+                      class="size-5 shrink-0"
+                    />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class={cn('flex flex-col gap-14 px-3 tb:px-6 dk:hidden')}>
+      <div>
+        <p class={labelClass}>{footer.navigationLabel}</p>
+        <ul class="m-0 mt-4 flex list-none flex-col gap-2 p-0 tb:mt-8 tb:gap-3">
+          {
+            footer.nav.map((item) => (
+              <li class="flex flex-col gap-2 tb:gap-3">
+                <a href={item.href} class={navLinkClass}>
+                  {item.label}
+                </a>
+                <span class="h-px w-full bg-white/20" aria-hidden="true" />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="flex items-start gap-5">
+        <div class="flex min-w-0 flex-1 flex-col gap-4 tb:gap-8">
+          <p class={labelClass}>{footer.infoLabel}</p>
+          <div class="flex flex-col gap-4">
+            <a href={`mailto:${footer.email}`} class={cn(infoValueClass, 'break-words')}>
+              {footer.email}
+            </a>
+            <a href={footer.phoneHref} class={infoValueClass}>
+              {footer.phone}
+            </a>
+          </div>
+        </div>
+
+        <div class="flex shrink-0 flex-col gap-4 tb:flex-1 tb:gap-8">
+          <p class={labelClass}>{footer.socialsLabel}</p>
+          <ul class="m-0 flex list-none flex-col gap-4 p-0">
+            {
+              footer.socials.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class={socialLinkClass}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {item.label}
+                    <img
+                      src="/images/footer/arrow-up-right.svg"
+                      alt=""
+                      width="20"
+                      height="20"
+                      class="size-3 shrink-0 tb:size-5"
+                    />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    data-anim="footer-reveal"
+    class={cn(
+      'relative z-10 flex flex-col will-change-transform',
+      'mt-10 gap-10 tb:mt-20 tb:gap-20 dk:gap-4',
+    )}
+  >
+    <div class="relative w-full">
+      <div
+        data-anim="footer-bar"
+        class={cn(
+          'pointer-events-none absolute top-1/2 left-0 w-full -translate-y-1/2 overflow-hidden bg-[#6d522c]',
+          'h-[0.8125rem] tb:h-8 dk:h-[3.125rem] dk-lg:h-[4.375rem]',
+        )}
+        aria-hidden="true"
+      >
+        <img
+          src="/images/footer/apricot-storm.svg"
+          alt=""
+          width="1477"
+          height="858"
+          class="absolute bottom-[-158%] left-[-2.6%] h-[1716%] w-[102.6%] max-w-none"
+        />
+      </div>
+
+      <p
+        data-anim="footer-word"
+        class={cn(
+          'relative z-10 m-0 w-full text-center font-neue-medium whitespace-nowrap text-white',
+          'text-[clamp(3rem,18.5vw,4.5rem)] tb:text-[20.16vw] dk:text-[20.83vw] dk-lg:text-[min(24.375rem,20.83vw)]',
+          'leading-none',
+        )}
+      >
+        <span data-anim="footer-word-part">OD</span><span
+          data-anim="footer-word-part"
+          class="font-neue-medium-italic">Y</span><span data-anim="footer-word-part">SSE</span><span
+          data-anim="footer-word-part"
+          class="font-neue-medium-italic">Y</span>
+      </p>
+    </div>
+
+    <div
+      class={cn(
+        'flex items-end justify-between gap-5 px-3',
+        'tb:px-6 dk:grid dk:grid-cols-12 dk:items-end dk:gap-x-5 dk:px-12',
+      )}
+    >
+      <div class="flex flex-col gap-1 tb:gap-3 dk:col-span-5">
+        <a href="#terms" class={legalClass}>{footer.terms}</a>
+        <a href="#privacy" class={legalClass}>{footer.privacy}</a>
+      </div>
+
+      <button
+        type="button"
+        data-anim="footer-back-to-top"
+        class={cn(
+          legalClass,
+          'hidden cursor-pointer items-center gap-3 border-0 bg-transparent p-0',
+          'tb:inline-flex dk:col-span-3 dk:col-start-10 dk:justify-self-end',
+        )}
+      >
+        {footer.backToTop}
+        <img
+          src="/images/footer/arrow-up.svg"
+          alt=""
+          width="16"
+          height="16"
+          class="size-4 shrink-0"
+        />
+      </button>
+
+      <p class={cn(legalClass, 'dk:col-span-4 dk:col-start-6')}>{footer.copyright}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initFooterAnimation } from './animation';
+
+  document.addEventListener('astro:page-load', () => {
+    initFooterAnimation();
+  });
+</script>

@@ -164,6 +164,34 @@ const en: Translations = {
       },
     ],
   },
+
+  footer: {
+    headline: ['WE HELP', 'WITH', 'YOUR', 'ODYSSEY.'],
+    location: 'Based in Cusco, Perú',
+    navigationLabel: '(Navigation)',
+    nav: [
+      { label: 'About', href: '#about' },
+      { label: 'Work', href: '#work' },
+      { label: 'Process', href: '#process' },
+      { label: 'Services', href: '#services' },
+      { label: 'Contact', href: 'mailto:info@byodysseystudio.com' },
+    ],
+    infoLabel: '(Info)',
+    email: 'info@byodysseystudio.com',
+    phone: '+51 927 829 352',
+    phoneHref: 'tel:+51927829352',
+    socialsLabel: '(Socials)',
+    socials: [
+      { label: 'Linkedin', href: 'https://www.linkedin.com' },
+      { label: 'Instagram', href: 'https://www.instagram.com' },
+      { label: 'Facebook', href: 'https://www.facebook.com' },
+      { label: 'Whatsapp', href: 'https://wa.me/51927829352' },
+    ],
+    terms: 'Terms of service',
+    privacy: 'Privacy policy',
+    copyright: '© 2026 Odyssey Agency',
+    backToTop: 'Back to top',
+  },
 };
 
 export default en;

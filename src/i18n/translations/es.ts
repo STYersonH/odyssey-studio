@@ -164,6 +164,34 @@ const es = {
       },
     ],
   },
+
+  footer: {
+    headline: ['AYUDAMOS', 'CON', 'TU', 'ODISEA.'],
+    location: 'Con base en Cusco, Perú',
+    navigationLabel: '(Navegación)',
+    nav: [
+      { label: 'Nosotros', href: '#about' },
+      { label: 'Proyectos', href: '#work' },
+      { label: 'Proceso', href: '#process' },
+      { label: 'Servicios', href: '#services' },
+      { label: 'Contacto', href: 'mailto:info@byodysseystudio.com' },
+    ],
+    infoLabel: '(Info)',
+    email: 'info@byodysseystudio.com',
+    phone: '+51 927 829 352',
+    phoneHref: 'tel:+51927829352',
+    socialsLabel: '(Redes)',
+    socials: [
+      { label: 'Linkedin', href: 'https://www.linkedin.com' },
+      { label: 'Instagram', href: 'https://www.instagram.com' },
+      { label: 'Facebook', href: 'https://www.facebook.com' },
+      { label: 'Whatsapp', href: 'https://wa.me/51927829352' },
+    ],
+    terms: 'Términos de servicio',
+    privacy: 'Política de privacidad',
+    copyright: '© 2026 Odyssey Agency',
+    backToTop: 'Volver arriba',
+  },
 };
 
 export default es;
