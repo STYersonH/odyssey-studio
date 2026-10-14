@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import { CustomEase } from 'gsap/CustomEase';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ensureCopyEases } from '../../../../components/Copy/utils/copy/eases';
 import { ensureLenisScroll } from '../../../../lib/lenisScroll';
 import { whenFontsReady } from '../../../../utils/when-fonts-ready';
@@ -147,11 +148,37 @@ export function initPreloader() {
   };
 
   const finish = () => {
-    gsap.set(root, { display: 'none', clearProps: 'transform' });
-    root.removeAttribute('data-preloader-active');
-    document.documentElement.style.overflow = '';
+    root.remove();
+    const html = document.documentElement;
+    html.style.removeProperty('overflow');
+    html.style.removeProperty('overflow-x');
+    html.style.removeProperty('overflow-y');
+    // lenis-stopped keeps overflow:hidden, so the scrollbar cannot return until Lenis starts.
     lenis.start();
-    running = false;
+
+    const settle = () => {
+      const vw = html.clientWidth;
+      const locked = [...document.querySelectorAll<HTMLElement>('body *')].filter(
+        (el) => el.style.width && el.getBoundingClientRect().right > vw + 1,
+      );
+      locked.forEach((el) => {
+        el.style.width = '';
+        el.style.maxWidth = '';
+      });
+      ScrollTrigger.refresh();
+      running = false;
+    };
+
+    const waitForScrollbar = (frame = 0) => {
+      const barIsVisible = html.clientWidth < window.innerWidth;
+      if (barIsVisible || frame >= 30) {
+        settle();
+        return;
+      }
+      requestAnimationFrame(() => waitForScrollbar(frame + 1));
+    };
+
+    requestAnimationFrame(() => waitForScrollbar());
   };
 
   const reveal = () => {
