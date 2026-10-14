@@ -40,9 +40,9 @@ const en: Translations = {
     },
     text: {
       paragraph1:
-        "Every project begins with a destination in mind. Whether you're building a travel brand, a hospitality experience, or something entirely new, it starts with a vision.",
+        "Every project begins with a destination in mind. Whether you're building a brand, launching a new business, or exploring something entirely different, it all starts with a vision.",
       paragraph2:
-        'Our role is to transform that vision into a meaningful digital journey—crafted with strategy, design, and technology to help your brand move forward with purpose.',
+        'Our role is to turn that vision into a meaningful digital journey — shaped by strategy, design, and technology to move your brand forward with purpose.',
     },
   },
 

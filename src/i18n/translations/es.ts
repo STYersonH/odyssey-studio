@@ -40,9 +40,9 @@ const es = {
     },
     text: {
       paragraph1:
-        'Todo proyecto comienza con un destino en mente. Ya sea que estés construyendo una marca de viajes, una experiencia hotelera o algo completamente nuevo, todo empieza con una visión.',
+        'Todo proyecto comienza con un destino en mente. Ya sea que estés construyendo una marca, lanzando un negocio nuevo o explorando algo completamente distinto, todo empieza con una visión.',
       paragraph2:
-        'Nuestro rol es transformar esa visión en un viaje digital significativo —creado con estrategia, diseño y tecnología para ayudar a tu marca a avanzar con propósito.',
+        'Nuestro rol es convertir esa visión en un viaje digital significativo — moldeado por la estrategia, el diseño y la tecnología para hacer avanzar tu marca con propósito.',
     },
   },
 
