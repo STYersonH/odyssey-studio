@@ -22,6 +22,10 @@ const en: Translations = {
     titleBottom: 'that transform the future',
     subheading:
       'We drive education, innovation and entrepreneurship in Andean communities to generate sustainable opportunities and connect local talent with the world.',
+    paragraph1:
+      'We craft premium websites and digital experiences for ambitious brands and businesses.',
+    paragraph2:
+      'For businesses that need a digital presence as remarkable as the work they do.',
     ctaText: 'BE AN ALLY',
     ctaHref: '#impacto',
     scrollLabel: 'SCROLL DOWN',

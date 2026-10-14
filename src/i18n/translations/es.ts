@@ -22,6 +22,10 @@ const es = {
     titleBottom: 'que transforman el futuro',
     subheading:
       'Impulsamos educación, innovación y emprendimiento en comunidades andinas para generar oportunidades sostenibles y conectar el talento local con el mundo.',
+    paragraph1:
+      'Creamos sitios web premium y experiencias digitales para marcas y negocios ambiciosos.',
+    paragraph2:
+      'Para negocios que necesitan una presencia digital tan notable como el trabajo que realizan.',
     ctaText: 'SÉ UN ALIADO',
     ctaHref: '#impacto',
     scrollLabel: 'SCROLL DOWN',

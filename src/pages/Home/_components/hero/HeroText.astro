@@ -1,5 +1,10 @@
 ---
+interface Props {
+  paragraph1: string;
+  paragraph2: string;
+}
 
+const { paragraph1, paragraph2 } = Astro.props;
 ---
 
 <div class="tb:items-start flex w-full flex-col items-center">
@@ -7,15 +12,13 @@
     data-anim="description"
     class="text-block-animate tb:text-left body-3 w-full max-w-[244px] text-center text-neutral-900"
   >
-    We craft premium websites and digital experiences for experience-led brands in life
-    styles and travel.
+    {paragraph1}
   </p>
   <p
     data-anim="description"
     class="text-block-animate tb:text-left body-3 mt-4 max-w-[244px] text-center text-neutral-900 md:mt-4"
   >
-    For businesses that need a digital presence as memorable as the experiences they
-    deliver.
+    {paragraph2}
   </p>
 </div>
 
