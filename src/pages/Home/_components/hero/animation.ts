@@ -3,6 +3,7 @@ import { SplitText } from 'gsap/SplitText';
 import { CustomEase } from 'gsap/all';
 import { clearSectionStyles } from '../../../../utils/clear-section-styles';
 import { createSectionAnimationController } from '../../../../utils/create-section-animation-controller';
+import { whenPreloaderDone } from '../Preloader/preloader-state';
 
 gsap.registerPlugin(CustomEase, SplitText);
 CustomEase.create('hop', '0.8, 0, 0.2, 1');
@@ -70,15 +71,21 @@ export const initHeroAnimation = createSectionAnimationController({
       descriptionLines.push(...lineSplit.lines);
     });
 
-    const timeline = gsap.timeline({ delay: 0.5 });
+    // Split + initial states run now; playback waits for the preloader reveal.
+    const timeline = gsap.timeline({ paused: true });
+    let cancelled = false;
 
     timeline
-      .to(titleChars, {
-        y: '0%',
-        duration: 2,
-        ease: 'hop',
-        stagger: { each: 0.075, from: 'random' },
-      })
+      .to(
+        titleChars,
+        {
+          y: '0%',
+          duration: 2,
+          ease: 'hop',
+          stagger: { each: 0.075, from: 'random' },
+        },
+        0.3,
+      )
       .to(titleStudio, { opacity: 1 }, '>-0.5')
       .to(coordinates, { opacity: 1 }, '>-0.5')
       .to(compassRose, { opacity: 1 }, '>-0.5')
@@ -93,7 +100,12 @@ export const initHeroAnimation = createSectionAnimationController({
         '<',
       );
 
+    void whenPreloaderDone().then(() => {
+      if (!cancelled) timeline.play();
+    });
+
     return () => {
+      cancelled = true;
       timeline.kill();
       clearSectionStyles(root, splits);
     };

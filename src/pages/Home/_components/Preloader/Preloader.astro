@@ -1,0 +1,76 @@
+---
+import { cn } from '../../../../lib/cn';
+
+/** Figma order: E on the left, W on the right (mirrors the Hero compass). */
+const cardinals = [
+  { letter: 'N', position: 'top-0 left-1/2' },
+  { letter: 'S', position: 'top-full left-1/2' },
+  { letter: 'E', position: 'top-1/2 left-0' },
+  { letter: 'W', position: 'top-1/2 left-full' },
+];
+---
+
+<div
+  class="bg-primary-dark fixed inset-0 z-[100]"
+  data-preloader
+  role="progressbar"
+  aria-label="Loading"
+  aria-valuemin="0"
+  aria-valuemax="99"
+  aria-valuenow="0"
+>
+  <div
+    class={cn(
+      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+      // Figma ~90px radius at 1440
+      '[--compass-r:4.5rem] tb:[--compass-r:5.625rem]',
+      'size-[calc(var(--compass-r)*2)]',
+      'font-neue-regular text-[1.25rem] leading-none tb:text-[1.5rem]',
+    )}
+  >
+    <div class="absolute inset-0 will-change-transform" data-preloader-ring aria-hidden="true">
+      {
+        cardinals.map(({ letter, position }) => (
+          <span
+            class={cn('absolute -translate-x-1/2 -translate-y-1/2 text-white opacity-0', position)}
+            data-preloader-letter={letter}
+          >
+            {letter}
+          </span>
+        ))
+      }
+    </div>
+
+    <!-- Two 0–9 columns. The count stops at 27, 41, 56, 72, 88, then 99. -->
+    <div
+      class="absolute inset-0 flex items-center justify-center text-[#4d4d4d] tabular-nums"
+      data-preloader-count
+      aria-hidden="true"
+    >
+      <div class="flex h-[1em] overflow-hidden" data-preloader-counter>
+        <div class="flex w-[1ch] flex-col" data-digit="tens"></div>
+        <div class="flex w-[1ch] flex-col" data-digit="ones"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<noscript>
+  <style is:global>
+    [data-preloader] {
+      display: none !important;
+    }
+  </style>
+</noscript>
+
+<style is:global>
+  html[data-preloader-done] [data-preloader]:not([data-preloader-active]) {
+    display: none;
+  }
+</style>
+
+<script>
+  import { initPreloader } from './animation';
+
+  document.addEventListener('astro:page-load', () => initPreloader());
+</script>
