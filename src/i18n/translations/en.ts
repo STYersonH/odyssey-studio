@@ -95,37 +95,37 @@ const en: Translations = {
     title: ['WE CAN', 'HELP WITH'],
     subtitle: 'OUR SERVICES',
     subtitleDesktop: 'OUR SERVICES',
-    defaultActive: 1,
+    defaultActive: 2,
     items: [
-      {
-        title: 'Website Strategy',
-        description:
-          'We map goals, audience, and journey so every page has a clear job to do.',
-        images: ['/images/work-oh-arch-bg.png', '/images/work-oh-arch-overlay.png'],
-      },
-      {
-        title: 'UX/UI Design',
-        description:
-          'Interfaces that feel effortless — researched, structured, and polished for conversion.',
-        images: ['/images/services-preview-a.png', '/images/services-preview-b.png'],
-      },
       {
         title: 'Website Design',
         description:
           'Visual systems and layouts that carry your brand with clarity and presence.',
-        images: ['/images/work-supersolid-bg.png', '/images/work-supersolid-overlay.png'],
+        images: ['/images/services/website-design-1.png', '/images/services/website-design-2.png'],
       },
       {
         title: 'Website Development',
         description:
           'Fast, accessible builds engineered to scale — from launch to long-term growth.',
-        images: ['/images/work-mamots-bg.png', '/images/work-mamots-overlay.png'],
+        images: ['/images/services/website-development-1.png', '/images/services/website-development-2.png'],
       },
       {
-        title: 'Booking & Commerce',
+        title: 'UX/UI Design',
         description:
-          'Flows that turn interest into bookings and sales without friction.',
-        images: ['/images/services-preview-b.png', '/images/services-preview-a.png'],
+          'Interfaces that feel effortless — researched, structured, and polished for conversion.',
+        images: ['/images/services/uxui-design-1.png', '/images/services/uxui-design-2.png'],
+      },
+      {
+        title: 'Reservas',
+        description:
+          'Booking flows that turn interest into reservations without friction.',
+        images: ['/images/services/reservas-1.png', '/images/services/reservas-2.png'],
+      },
+      {
+        title: 'E-commerce',
+        description:
+          'Storefronts that turn interest into sales without friction.',
+        images: ['/images/services/ecommerce-1.png', '/images/services/ecommerce-2.png'],
       },
     ],
   },

@@ -72,11 +72,7 @@ const activeImages = [active.images[0], active.images[1]] as [string, string];
         data-anim="services-visual"
       >
         <div class="dk:justify-start flex w-full justify-center">
-          <ServicePreview
-            images={activeImages}
-            overlay="/images/services-preview-a-overlay.png"
-            showOverlay={activeIndex === 1}
-          />
+            <ServicePreview images={activeImages} />
         </div>
 
         <!-- Desktop-only description (bottom of left column) — Copy slideFromTop after images -->

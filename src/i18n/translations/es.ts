@@ -95,37 +95,37 @@ const es = {
     title: ['PODEMOS', 'AYUDARTE'],
     subtitle: 'NUESTROS SERVICIOS',
     subtitleDesktop: 'SERVICIOS',
-    defaultActive: 1,
+    defaultActive: 2,
     items: [
-      {
-        title: 'Estrategia web',
-        description:
-          'Definimos objetivos, audiencia y recorrido para que cada página tenga un propósito claro.',
-        images: ['/images/work-oh-arch-bg.png', '/images/work-oh-arch-overlay.png'],
-      },
-      {
-        title: 'Diseño UX/UI',
-        description:
-          'Interfaces que se sienten naturales — investigadas, estructuradas y pensadas para convertir.',
-        images: ['/images/services-preview-a.png', '/images/services-preview-b.png'],
-      },
       {
         title: 'Diseño web',
         description:
           'Sistemas visuales y layouts que llevan tu marca con claridad y presencia.',
-        images: ['/images/work-supersolid-bg.png', '/images/work-supersolid-overlay.png'],
+        images: ['/images/services/website-design-1.png', '/images/services/website-design-2.png'],
       },
       {
         title: 'Desarrollo web',
         description:
           'Construcciones rápidas y accesibles, listas para escalar desde el lanzamiento.',
-        images: ['/images/work-mamots-bg.png', '/images/work-mamots-overlay.png'],
+        images: ['/images/services/website-development-1.png', '/images/services/website-development-2.png'],
       },
       {
-        title: 'Reservas & Commerce',
+        title: 'Diseño UX/UI',
         description:
-          'Flujos que convierten el interés en reservas y ventas sin fricción.',
-        images: ['/images/services-preview-b.png', '/images/services-preview-a.png'],
+          'Interfaces que se sienten naturales — investigadas, estructuradas y pensadas para convertir.',
+        images: ['/images/services/uxui-design-1.png', '/images/services/uxui-design-2.png'],
+      },
+      {
+        title: 'Reservas',
+        description:
+          'Flujos de reserva que convierten el interés en citas y estancias sin fricción.',
+        images: ['/images/services/reservas-1.png', '/images/services/reservas-2.png'],
+      },
+      {
+        title: 'E-commerce',
+        description:
+          'Tiendas que convierten el interés en ventas sin fricción.',
+        images: ['/images/services/ecommerce-1.png', '/images/services/ecommerce-2.png'],
       },
     ],
   },
