@@ -5,9 +5,10 @@ const en: Translations = {
   header: {
     brandAriaLabel: 'Odyssey - Home',
     mobileMenuAriaLabel: 'Open navigation',
+    closeAriaLabel: 'Close navigation',
+    langSwitchLabel: 'ES',
+    langSwitchAriaLabel: 'Switch to Spanish',
     cta: 'Start a project',
-    ctaCompact: 'Start a project',
-    menu: 'Menu',
     navLinks: [
       { label: 'About', slug: 'about' },
       { label: 'Work', slug: 'work' },

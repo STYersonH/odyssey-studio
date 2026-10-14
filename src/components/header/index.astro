@@ -1,5 +1,6 @@
 ---
 import Button from '../button/index.astro';
+import MobileMenu from './MobileMenu.astro';
 import NavLinkItem from '../nav-link-item/index.astro';
 import type { Locale } from '../../i18n/locales';
 import { DEFAULT_LOCALE } from '../../i18n/locales';
@@ -12,65 +13,101 @@ interface Props {
 
 const { lang = DEFAULT_LOCALE } = Astro.props;
 const t = useTranslations(lang);
+
+const alternateLang: Locale = lang === 'es' ? 'en' : 'es';
+const basePath = Astro.url.pathname.replace(/^\/(es|en)(?=\/|$)/, '') || '/Home';
+const alternateUrl = `/${alternateLang}${basePath.startsWith('/') ? basePath : `/${basePath}`}`;
+
 const navLinks = t.header.navLinks;
 ---
 
-<!--
-  Full bar is absolute (scrolls away with the page).
-  Compact dock is fixed; buttons rise from below when Hero 70% hits viewport top.
--->
-<header class="pointer-events-none absolute top-0 left-0 z-50 w-full" data-header>
+<header class="pointer-events-none fixed top-0 left-0 z-50 w-full" data-header>
   <div
     class={cn(
-      'pointer-events-auto mx-[40px] my-[24px] flex w-[calc(100%-80px)] items-center justify-between',
+      'pointer-events-auto flex w-full items-center',
+      'px-5 pt-4',
+      'dk:px-10 dk:pt-6',
     )}
     data-header-full
   >
-    <a
-      href={`/${lang}/Home`}
-      class="font-neue-medium flex-1 text-[20px] text-primary-dark no-underline"
-      aria-label={t.header.brandAriaLabel}
-    >
-      OD
-      <span class="font-neue-medium-italic">Y</span>
-      SSE
-      <span class="font-neue-medium-italic">Y</span>
-    </a>
-    <div class="flex flex-1 items-center justify-between">
-      <nav aria-label="Primary">
-        <ul class="m-0 flex list-none gap-4 p-0">
+    <div class="dk:flex-1">
+      <a
+        href={`/${lang}/Home`}
+        class={cn(
+          'font-neue-medium block text-primary-dark no-underline',
+          'text-[16px]',
+          'leading-[0.9]',
+        )}
+        data-header-logo
+        aria-label={t.header.brandAriaLabel}
+      >
+        <span class="block whitespace-pre">
+          OD<span class="font-neue-medium-italic">Y</span>
+        </span>
+        <span class="block whitespace-pre">
+          {'     '}SSE<span class="font-neue-medium-italic">Y</span>
+        </span>
+      </a>
+    </div>
+
+    <div class="flex min-w-0 flex-1 items-center justify-end dk:justify-between">
+      <nav class="hidden dk:block" aria-label="Primary">
+        <ul class="m-0 flex list-none items-center gap-8 p-0">
           {
             navLinks.map((link) => (
-              <NavLinkItem href={`#${link.slug}`} label={link.label} />
+              <li>
+                <NavLinkItem href={`#${link.slug}`} label={link.label} />
+              </li>
             ))
           }
         </ul>
       </nav>
-      <Button href="#contact" text={t.header.cta} />
+
+      <div class="flex shrink-0 items-center gap-3">
+        <Button href="#contact" text={t.header.cta} />
+        <Button
+          href={alternateUrl}
+          text={t.header.langSwitchLabel}
+          type="secondary"
+          icon={false}
+          hover="text"
+          aria-label={t.header.langSwitchAriaLabel}
+          class="hidden min-w-0 dk:inline-flex"
+        />
+        <button
+          type="button"
+          data-mobile-menu-toggle
+          data-close-aria={t.header.closeAriaLabel}
+          aria-expanded="false"
+          aria-label={t.header.mobileMenuAriaLabel}
+          class={cn(
+            'relative flex size-10 shrink-0 cursor-pointer items-center justify-center',
+            'rounded-lg border-0 bg-white',
+            'dk:hidden',
+          )}
+        >
+          <span class="relative block size-4" data-mobile-menu-icon aria-hidden="true">
+            <span
+              data-mobile-menu-icon-top
+              class="absolute top-1/2 left-0 h-px w-4 -translate-y-[3px] bg-primary-dark will-change-transform"
+            ></span>
+            <span
+              data-mobile-menu-icon-bottom
+              class="absolute top-1/2 left-0 h-px w-4 translate-y-[3px] bg-primary-dark will-change-transform"
+            ></span>
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </header>
 
-<!-- Fixed dock: clipped so the row can slide up from below -->
-<div
-  class={cn(
-    'pointer-events-none fixed top-[24px] right-[40px] z-[60]',
-    'h-[35px] overflow-hidden',
-  )}
-  data-header-compact
-  aria-hidden="true"
->
-  <div class="flex h-full items-center gap-3 will-change-transform" data-header-compact-inner>
-    <Button href="#contact" text={t.header.cta} class="pointer-events-auto" />
-    <Button
-      type="secondary"
-      icon={false}
-      text={t.header.menu}
-      aria-label={t.header.mobileMenuAriaLabel}
-      class={cn('pointer-events-auto', '!w-auto min-w-[72px]')}
-    />
-  </div>
-</div>
+<MobileMenu
+  navLinks={navLinks}
+  alternateUrl={alternateUrl}
+  langLabel={t.header.langSwitchLabel}
+  langAriaLabel={t.header.langSwitchAriaLabel}
+/>
 
 <script>
   import { initHeaderAnimation } from './animation';

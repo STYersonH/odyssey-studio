@@ -42,6 +42,7 @@ export function initButtonAnimation(button: HTMLElement) {
 
   const type = (button.dataset.buttonType ?? 'primary') as ButtonType;
   const hasIcon = button.dataset.buttonIcon !== 'false';
+  const labelOnly = button.dataset.buttonHover === 'text';
   const theme = getTheme(type);
   const iconSize = getIconSize(button);
   const iconPadding = 2;
@@ -56,10 +57,11 @@ export function initButtonAnimation(button: HTMLElement) {
 
   const labelOffset = () => getLabelOffset(labelTrack, labelTop);
 
-  gsap.set(button, { backgroundColor: theme.bgRest });
   gsap.set(labelTrack, { y: 0 });
 
-  if (hasIcon && iconWrap && icon) {
+  if (!labelOnly) gsap.set(button, { backgroundColor: theme.bgRest });
+
+  if (!labelOnly && hasIcon && iconWrap && icon) {
     gsap.set(iconWrap, { width: 0 });
     gsap.set(icon, { width: 0, height: 0, padding: 0 });
     if (iconSvg) gsap.set(iconSvg, { opacity: 0, scale: 0.6 });
@@ -70,11 +72,11 @@ export function initButtonAnimation(button: HTMLElement) {
     defaults: { duration: DURATION, ease: EASE },
   });
 
-  timeline
-    .to(button, { backgroundColor: theme.bgHover }, 0)
-    .fromTo(labelTrack, { y: 0 }, { y: () => -labelOffset() }, 0);
+  timeline.fromTo(labelTrack, { y: 0 }, { y: () => -labelOffset() }, 0);
 
-  if (hasIcon && iconWrap && icon) {
+  if (!labelOnly) timeline.to(button, { backgroundColor: theme.bgHover }, 0);
+
+  if (!labelOnly && hasIcon && iconWrap && icon) {
     timeline
       .fromTo(iconWrap, { width: 0 }, { width: iconSize }, 0)
       .fromTo(

@@ -5,9 +5,10 @@ const es = {
   header: {
     brandAriaLabel: 'Odyssey - Inicio',
     mobileMenuAriaLabel: 'Abrir navegación',
+    closeAriaLabel: 'Cerrar navegación',
+    langSwitchLabel: 'EN',
+    langSwitchAriaLabel: 'Cambiar a inglés',
     cta: 'Hablemos hoy ',
-    ctaCompact: 'Empezar proyecto',
-    menu: 'Menú',
     navLinks: [
       { label: 'Sobre nosotros', slug: 'about' },
       { label: 'Proyectos', slug: 'work' },

@@ -1,0 +1,80 @@
+---
+import NavLinkItem from '../nav-link-item/index.astro';
+import { cn } from '../../lib/cn';
+
+interface Props {
+  navLinks: Array<{ label: string; slug: string }>;
+  alternateUrl: string;
+  langLabel: string;
+  langAriaLabel: string;
+}
+
+const { navLinks, alternateUrl, langLabel, langAriaLabel } = Astro.props;
+---
+
+<div
+  data-mobile-menu-root
+  class="pointer-events-none fixed inset-0 z-40 overflow-hidden dk:hidden"
+>
+  <div
+    data-mobile-menu-overlay
+    aria-hidden="true"
+    class={cn(
+      'absolute inset-0 overflow-hidden bg-primary-dark will-change-[clip-path]',
+      '[clip-path:polygon(0%_0%,100%_0%,100%_0%,0%_0%)]',
+    )}
+  >
+    <div
+      data-mobile-menu-content
+      class="absolute inset-0 flex translate-y-[-50%] flex-col justify-between px-5 pt-28 pb-8 will-change-transform tb:px-8 tb:pt-32 tb:pb-10"
+    >
+      <div class="flex min-h-0 flex-1 items-center">
+        <div data-mobile-menu-col class="flex w-full flex-col gap-2">
+          {
+            navLinks.map((link) => (
+              <div class="overflow-hidden py-1">
+                <div data-mobile-menu-line class="translate-y-[-110%] will-change-transform">
+                  <NavLinkItem
+                    href={`#${link.slug}`}
+                    label={link.label}
+                    variant="menu"
+                    class="text-neutral-50"
+                  />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div
+        data-mobile-menu-footer
+        class="flex items-center justify-end border-t border-white/15 pt-5"
+      >
+        <div class="overflow-hidden">
+          <a
+            href={alternateUrl}
+            data-lang-switch
+            data-mobile-menu-line
+            class={cn(
+              'inline-flex translate-y-[-110%] items-center justify-center no-underline will-change-transform',
+              'rounded-[5px] border border-neutral-50 px-[10px] py-[2px]',
+              'font-neue-regular text-[12px] leading-normal text-neutral-50',
+            )}
+            aria-label={langAriaLabel}
+          >
+            {langLabel}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { initMobileMenuAnimation } from './mobile-menu-animation';
+
+  const boot = () => initMobileMenuAnimation();
+  boot();
+  document.addEventListener('astro:page-load', boot);
+</script>

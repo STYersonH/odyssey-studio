@@ -6,15 +6,24 @@ interface Props {
   label: string;
   class?: string;
   isActive?: boolean;
+  /** Large type for the mobile / tablet menu. */
+  variant?: 'default' | 'menu';
 }
 
-const { href, label, class: className = '', isActive = false } = Astro.props;
+const {
+  href,
+  label,
+  class: className = '',
+  isActive = false,
+  variant = 'default',
+} = Astro.props;
 ---
 
 <a
   href={href}
   class={cn(
     'nav-link-item inline-block font-neue-regular text-primary-dark no-underline outline-none',
+    variant === 'menu' && 'nav-link-item--menu',
     isActive && 'nav-link-item--active',
     className,
   )}
@@ -43,6 +52,17 @@ const { href, label, class: className = '', isActive = false } = Astro.props;
   @media (width >= 1025px) {
     .nav-link-item {
       --nav-link-line: 16px;
+    }
+  }
+
+  .nav-link-item--menu {
+    --nav-link-line: 32px;
+    --nav-link-track-gap: 6px;
+  }
+
+  @media (width >= 440px) {
+    .nav-link-item--menu {
+      --nav-link-line: 40px;
     }
   }
 
