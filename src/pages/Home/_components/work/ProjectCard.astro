@@ -7,6 +7,7 @@ interface Props {
   number: string;
   total: string;
   title: string;
+  href?: string;
   description: string;
   statNumber: string;
   statLabel: string;
@@ -19,6 +20,7 @@ const {
   number,
   total,
   title,
+  href,
   description,
   statNumber,
   statLabel,
@@ -38,11 +40,12 @@ const {
   data-anim="project-card"
   data-bg={bgColor}
 >
-  <ProjectMedia bgImage={bgImage} overlayImage={overlayImage} />
+  <ProjectMedia bgImage={bgImage} overlayImage={overlayImage} href={href} title={title} />
   <ProjectContent
     number={number}
     total={total}
     title={title}
+    href={href}
     description={description}
     statNumber={statNumber}
     statLabel={statLabel}

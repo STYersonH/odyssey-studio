@@ -5,12 +5,13 @@ interface Props {
   number: string;
   total: string;
   title: string;
+  href?: string;
   description: string;
   statNumber: string;
   statLabel: string;
 }
 
-const { number, total, title, description, statNumber, statLabel } = Astro.props;
+const { number, total, title, href, description, statNumber, statLabel } = Astro.props;
 ---
 
 <div
@@ -55,7 +56,14 @@ const { number, total, title, description, statNumber, statLabel } = Astro.props
         )}
         data-anim="project-title"
       >
-        {title}
+        <a
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          class="cursor-pointer text-inherit no-underline"
+        >
+          {title}
+        </a>
       </h3>
       <p
         class={cn(

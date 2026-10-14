@@ -60,6 +60,7 @@ const es = {
         number: '01',
         total: '02',
         title: 'Andean Republic',
+        href: 'https://andeanrepublic.com/',
         description:
           'Un marketplace de textiles, superfoods y experiencias que conserva la esencia de los Andes y conecta al mundo con su riqueza cultural.',
         statNumber: '03',
@@ -72,6 +73,7 @@ const es = {
         number: '02',
         total: '02',
         title: 'Andean Roots Initiative',
+        href: 'https://roots.andeanrepublic.com/es/Home',
         description:
           'Impulsamos educación, innovación y emprendimiento en comunidades andinas para generar oportunidades sostenibles.',
         statNumber: 'Mayor',

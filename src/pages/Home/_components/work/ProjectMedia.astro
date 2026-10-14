@@ -4,12 +4,20 @@ import { cn } from '../../../../lib/cn';
 interface Props {
   bgImage?: string;
   overlayImage?: string;
+  href?: string;
+  title?: string;
 }
 
-const { bgImage, overlayImage } = Astro.props;
+const { bgImage, overlayImage, href, title } = Astro.props;
 ---
 
-<div class="relative grid place-items-start leading-[0]">
+<a
+  href={href}
+  target="_blank"
+  rel="noreferrer"
+  aria-label={title}
+  class="relative grid cursor-pointer place-items-start leading-[0] no-underline"
+>
   <!-- Background image layer with gradient placeholder -->
   <div
     class={cn(
@@ -46,4 +54,4 @@ const { bgImage, overlayImage } = Astro.props;
       )
     }
   </div>
-</div>
+</a>

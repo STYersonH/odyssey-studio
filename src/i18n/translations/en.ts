@@ -60,6 +60,7 @@ const en: Translations = {
         number: '01',
         total: '02',
         title: 'Andean Republic',
+        href: 'https://andeanrepublic.com/',
         description:
           'A marketplace of textiles, superfoods, and experiences that preserves the essence of the Andes and connects the world with its cultural richness.',
         statNumber: '03',
@@ -72,6 +73,7 @@ const en: Translations = {
         number: '02',
         total: '02',
         title: 'Andean Roots Initiative',
+        href: 'https://roots.andeanrepublic.com/es/Home',
         description:
           'We drive education, innovation, and entrepreneurship in Andean communities to create sustainable opportunities.',
         statNumber: 'Greater',

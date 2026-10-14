@@ -7,6 +7,7 @@ interface Project {
   number: string;
   total: string;
   title: string;
+  href?: string;
   description: string;
   statNumber: string;
   statLabel: string;
@@ -40,7 +41,12 @@ const { projects } = Astro.props;
           data-anim="project-media-layer"
           data-index={String(i)}
         >
-          <ProjectMedia bgImage={project.bgImage} overlayImage={project.overlayImage} />
+          <ProjectMedia
+            bgImage={project.bgImage}
+            overlayImage={project.overlayImage}
+            href={project.href}
+            title={project.title}
+          />
         </div>
       ))
     }
@@ -59,6 +65,7 @@ const { projects } = Astro.props;
             number={project.number}
             total={project.total}
             title={project.title}
+            href={project.href}
             description={project.description}
             statNumber={project.statNumber}
             statLabel={project.statLabel}
